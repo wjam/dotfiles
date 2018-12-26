@@ -45,6 +45,13 @@ Environment variables are also managed through:
 * /etc/launchd.conf
 * /etc/paths.d
 
+## Ubuntu
+### fonts
+`sudo apt install fonts-powerline`
+### gnome-shell
+Tick the following check box so that .bash_profile is actually run when running a Terminal
+Edit > Preferences > Command > Run command as a login shell
+
 # TODO
 * Automate brew install stuff
 * Go through https://github.com/atomantic/dotfiles/blob/master/install.sh for things to auto-config for iterm2 etc

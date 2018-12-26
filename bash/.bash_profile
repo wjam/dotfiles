@@ -55,4 +55,4 @@ fi
 
 if [[ -f ~/.bashrc ]]; then . ~/.bashrc; fi
 
-test -e "${HOME}/.iterm2_shell_integration.bash" && source "${HOME}/.iterm2_shell_integration.bash"
+if [[ -f ~/.iterm2_shell_integration.bash ]]; then . ~/.iterm2_shell_integration.bash; fi
