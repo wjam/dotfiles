@@ -16,7 +16,7 @@ elif [[ "${TERM}" != "linux" ]]; then
   # $TERM is 'linux' when running via console (Ctrl+Alt+F7)
   PROMPT_COMMAND="_update_ps1; $PROMPT_COMMAND"
 else
-  PS1="\u@\h:\w\$"
+  PS1="\u@\h:\w\$ "
 fi
 
 ##
