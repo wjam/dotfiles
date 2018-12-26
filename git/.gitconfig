@@ -1,0 +1,9 @@
+[user]
+	name = Will May
+	email = will.j.may@gmail.com
+[pull]
+	rebase = true
+[push]
+	default = simple
+[core]
+	autocrlf = input

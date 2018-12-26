@@ -1,0 +1,5 @@
+"\e\e[D" backward-word
+"\e\e[C" forward-word
+
+set colored-stats On
+set completion-ignore-case On
