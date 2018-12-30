@@ -55,3 +55,4 @@ Edit > Preferences > Command > Run command as a login shell
 # TODO
 * Automate brew install stuff
 * Go through https://github.com/atomantic/dotfiles/blob/master/install.sh for things to auto-config for iterm2 etc
+* Remove `/usr/local/opt/go@1.10/bin` reference from `.bashrc` and use direnv instead
