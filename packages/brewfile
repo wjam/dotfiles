@@ -1,0 +1,45 @@
+cask_args appdir: '~/Applications'
+
+brew "bash-completion"
+
+# General command line tools
+brew "readline" # (.inputrc)
+brew "jq"
+brew "git"
+brew "htop"
+brew "tree"
+brew "curl"
+brew "watch"
+brew "direnv"
+
+# Tools for interacting with the cloud
+brew "terraform"
+brew "packer"
+brew "ansible"
+brew "awscli"
+brew "azure-cli"
+cask "google-cloud-sdk"
+
+# Tools for Kubernetes
+brew "kubernetes-cli"
+brew "kubectx" # Switch between contexts
+brew "stern" # Tail multiple pods
+
+# UI tools
+cask "keepingyouawake"
+cask "font-liberation-mono-for-powerline"
+# hammerspoon?
+
+# Database tools
+brew "pgcli" # PostgreSQL
+brew "mysql-client"
+
+# Java tools
+tap "AdoptOpenJDK/openjdk"
+cask "adoptopenjdk8"
+cask "adoptopenjdk11"
+brew "maven"
+
+# Go tools
+brew "go"
+brew "dep"

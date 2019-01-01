@@ -13,21 +13,12 @@
 * Go
 * IntelliJ
 * Atom
-* awscli
-* direnv
 * terraform
 * packer
-* jq
 
 ## macOS specific
-* iTerm2
-* Homebrew
-  * bash-completion
-  * curl
-  * htop
-  * watch
-  * git
-  * readline? (.inputrc)
+* [iTerm2](https://www.iterm2.com/)
+* [Homebrew](https://brew.sh/)
 
 # Notes
 
@@ -56,3 +47,6 @@ Edit > Preferences > Command > Run command as a login shell
 * Automate brew install stuff
 * Go through https://github.com/atomantic/dotfiles/blob/master/install.sh for things to auto-config for iterm2 etc
 * Remove `/usr/local/opt/go@1.10/bin` reference from `.bashrc` and use direnv instead
+* Try replacing shiftit with hammerspoon
+  * Test next/previous screen with maximised and normal screen
+  * Ctrl+Alt+Meta - left, up, down, right

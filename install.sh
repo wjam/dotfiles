@@ -20,3 +20,17 @@ ln -s "${cwd}/bash/.bash_profile" ~/.bash_profile
 ln -s "${cwd}/bash/.bash_aliases" ~/.bash_aliases
 ln -s "${cwd}/readline/.inputrc" ~/.inputrc
 ln -s "${cwd}/git/.gitconfig" ~/.gitconfig
+
+os=$(uname -s)
+
+case "${os}" in
+  Darwin)
+    # If brew isn't already installed, then this installation should fail
+    brew bundle --file=${cwd}/packages/brewfile
+    ;;
+  Linux)
+    if which apt > /dev/null; then
+      xargs --arg-file=${cwd}/packages/apt.txt sudo apt install
+    fi
+    ;;
+esac
