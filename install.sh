@@ -13,13 +13,14 @@ set -o pipefail
 
 cwd=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
-rm -f ~/.bash_aliases ~/.bash_profile ~/.bashrc ~/.profile ~/.inputrc ~/.gitconfig
+rm -f ~/.bash_aliases ~/.bash_profile ~/.bashrc ~/.profile ~/.inputrc ~/.gitconfig ~/.hammerspoon
 
 ln -s "${cwd}/bash/.bashrc" ~/.bashrc
 ln -s "${cwd}/bash/.bash_profile" ~/.bash_profile
 ln -s "${cwd}/bash/.bash_aliases" ~/.bash_aliases
 ln -s "${cwd}/readline/.inputrc" ~/.inputrc
 ln -s "${cwd}/git/.gitconfig" ~/.gitconfig
+ln -s "${cwd}/hammerspoon" ~/.hammerspoon
 
 os=$(uname -s)
 

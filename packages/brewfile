@@ -28,7 +28,7 @@ brew "stern" # Tail multiple pods
 # UI tools
 cask "keepingyouawake"
 cask "font-liberation-mono-for-powerline"
-# hammerspoon?
+cask "hammerspoon"
 
 # Database tools
 brew "pgcli" # PostgreSQL
