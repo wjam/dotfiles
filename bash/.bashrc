@@ -10,5 +10,3 @@ if [[ -e ~/.rvm/bin ]]; then export PATH="$PATH:$HOME/.rvm/bin"; fi
 [[ -s "$HOME/.rvm/scripts/rvm" ]] && source "$HOME/.rvm/scripts/rvm" # Load RVM into a shell session *as a function*
 
 if [[ -e ~/.cargo/bin ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
-
-if [[ -e /usr/local/opt/go@1.10/bin ]]; then export PATH="/usr/local/opt/go@1.10/bin:$PATH"; fi

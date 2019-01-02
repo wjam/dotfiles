@@ -41,9 +41,4 @@ Tick the following check box so that .bash_profile is actually run when running 
 Edit > Preferences > Command > Run command as a login shell
 
 # TODO
-* Automate brew install stuff
 * Go through https://github.com/atomantic/dotfiles/blob/master/install.sh for things to auto-config for iterm2 etc
-* Remove `/usr/local/opt/go@1.10/bin` reference from `.bashrc` and use direnv instead
-* Try replacing shiftit with hammerspoon
-  * Test next/previous screen with maximised and normal screen
-  * Ctrl+Alt+Meta - left, up, down, right
