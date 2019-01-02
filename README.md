@@ -1,12 +1,9 @@
-# Set up
+# Set up for mac
 * Install [Homebrew](https://brew.sh/)
-* Install Go
+* Run `./install.sh`
 * Build https://github.com/justjanne/powerline-go
 * Copy the `powerline-go` binary to /usr/local/bin
-* Install custom fonts from https://github.com/powerline/fonts (LiberationMono)
-  * `brew tap homebrew/cask-fonts`
-  * `brew install homebrew/cask-fonts/font-liberation-mono-for-powerline`
-* Configure iTerm2 (https://github.com/powerline/fonts/issues/44#issuecomment-300643099)
+* Configure iTerm2 to use LiberationMono font (https://github.com/powerline/fonts/issues/44#issuecomment-300643099)
 
 # Tools to install
 * Git
