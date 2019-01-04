@@ -27,7 +27,8 @@ os=$(uname -s)
 case "${os}" in
   Darwin)
     # If brew isn't already installed, then this installation should fail
-    brew bundle --file=${cwd}/packages/brewfile
+    brew bundle --file=${cwd}/packages/Brewfile
+    source ${cwd}/packages/mac-config.sh
     ;;
   Linux)
     if which apt > /dev/null; then

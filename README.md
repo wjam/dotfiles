@@ -3,7 +3,7 @@
 * Run `./install.sh`
 * Build https://github.com/justjanne/powerline-go
 * Copy the `powerline-go` binary to /usr/local/bin
-* Configure iTerm2 to use LiberationMono font (https://github.com/powerline/fonts/issues/44#issuecomment-300643099)
+* Restart iTerm2
 
 # Tools to install
 * Git
