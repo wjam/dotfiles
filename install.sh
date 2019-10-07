@@ -13,14 +13,10 @@ set -o pipefail
 
 cwd=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
-rm -f ~/.bash_aliases ~/.bash_profile ~/.bashrc ~/.profile ~/.inputrc ~/.gitconfig ~/.hammerspoon
-
-ln -s "${cwd}/bash/.bashrc" ~/.bashrc
-ln -s "${cwd}/bash/.bash_profile" ~/.bash_profile
-ln -s "${cwd}/bash/.bash_aliases" ~/.bash_aliases
-ln -s "${cwd}/readline/.inputrc" ~/.inputrc
-ln -s "${cwd}/git/.gitconfig" ~/.gitconfig
-ln -s "${cwd}/hammerspoon" ~/.hammerspoon
+if [[ "${cwd}" != "${HOME}/.dotfiles" ]]; then
+  echo "This should be checked out to ~/.dotfiles"
+  exit 1
+fi
 
 os=$(uname -s)
 
@@ -34,5 +30,15 @@ case "${os}" in
     if which apt > /dev/null; then
       xargs --arg-file=${cwd}/packages/apt.txt sudo apt install
     fi
+    ;;
+esac
+
+echo "If stow fails, then you need to delete the existing files"
+stow -d ${cwd} bash git readline path
+
+
+case "${os}" in
+  Darwin)
+    stow -d ${cwd} hammerspoon
     ;;
 esac

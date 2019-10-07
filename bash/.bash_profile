@@ -1,3 +1,5 @@
+if [[ -f ~/.bashrc ]]; then . ~/.bashrc; fi
+
 ###
 # Customise command prompt, primarily using powerline-go
 ###
@@ -47,12 +49,10 @@ fi
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-if command -v brew > /dev/null && [[ -f $(brew --prefix)/etc/bash_completion ]]; then
-  . $(brew --prefix)/etc/bash_completion
+if command -v brew > /dev/null && [[ -f $(brew --prefix bash-completion)/etc/bash_completion ]]; then
+  . $(brew --prefix bash-completion)/etc/bash_completion
 elif [[ -f /etc/bash_completion ]] && ! shopt -oq posix; then
   . /etc/bash_completion
 fi
-
-if [[ -f ~/.bashrc ]]; then . ~/.bashrc; fi
 
 if [[ -f ~/.iterm2_shell_integration.bash ]]; then . ~/.iterm2_shell_integration.bash; fi

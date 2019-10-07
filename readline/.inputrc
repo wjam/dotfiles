@@ -1,5 +1,11 @@
-"\e\e[D" backward-word
-"\e\e[C" forward-word
+
+# Include system defaults for Ubuntu
+$include /etc/inputrc
+
+"\e\e[D": backward-word
+"\e\e[C": forward-word
+"\M-\e[D": beginning-of-line
+"\M-\e[C": end-of-line
 
 set colored-stats On
 set completion-ignore-case On

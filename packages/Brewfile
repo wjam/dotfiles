@@ -2,6 +2,12 @@ cask_args appdir: '~/Applications'
 
 brew "bash-completion"
 
+# Tool used to install dot files
+brew "stow"
+
+# Tool used to browse the contents of Docker images
+brew "dive"
+
 # General command line tools
 brew "readline" # (.inputrc)
 brew "jq"
@@ -11,6 +17,7 @@ brew "tree"
 brew "curl"
 brew "watch"
 brew "direnv"
+brew "pandoc"
 
 # Tools for interacting with the cloud
 brew "terraform"
@@ -42,4 +49,3 @@ brew "maven"
 
 # Go tools
 brew "go"
-brew "dep"
