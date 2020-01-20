@@ -23,12 +23,13 @@ os=$(uname -s)
 case "${os}" in
   Darwin)
     # If brew isn't already installed, then this installation should fail
-    brew bundle --file=${cwd}/packages/Brewfile
-    source ${cwd}/packages/mac-config.sh
+    brew bundle --file="${cwd}"/packages/Brewfile
+    # shellcheck source=packages/mac-config.sh
+    source "${cwd}"/packages/mac-config.sh
     ;;
   Linux)
     if which apt > /dev/null; then
-      xargs --arg-file=${cwd}/packages/apt.txt sudo apt install
+      xargs --arg-file="${cwd}"/packages/apt.txt sudo apt install
     fi
     ;;
 esac

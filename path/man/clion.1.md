@@ -1,4 +1,4 @@
-% IDEA(1) | CLion command line Documentation
+% CLION(1) | CLion command line Documentation
 
 # NAME
 
@@ -6,7 +6,7 @@
 
 # SYNOPSIS
 
-| **idea** \[_directory_\]
+| **clion** \[_directory_\]
 
 # DESCRIPTION
 

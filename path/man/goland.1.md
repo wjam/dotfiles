@@ -1,4 +1,4 @@
-% IDEA(1) | Goland command line Documentation
+% GOLAND(1) | Goland command line Documentation
 
 # NAME
 
@@ -6,7 +6,7 @@
 
 # SYNOPSIS
 
-| **idea** \[_directory_\]
+| **goland** \[_directory_\]
 
 # DESCRIPTION
 

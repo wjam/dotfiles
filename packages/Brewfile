@@ -18,9 +18,12 @@ brew "curl"
 brew "watch"
 brew "direnv"
 brew "pandoc"
+brew "ipcalc"
+brew "powerline-go"
 
 # Tools for interacting with the cloud
 brew "terraform"
+brew "terragrunt"
 brew "packer"
 brew "ansible"
 brew "awscli"
@@ -31,21 +34,32 @@ cask "google-cloud-sdk"
 brew "kubernetes-cli"
 brew "kubectx" # Switch between contexts
 brew "stern" # Tail multiple pods
+brew "aws-iam-authenticator"
 
 # UI tools
-cask "keepingyouawake"
+tap "homebrew/cask-fonts"
 cask "font-liberation-mono-for-powerline"
 cask "hammerspoon"
+cask "menumeters"
+cask "google-chrome"
+cask "atom"
+cask "jetbrains-toolbox"
+cask "docker"
 
 # Database tools
 brew "pgcli" # PostgreSQL
 brew "mysql-client"
+brew "neo4j"
+brew "cassandra"
+brew "vault"
 
 # Java tools
 tap "AdoptOpenJDK/openjdk"
-cask "adoptopenjdk8"
 cask "adoptopenjdk11"
 brew "maven"
 
 # Go tools
 brew "go"
+
+# Tools used by Hammerspoon Lua files
+brew "blueutil"

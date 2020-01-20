@@ -56,3 +56,6 @@ elif [[ -f /etc/bash_completion ]] && ! shopt -oq posix; then
 fi
 
 if [[ -f ~/.iterm2_shell_integration.bash ]]; then . ~/.iterm2_shell_integration.bash; fi
+
+# Shut Apple up about Bash being deprecated for Zsh
+export BASH_SILENCE_DEPRECATION_WARNING=1

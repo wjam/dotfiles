@@ -9,3 +9,4 @@ $include /etc/inputrc
 
 set colored-stats On
 set completion-ignore-case On
+set show-all-if-ambiguous on

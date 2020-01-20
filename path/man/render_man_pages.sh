@@ -18,11 +18,12 @@ set -o pipefail
 cwd=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
 for i in {1..9} ; do
-  rm  ${cwd}/man${i}/*.${i} || true
-  for j in $(find ${cwd}/ -name "*.${i}.md"); do
-    mkdir -p ${cwd}/man${i}
-    filename=$(basename -- "${j}")
+  rm  -f "${cwd}"/man${i}/*.${i}
+
+  find "${cwd}"/ -name "*.${i}.md" -exec sh -c '
+    mkdir -p "${1}"/man${2}
+    filename=$(basename -- "${3}")
     without_extension="${filename%.*}"
-    pandoc -s -t man ${j} -o ~/man/man${i}/${without_extension}
-  done
+    pandoc -s -t man "${3}" -o ${1}/man${2}/"${without_extension}"
+  ' sh "${cwd}" ${i} {} \;
 done

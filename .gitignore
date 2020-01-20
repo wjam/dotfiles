@@ -127,3 +127,5 @@ Temporary Items
 .apdisk
 
 # End of https://www.gitignore.io/api/linux,macos,intellij+all
+
+packages/Brewfile.lock.json
