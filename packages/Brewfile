@@ -45,6 +45,8 @@ cask "google-chrome"
 cask "atom"
 cask "jetbrains-toolbox"
 cask "docker"
+cask "drawio"
+cask "libreoffice"
 
 # Database tools
 brew "pgcli" # PostgreSQL
