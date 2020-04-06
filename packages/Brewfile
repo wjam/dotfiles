@@ -2,6 +2,14 @@ cask_args appdir: '~/Applications'
 
 brew "bash-completion"
 
+# Java tools
+tap "AdoptOpenJDK/openjdk"
+cask "adoptopenjdk11"
+brew "maven"
+
+# Go tools
+brew "go"
+
 # Tool used to install dot files
 brew "stow"
 
@@ -54,14 +62,6 @@ brew "mysql-client"
 brew "neo4j"
 brew "cassandra"
 brew "vault"
-
-# Java tools
-tap "AdoptOpenJDK/openjdk"
-cask "adoptopenjdk11"
-brew "maven"
-
-# Go tools
-brew "go"
 
 # Tools used by Hammerspoon Lua files
 brew "blueutil"
