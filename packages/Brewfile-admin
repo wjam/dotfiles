@@ -1,0 +1,8 @@
+cask_args appdir: '~/Applications'
+
+tap "AdoptOpenJDK/openjdk"
+cask "adoptopenjdk11"
+
+cask "docker"
+
+brew "neo4j"

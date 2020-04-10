@@ -3,8 +3,6 @@ cask_args appdir: '~/Applications'
 brew "bash-completion"
 
 # Java tools
-tap "AdoptOpenJDK/openjdk"
-cask "adoptopenjdk11"
 brew "maven"
 
 # Go tools
@@ -13,21 +11,19 @@ brew "go"
 # Tool used to install dot files
 brew "stow"
 
-# Tool used to browse the contents of Docker images
-brew "dive"
-
 # General command line tools
+brew "dive" # Tool used to browse the contents of Docker images
 brew "readline" # (.inputrc)
-brew "jq"
+brew "jq" # Manipulating JSON
 brew "git"
 brew "htop"
 brew "tree"
 brew "curl"
 brew "watch"
-brew "direnv"
-brew "pandoc"
-brew "ipcalc"
-brew "powerline-go"
+brew "direnv" # Per-directory environment configuration
+brew "pandoc" # Generating man from markdown
+brew "ipcalc" # Working out CIDR ranges
+brew "powerline-go" # Advanced command prompt
 
 # Tools for interacting with the cloud
 brew "terraform"
@@ -52,14 +48,12 @@ cask "menumeters"
 cask "google-chrome"
 cask "atom"
 cask "jetbrains-toolbox"
-cask "docker"
 cask "drawio"
 cask "libreoffice"
 
 # Database tools
 brew "pgcli" # PostgreSQL
 brew "mysql-client"
-brew "neo4j"
 brew "cassandra"
 brew "vault"
 

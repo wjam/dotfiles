@@ -15,6 +15,10 @@ and reads and executes commands from the first one that exists and is readable
 ## `bash/.bashrc`
 When an interactive shell that is not a login shell is started, bash reads and executes commands from /etc/bash.bashrc and ~/.bashrc
 
+## Go & private Git servers
+To get `go get` to work with private Git servers, like BitBucket server, `ssh-add` the SSH key and then
+`git config --global.url url."ssh://git@server:port/".insteadOf "https://server/scm"`
+
 ## Ubuntu
 ### fonts
 `sudo apt install fonts-powerline`

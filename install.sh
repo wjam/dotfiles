@@ -22,6 +22,9 @@ os=$(uname -s)
 
 case "${os}" in
   Darwin)
+    if ! command docker || ! command java; then
+        brew bundle --file="${cwd}"/packages/Brewfile-admin
+    fi
     # If brew isn't already installed, then this installation should fail
     brew bundle --file="${cwd}"/packages/Brewfile
     # shellcheck source=packages/mac-config.sh

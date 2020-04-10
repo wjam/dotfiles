@@ -1,3 +1,5 @@
+if [[ -f ~/dev/brew/bin ]]; then export PATH="$HOME/dev/brew/bin:$PATH"; fi
+
 if [[ -f ~/.bash_aliases ]]; then . ~/.bash_aliases; fi
 
 eval "$(direnv hook bash)"

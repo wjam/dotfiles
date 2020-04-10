@@ -6,7 +6,7 @@ if [[ -f ~/.bashrc ]]; then . ~/.bashrc; fi
 function _update_ps1() {
   # __bp_last_ret_value will be present if iterm2 integration is in place
   lastError=${__bp_last_ret_value:-$?}
-  export PS1="$(/usr/local/bin/powerline-go -colorize-hostname -error ${lastError} -newline -modules 'user,host,ssh,cwd,git,jobs,exit,kube,aws' -max-width 100 -mode patched -cwd-mode fancy)"
+  export PS1="$(powerline-go -colorize-hostname -error ${lastError} -newline -modules 'user,host,ssh,cwd,git,jobs,exit,kube,aws' -max-width 100 -mode patched -cwd-mode fancy)"
   (exit ${lastError})
 }
 

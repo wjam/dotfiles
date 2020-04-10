@@ -1,4 +1,2 @@
-idea
-goland
-clion
-webstorm
+*
+!.gitignore
