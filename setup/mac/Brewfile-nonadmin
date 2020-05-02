@@ -14,15 +14,15 @@ brew "stow"
 # General command line tools
 brew "dive" # Tool used to browse the contents of Docker images
 brew "readline" # (.inputrc)
-#brew "jq" # Manipulating JSON
-#brew "git"
-#brew "htop"
-#brew "tree"
-#brew "curl"
-#brew "watch"
+brew "jq" # Manipulating JSON
+brew "git"
+brew "htop"
+brew "tree"
+brew "curl"
+brew "watch"
 brew "direnv" # Per-directory environment configuration
-#brew "pandoc" # Generating man from markdown
-#brew "ipcalc" # Working out CIDR ranges
+brew "pandoc" # Generating man from markdown
+brew "ipcalc" # Working out CIDR ranges
 brew "powerline-go" # Advanced command prompt
 
 # Tools for interacting with the cloud
