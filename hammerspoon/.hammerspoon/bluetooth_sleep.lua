@@ -1,6 +1,6 @@
 require "string"
 
-function checkBluetoothResult(rc, stderr, stderr)
+function checkBluetoothResult(rc, stdout, stderr)
     if rc ~= 0 then
         print(string.format("Unexpected result executing `blueutil`: rc=%d stderr=%s stdout=%s", rc, stderr, stdout))
     end

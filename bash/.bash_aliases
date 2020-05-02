@@ -10,3 +10,7 @@ fi
 if [[ -x $(command -v packer) ]]; then
   complete -C $(which packer) packer
 fi
+
+if [[ -x $(command -v aws_finder) ]]; then
+  complete -C $(which aws_finder) aws_finder
+fi
