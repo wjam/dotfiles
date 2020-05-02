@@ -1,9 +1,3 @@
-# Set up for mac
-* Install [iTerm2](https://www.iterm2.com/)
-* Install [Homebrew](https://brew.sh/)
-* Run `./install.sh`
-* Restart iTerm2
-
 # Notes
 
 ## `bash/.bash_profile`
@@ -19,6 +13,7 @@ When an interactive shell that is not a login shell is started, bash reads and e
 To get `go get` to work with private Git servers, like BitBucket server, `ssh-add` the SSH key and then
 `git config --global.url url."ssh://git@server:port/".insteadOf "https://server/scm"`
 
+# Installing
 ## Ubuntu
 ### fonts
 `sudo apt install fonts-powerline`
@@ -27,28 +22,30 @@ Tick the following check box so that .bash_profile is actually run when running 
 Edit > Preferences > Command > Run command as a login shell
 
 ## macOS
+### Installation
+```shell script
+./install.sh
+```
 ### Post installation
-* Uninstall unused default apps
-    * Numbers
-    * Pages
-    * GarageBand
-    * iMovie
 * Set up dock
-    * Untick 'show recent applications in dock'
-    * Size
-* Install software managed through the App Store
-    * Slack
-    * Microsoft Remote Desktop
+    * Remove things to the right of the bar - everything apart from bin & downloads
 * Tweak Finder
     * Add home directory to the side bar
-    * Hide tags
-* iTerm2
-    * Fix cmd+{left,right} due to iTerm swallowing all command key presses
-        * Remove next & previous tab key bindings as these are bound to cmd+{left,right}
-        * Add cmd+left (hex code 0x01) & cmd+right (hex code 0x05) to `profile` > `default` > `keys`
-    * Change the theme to compact (`Appearance` > `General`)
-
 
 # TODO
 * Go through https://github.com/atomantic/dotfiles/blob/master/install.sh for things to auto-config for iterm2 etc
 * How do other tools get added to man?
+* CI
+    * Ubuntu
+    * Mac w/ sudo
+    * Mac w/out sudo
+    * https://help.github.com/en/actions/reference/virtual-environments-for-github-hosted-runners
+    * https://docs.travis-ci.com/user/reference/osx/
+    * https://github.com/ashishb/dotfiles/blob/master/.travis.yml
+    * https://medium.com/@sam_hosseini/build-a-macos-empire-a0c83879ac24
+    * https://github.com/ashishb/dotfiles/tree/master/setup - separate installation
+* Document how to visually verify the installation
+* Document initial set up method - download zip from GitHub? Does it include the `.git` directory?
+* Document key combinations for move to next monitor, etc
+    * Hammerspoon config for mac
+    * https://wiki.gnome.org/Design/OS/KeyboardShortcuts

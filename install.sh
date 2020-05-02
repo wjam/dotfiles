@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+# Entry point for install dotfiles
+# Delegates most work to O/S specific scripts before calling `stow`
+
 # Exit on error. Append || true if you expect an error.
 set -o errexit
 # Exit on error inside any functions or subshells.
@@ -11,9 +14,9 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-cwd=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
+dotfilesDir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
-if [[ "${cwd}" != "${HOME}/.dotfiles" ]]; then
+if [[ "${dotfilesDir}" != "${HOME}/.dotfiles" ]]; then
   echo "This should be checked out to ~/.dotfiles"
   exit 1
 fi
@@ -22,27 +25,14 @@ os=$(uname -s)
 
 case "${os}" in
   Darwin)
-    if ! command docker || ! command java; then
-        brew bundle --file="${cwd}"/packages/Brewfile-admin
-    fi
-    # If brew isn't already installed, then this installation should fail
-    brew bundle --file="${cwd}"/packages/Brewfile
-    # shellcheck source=packages/mac-config.sh
-    source "${cwd}"/packages/mac-config.sh
+    # shellcheck source=setup/mac/install.sh
+    source "${dotfilesDir}"/setup/mac/install.sh
     ;;
-  Linux)
-    if which apt > /dev/null; then
-      xargs --arg-file="${cwd}"/packages/apt.txt sudo apt install
-    fi
+  Linux) # TODO - sniff out ubuntu
+    # shellcheck source=setup/ubuntu/install.sh
+    source "${dotfilesDir}"/setup/ubuntu/install.sh
     ;;
 esac
 
 echo "If stow fails, then you need to delete the existing files"
-stow -d ${cwd} bash git readline path
-
-
-case "${os}" in
-  Darwin)
-    stow -d ${cwd} hammerspoon
-    ;;
-esac
+stow -d "${dotfilesDir}" bash git readline path hammerspoon

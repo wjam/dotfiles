@@ -2,7 +2,12 @@ cask_args appdir: '~/Applications'
 
 tap "AdoptOpenJDK/openjdk"
 cask "adoptopenjdk11"
+cask "adoptopenjdk8"
 
 cask "docker"
 
 brew "neo4j"
+brew "mas"
+
+mas "Microsoft Remote Desktop 10", id: 1295203466
+mas "Slack", id: 803453959

@@ -2,3 +2,4 @@ jq
 direnv
 awscli
 stow
+fonts-powerline
