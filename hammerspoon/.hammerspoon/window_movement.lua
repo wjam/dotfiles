@@ -26,7 +26,6 @@ hs.hotkey.bind(mash, '2', function() hs.window.focusedWindow():move(units.topRig
 hs.hotkey.bind(mash, '3', function() hs.window.focusedWindow():move(units.botLeft, nil, true) end)
 hs.hotkey.bind(mash, '4', function() hs.window.focusedWindow():move(units.botRight, nil, true) end)
 
-hs.hotkey.bind(mash, 'f', function() hs.window.focusedWindow():toggleFullScreen() end)
 hs.hotkey.bind(mash, 'z', function() hs.window.focusedWindow():toggleZoom() end)
 
 hs.hotkey.bind(mash, "n", function()
