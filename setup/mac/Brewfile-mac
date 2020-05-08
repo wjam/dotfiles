@@ -1,0 +1,26 @@
+# Things to make mac more Linuxy or casks, which as mac only
+brew "bash-completion"
+brew "readline" # (.inputrc)
+brew "watch"
+
+brew "cassandra" # only supports macOS
+
+# Tools used by Hammerspoon Lua files
+brew "blueutil"
+
+# Casks
+cask_args appdir: '~/Applications'
+cask "google-cloud-sdk"
+
+cask "hammerspoon"
+cask "menumeters"
+cask "firefox"
+cask "google-chrome"
+cask "atom"
+cask "jetbrains-toolbox"
+cask "drawio"
+cask "libreoffice"
+cask "iterm2"
+
+tap "homebrew/cask-fonts"
+cask "font-liberation-mono-for-powerline"

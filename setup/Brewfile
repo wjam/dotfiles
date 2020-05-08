@@ -1,7 +1,3 @@
-cask_args appdir: '~/Applications'
-
-brew "bash-completion"
-
 # Java tools
 brew "maven"
 
@@ -13,13 +9,11 @@ brew "stow"
 
 # General command line tools
 brew "dive" # Tool used to browse the contents of Docker images
-brew "readline" # (.inputrc)
 brew "jq" # Manipulating JSON
 brew "git"
 brew "htop"
 brew "tree"
 brew "curl"
-brew "watch"
 brew "direnv" # Per-directory environment configuration
 brew "pandoc" # Generating man from markdown
 brew "ipcalc" # Working out CIDR ranges
@@ -32,7 +26,6 @@ brew "packer"
 brew "ansible"
 brew "awscli"
 brew "azure-cli"
-cask "google-cloud-sdk"
 
 # Tools for Kubernetes
 brew "kubernetes-cli" # kubectl
@@ -40,24 +33,7 @@ brew "kubectx" # Switch between contexts
 brew "stern" # Tail multiple pods
 brew "aws-iam-authenticator"
 
-# UI tools
-tap "homebrew/cask-fonts"
-cask "font-liberation-mono-for-powerline"
-cask "hammerspoon"
-cask "menumeters"
-cask "firefox"
-cask "google-chrome"
-cask "atom"
-cask "jetbrains-toolbox"
-cask "drawio"
-cask "libreoffice"
-cask "iterm2"
-
 # Database tools
 brew "pgcli" # PostgreSQL
 brew "mysql-client"
-brew "cassandra"
 brew "vault"
-
-# Tools used by Hammerspoon Lua files
-brew "blueutil"

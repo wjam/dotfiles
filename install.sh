@@ -28,11 +28,19 @@ case "${os}" in
     # shellcheck source=setup/mac/install.sh
     source "${dotfilesDir}"/setup/mac/install.sh
     ;;
-  Linux) # TODO - sniff out ubuntu
-    # shellcheck source=setup/ubuntu/install.sh
-    source "${dotfilesDir}"/setup/ubuntu/install.sh
+  Linux)
+    . /etc/os-release
+    if [[ "$ID" == "ubuntu" ]]; then
+      # shellcheck source=setup/ubuntu/install.sh
+      source "${dotfilesDir}"/setup/ubuntu/install.sh
+    else
+      echo "Unknown OS ${ID}"
+      exit 1
+    fi
     ;;
 esac
+
+brew bundle --file="${dotfilesDir}"/setup/Brewfile
 
 echo "If stow fails, then you need to delete the existing files"
 stow -d "${dotfilesDir}" bash git readline path hammerspoon

@@ -128,5 +128,4 @@ Temporary Items
 
 # End of https://www.gitignore.io/api/linux,macos,intellij+all
 
-setup/mac/Brewfile-admin.lock.json
-setup/mac/Brewfile-nonadmin.lock.json
+Brewfile*.lock.json

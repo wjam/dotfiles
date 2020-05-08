@@ -1,4 +1,8 @@
-if [[ -f ~/dev/brew/bin ]]; then export PATH="$HOME/dev/brew/bin:$PATH"; fi
+if [[ -f $HOME/dev/brew/bin ]]; then
+  export PATH="$HOME/dev/brew/bin:$PATH"
+elif [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+fi
 
 if [[ -f ~/.bash_aliases ]]; then . ~/.bash_aliases; fi
 

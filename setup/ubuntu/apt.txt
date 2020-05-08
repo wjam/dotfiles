@@ -1,5 +1,4 @@
-jq
-direnv
-awscli
-stow
+curl
+docker
+git
 fonts-powerline

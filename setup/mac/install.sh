@@ -76,22 +76,28 @@ function uninstall_unwanted_default_apps() {
 
 # Check whether tools that can only be installed as admin are present
 function check_admin_tools_installed() {
-  if ! command -v docker &> /dev/null; then
+  if ! command -v docker &>/dev/null; then
     echo "docker not installed"
     exit 1
   fi
-  if ! command -v java &> /dev/null; then
+  if ! command -v java &>/dev/null; then
     echo "java not installed"
     exit 1
   fi
 }
 
-function brew_bundle_nonadmin() {
+function brew_bundle_mac() {
   # TODO add cask "keeweb" or cask "keepassxc"
-  brew bundle --file="${macDir}"/Brewfile-nonadmin
+  brew bundle --file="${macDir}"/Brewfile-mac
+}
+
+function brew_bundle() {
+  brew bundle --file="${macDir}"/../Brewfile
 }
 
 function configure_finder() {
+  # TODO defaults write com.apple.finder AppleShowAllFiles YES; # show hidden files
+  # TODO defaults write NSGlobalDomain AppleShowAllExtensions -bool true; # show all file extensions
   # Set the default view to be list
   defaults write com.apple.Finder FXPreferredViewStyle Nlsv
   # Show path bar in Finder
@@ -103,6 +109,7 @@ function configure_finder() {
 }
 
 function configure_dock() {
+  # TODO defaults write com.apple.dock persistent-apps -array; # remove icons in Dock - what about finder, app store
   # Don't show recent applications in dock
   defaults write com.apple.dock "show-recents" -bool false
   # Set size of icons in dock
@@ -128,15 +135,14 @@ if is_sudoer; then
   wait_for_app_store_login_confirmation
   install_brew
   brew_bundle_admin
-  brew_bundle_nonadmin
   uninstall_unwanted_default_apps
 else
   check_xcode_installed
   check_admin_tools_installed
   install_brew_locally
-  brew_bundle_nonadmin
 fi
-
+brew_bundle_mac
+brew_bundle
 configure_finder
 configure_dock
 configure_iterm2
