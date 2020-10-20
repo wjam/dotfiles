@@ -59,3 +59,5 @@ if [[ -f ~/.iterm2_shell_integration.bash ]]; then . ~/.iterm2_shell_integration
 
 # Shut Apple up about Bash being deprecated for Zsh
 export BASH_SILENCE_DEPRECATION_WARNING=1
+
+export HOMEBREW_CASK_OPTS="--appdir=~/Applications"

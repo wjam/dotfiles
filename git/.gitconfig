@@ -7,3 +7,4 @@
 	default = simple
 [core]
 	autocrlf = input
+	attributesfile = ~/.gitattributes
