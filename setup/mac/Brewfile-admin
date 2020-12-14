@@ -6,6 +6,7 @@ cask "adoptopenjdk8"
 
 cask "docker"
 
+# TODO - does this still require admin permissions?
 brew "neo4j"
 brew "mas"
 

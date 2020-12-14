@@ -14,6 +14,15 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
+function install_oh_my_zsh() {
+  test -e "$HOME/.oh-my-zsh/oh-my-zsh.sh" || CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+  test -e "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" || git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
+  test -e "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" || git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
+  test -e "$HOME/.oh-my-zsh/custom/themes/iterm2-powerline-go.zsh-theme" || ln -s /Users/wjam/.dotfiles/iterm2-powerline-go.zsh-theme "$HOME/.oh-my-zsh/custom/themes/iterm2-powerline-go.zsh-theme"
+  mkdir -p "$HOME/.oh-my-zsh/completions"
+  cp -f "${dotfilesDir}/zsh-completions/_*" "$HOME/.oh-my-zsh/completions"
+}
+
 dotfilesDir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
 
 if [[ "${dotfilesDir}" != "${HOME}/.dotfiles" ]]; then
@@ -43,4 +52,8 @@ esac
 brew bundle --file="${dotfilesDir}"/setup/Brewfile
 
 echo "If stow fails, then you need to delete the existing files"
-stow -d "${dotfilesDir}" bash git readline path hammerspoon
+stow -d "${dotfilesDir}" zsh git readline path hammerspoon
+
+install_oh_my_zsh
+
+# TODO move aws_finder completion to a custom plugin?
