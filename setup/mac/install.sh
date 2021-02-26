@@ -119,16 +119,19 @@ function configure_dock() {
 }
 
 function configure_iterm2() {
-  curl -f -L https://iterm2.com/shell_integration/bash -o ~/.iterm2_shell_integration.bash
-
   # Specify the preferences directory
   defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$HOME/.dotfiles/iterm"
   # Tell iTerm2 to use the custom preferences in the directory
   defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 }
 
-function change_to_bash() {
-  chsh -s /bin/bash
+function configure_keyboard() {
+  # Stop inserting a "." when accidentally typing "  "
+  defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+}
+
+function change_to_zsh() {
+  chsh -s /bin/zsh
 }
 
 if is_sudoer; then
@@ -146,7 +149,8 @@ brew_bundle
 configure_finder
 configure_dock
 configure_iterm2
+configure_keyboard
 
-change_to_bash
+change_to_zsh
 
 # TODO add comment about reading manual steps?

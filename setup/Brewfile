@@ -4,8 +4,11 @@ brew "maven"
 # Go tools
 brew "go"
 
-# Tool used to install dot files
+# Tools used to install dot files
 brew "stow"
+
+# Tools used by zsh plugins
+brew "fzf"
 
 # General command line tools
 brew "dive" # Tool used to browse the contents of Docker images

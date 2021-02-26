@@ -8,3 +8,5 @@
 [core]
 	autocrlf = input
 	attributesfile = ~/.gitattributes
+[url "git@github.com:"]
+	insteadOf = https://github.com/

@@ -1,4 +1,4 @@
-if [[ -f ~/.bashrc ]]; then . ~/.bashrc; fi
+if [[ -e ~/.bashrc ]]; then . ~/.bashrc; fi
 
 ###
 # Customise command prompt, primarily using powerline-go
@@ -6,7 +6,7 @@ if [[ -f ~/.bashrc ]]; then . ~/.bashrc; fi
 function _update_ps1() {
   # __bp_last_ret_value will be present if iterm2 integration is in place
   lastError=${__bp_last_ret_value:-$?}
-  export PS1="$(powerline-go -colorize-hostname -error ${lastError} -newline -modules 'user,host,ssh,cwd,git,jobs,exit,kube,aws' -max-width 100 -mode patched -cwd-mode fancy)"
+  export PS1="$(powerline-go -newline -colorize-hostname -error ${lastError} -newline -modules 'termtitle,user,host,ssh,cwd,git,jobs,exit,kube,aws' -max-width 100 -mode patched -cwd-mode fancy)"
   (exit ${lastError})
 }
 
@@ -26,7 +26,7 @@ fi
 ##
 # don't put duplicate lines in the history. See bash(1) for more options
 # ... or force ignoredups and ignorespace
-export HISTCONTROL=ignoredups:ignorespace
+export HISTCONTROL=ignoredups:ignorespace:erasedups
 
 # append to the history file, don't overwrite it
 shopt -s histappend
@@ -49,13 +49,13 @@ fi
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
 
-if command -v brew > /dev/null && [[ -f $(brew --prefix bash-completion)/etc/bash_completion ]]; then
+if command -v brew > /dev/null && [[ -e $(brew --prefix bash-completion)/etc/bash_completion ]]; then
   . $(brew --prefix bash-completion)/etc/bash_completion
-elif [[ -f /etc/bash_completion ]] && ! shopt -oq posix; then
+elif [[ -e /etc/bash_completion ]] && ! shopt -oq posix; then
   . /etc/bash_completion
 fi
 
-if [[ -f ~/.iterm2_shell_integration.bash ]]; then . ~/.iterm2_shell_integration.bash; fi
+if [[ -e ~/.iterm2_shell_integration.bash ]]; then . ~/.iterm2_shell_integration.bash; fi
 
 # Shut Apple up about Bash being deprecated for Zsh
 export BASH_SILENCE_DEPRECATION_WARNING=1

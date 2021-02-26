@@ -1,10 +1,10 @@
-if [[ -f $HOME/dev/brew/bin ]]; then
+if [[ -e $HOME/dev/brew/bin ]]; then
   export PATH="$HOME/dev/brew/bin:$PATH"
-elif [[ -f /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+elif [[ -e /home/linuxbrew/.linuxbrew/bin/brew ]]; then
   export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
 fi
 
-if [[ -f ~/.bash_aliases ]]; then . ~/.bash_aliases; fi
+if [[ -e ~/.bash_aliases ]]; then . ~/.bash_aliases; fi
 
 eval "$(direnv hook bash)"
 
