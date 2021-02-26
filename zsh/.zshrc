@@ -68,6 +68,8 @@ export HISTFILESIZE=1000000000
 export HISTSIZE=1000000000
 setopt HIST_IGNORE_ALL_DUPS
 
+AUTO_NOTIFY_IGNORE+=("docker", "vi")
+
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # You can set one of the optional three formats:
@@ -88,7 +90,6 @@ plugins=(
   direnv # direnv hook
   docker # completion
   docker-compose # completion
-  gitfast # git completion
   golang # completion
   helm # completion
   kubectl # completion & `k` alias
@@ -96,55 +97,29 @@ plugins=(
   rust # completion
   rustup # completion
   systemd # completion
-  terraform # completion
   zsh-interactive-cd # interactive list of directories on `cd`
   zsh-autosuggestions # auto-suggest commands based on history
   zsh-syntax-highlighting # syntax highlighting for the typed command
+  auto-notify # Send a notification when long running programs end
 )
-# TODO `ubuntu` add on ubuntu
 # https://github.com/zsh-users/zsh-completions?
 # https://github.com/Sbodiu-pivotal/fly-zsh-autocomplete-plugin?
 
 
 source $ZSH/oh-my-zsh.sh
 
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
+
+  autoload -Uz compinit
+    rm -f ~/.zcompdump; compinit
+fi
+
 # make `*` slightly easier to see
 ZSH_HIGHLIGHT_STYLES[globbing]=fg=blue,bold
 
-# TODO This as a "proper" theme - iterm2-powerline-go?
-# function preexec() {
-#   __TIMER=$EPOCHREALTIME
-# }
-#
-# function powerline_precmd() {
-#   local __ERRCODE=$?
-#   local __DURATION=0
-#
-#   if [ -n $__TIMER ]; then
-#     local __ERT=$EPOCHREALTIME
-#     __DURATION="$(($__ERT - ${__TIMER:-__ERT}))"
-#   fi
-#   eval "$(powerline-go -colorize-hostname -eval -modules 'termtitle,perms,user,host,ssh,cwd,git,jobs,kube,aws,newline,root' -modules-right 'exit,duration,time' -max-width 100 -mode patched -cwd-mode fancy -duration $__DURATION -error $__ERRCODE -shell zsh)"
-#   unset __TIMER
-# }
-#
-# function install_powerline_precmd() {
-#   for s in "${precmd_functions[@]}"; do
-#     if [ "$s" = "powerline_precmd" ]; then
-#       return
-#     fi
-#   done
-#   precmd_functions+=(powerline_precmd)
-# }
-#
-# if [ "$TERM" != "linux" ]; then
-#     install_powerline_precmd
-# fi
-
 bindkey "\e\e[D" backward-word
 bindkey "\e\e[C" forward-word
-
-# if [[ -e ~/.iterm2_shell_integration.zsh ]]; then source ~/.iterm2_shell_integration.zsh; fi
 
 # User configuration
 
@@ -173,13 +148,10 @@ bindkey "\e\e[C" forward-word
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ll='ls -alF'
 
-# Support loading bash completions
+# Support loading bash completions, kept to a minimum to avoid performance problems
 autoload bashcompinit
 bashcompinit
 
-if which packer > /dev/null; then complete -C 'packer' packer; fi
-
-# AWS completion based on AWS recommend method
-if which aws_completer > /dev/null; then complete -C 'aws_completer' aws; fi
-
 if which vault > /dev/null; then complete -C 'vault' vault; fi
+
+if which terraform > /dev/null; then complete -C 'terraform' terraform; fi

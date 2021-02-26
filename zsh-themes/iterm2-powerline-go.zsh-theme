@@ -12,12 +12,13 @@ function preexec() {
 function powerline_precmd() {
   local __ERRCODE=$?
   local __DURATION=0
+  local __JOBS=${${(%):%j}:-0}
 
   if [ -n $__TIMER ]; then
     local __ERT=$EPOCHREALTIME
     __DURATION="$(($__ERT - ${__TIMER:-__ERT}))"
   fi
-  eval "$(powerline-go -colorize-hostname -eval -modules 'termtitle,perms,user,host,ssh,cwd,git,jobs,kube,aws,newline,root' -modules-right 'exit,duration,time' -max-width 100 -mode patched -cwd-mode fancy -duration $__DURATION -error $__ERRCODE -shell zsh)"
+  eval "$(powerline-go -duration $__DURATION -error $__ERRCODE -jobs $__JOBS)"
   unset __TIMER
 }
 
@@ -34,4 +35,5 @@ if [ "$TERM" != "linux" ]; then
     install_powerline_precmd
 fi
 
+# shellcheck source=../zsh/.iterm2_shell_integration.zsh
 source ~/.iterm2_shell_integration.zsh

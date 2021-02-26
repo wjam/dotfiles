@@ -18,9 +18,7 @@ function install_oh_my_zsh() {
   test -e "$HOME/.oh-my-zsh/oh-my-zsh.sh" || CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   test -e "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" || git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
   test -e "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" || git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
-  test -e "$HOME/.oh-my-zsh/custom/themes/iterm2-powerline-go.zsh-theme" || ln -s /Users/wjam/.dotfiles/iterm2-powerline-go.zsh-theme "$HOME/.oh-my-zsh/custom/themes/iterm2-powerline-go.zsh-theme"
-  mkdir -p "$HOME/.oh-my-zsh/completions"
-  cp -f "${dotfilesDir}/zsh-completions/_*" "$HOME/.oh-my-zsh/completions"
+  test -e "$HOME/.oh-my-zsh/custom/plugins/zsh-auto-notify" || git clone https://github.com/MichaelAquilina/zsh-auto-notify.git "$HOME/.oh-my-zsh/custom/plugins/zsh-auto-notify"
 }
 
 dotfilesDir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)
@@ -51,9 +49,16 @@ esac
 
 brew bundle --file="${dotfilesDir}"/setup/Brewfile
 
+install_oh_my_zsh
+
+mkdir -p ~/.config
+mkdir -p ~/.oh-my-zsh/completions
+
 echo "If stow fails, then you need to delete the existing files"
 stow -d "${dotfilesDir}" zsh git readline path hammerspoon
 
-install_oh_my_zsh
+stow -d "${dotfilesDir}" -t "$HOME/.config" config
+stow -d "${dotfilesDir}" -t "$HOME/.oh-my-zsh/completions" zsh-completions
+stow -d "${dotfilesDir}" -t "$HOME/.oh-my-zsh/themes" zsh-themes
 
 # TODO move aws_finder completion to a custom plugin?
