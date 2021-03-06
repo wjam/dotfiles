@@ -106,7 +106,7 @@ plugins=(
 
 source $ZSH/oh-my-zsh.sh
 
-AUTO_NOTIFY_IGNORE+=("docker" "vi" "dive")
+AUTO_NOTIFY_IGNORE+=("docker run" "docker exec" "docker logs" "vi" "dive")
 
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH
