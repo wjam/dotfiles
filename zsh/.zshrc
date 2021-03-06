@@ -68,8 +68,6 @@ export HISTFILESIZE=1000000000
 export HISTSIZE=1000000000
 setopt HIST_IGNORE_ALL_DUPS
 
-AUTO_NOTIFY_IGNORE+=("docker", "vi")
-
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # You can set one of the optional three formats:
@@ -107,6 +105,8 @@ plugins=(
 
 
 source $ZSH/oh-my-zsh.sh
+
+AUTO_NOTIFY_IGNORE+=("docker" "vi" "dive")
 
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh/site-functions:$FPATH

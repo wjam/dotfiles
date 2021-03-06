@@ -18,7 +18,7 @@ function install_oh_my_zsh() {
   test -e "$HOME/.oh-my-zsh/oh-my-zsh.sh" || CHSH=no sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
   test -e "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting" || git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$HOME/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting"
   test -e "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions" || git clone https://github.com/zsh-users/zsh-autosuggestions.git "$HOME/.oh-my-zsh/custom/plugins/zsh-autosuggestions"
-  test -e "$HOME/.oh-my-zsh/custom/plugins/zsh-auto-notify" || git clone https://github.com/MichaelAquilina/zsh-auto-notify.git "$HOME/.oh-my-zsh/custom/plugins/zsh-auto-notify"
+  test -e "$HOME/.oh-my-zsh/custom/plugins/zsh-auto-notify" || git clone https://github.com/MichaelAquilina/zsh-auto-notify.git "$HOME/.oh-my-zsh/custom/plugins/auto-notify"
 }
 
 dotfilesDir=$(cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd)

@@ -62,12 +62,11 @@ function brew_bundle_admin() {
 function mas_uninstall() {
   installed=$(mas list | grep "$1" || true)
   if [ "$installed" != "" ]; then
-    mas uninstall "$1"
+    sudo mas uninstall "$1"
   fi
 }
 
 function uninstall_unwanted_default_apps() {
-  # TODO test this deletes when preinstalled
   mas_uninstall 409203825 # Numbers
   mas_uninstall 409201541 # Pages
   mas_uninstall 682658836 # GarageBand
