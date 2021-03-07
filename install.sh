@@ -61,4 +61,6 @@ stow -d "${dotfilesDir}" -t "$HOME/.config" config
 stow -d "${dotfilesDir}" -t "$HOME/.oh-my-zsh/completions" zsh-completions
 stow -d "${dotfilesDir}" -t "$HOME/.oh-my-zsh/themes" zsh-themes
 
+echo "Now perform any manual steps!"
+
 # TODO move aws_finder completion to a custom plugin?

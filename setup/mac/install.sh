@@ -16,7 +16,6 @@ set -o pipefail
 macDir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 function is_sudoer() {
-  # TODO use what brew does for its check?
   admin_group=$(groups | grep "\<admin\>" || true)
   if [ "$admin_group" != "" ]; then
     return 0
@@ -86,7 +85,6 @@ function check_admin_tools_installed() {
 }
 
 function brew_bundle_mac() {
-  # TODO add cask "keeweb" or cask "keepassxc"
   brew bundle --file="${macDir}"/Brewfile-mac
 }
 
@@ -108,13 +106,23 @@ function configure_finder() {
 }
 
 function configure_dock() {
-  # TODO defaults write com.apple.dock persistent-apps -array; # remove icons in Dock - what about finder, app store
   # Don't show recent applications in dock
   defaults write com.apple.dock "show-recents" -bool false
   # Set size of icons in dock
   defaults write com.apple.dock "tilesize" -int 45
   # Get Dock to reload its configuration
   killall Dock
+
+  dockutil --remove all
+  dockutil --add "/System/Applications/Notes.app/" --section apps
+  dockutil --add "/System/Applications/App Store.app/" --section apps
+  dockutil --add "/System/Applications/System Preferences.app/" --section apps
+  dockutil --add "$HOME/Applications/iTerm.app/" --section apps
+  dockutil --add "$HOME/Applications/Slack.app/" --section apps
+  dockutil --add "$HOME/Applications/KeeWeb.app/" --section apps
+  dockutil --add "$HOME/Applications/Atom.app/" --section apps
+  dockutil --add "$HOME/Applications/Firefox.app/" --section apps
+  dockutil --add "$HOME/Downloads/" --section others --view list --display stack
 }
 
 function configure_iterm2() {
@@ -151,5 +159,3 @@ configure_iterm2
 configure_keyboard
 
 change_to_zsh
-
-# TODO add comment about reading manual steps?

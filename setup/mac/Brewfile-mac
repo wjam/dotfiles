@@ -8,6 +8,9 @@ brew "cassandra" # only supports macOS
 # Tools used by Hammerspoon Lua files
 brew "blueutil"
 
+# Things to make it easier to automatically manage things on the mac
+brew "dockutil"
+
 # Casks
 cask_args appdir: '~/Applications'
 cask "google-cloud-sdk"
