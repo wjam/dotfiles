@@ -21,12 +21,39 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 TODO
 
 ## macOS post installation
-* Set up dock
-    * Remove things to the right of the bar - everything apart from bin & downloads
 * Tweak Finder
     * Add home directory to the side bar
+* Settings > Display > Resolution: Scaled (More Space)
+* Settings > Display > Show mirroring options in the menu bar when available
+* Start hammerspoon
+  * launch at login
+  * enable accessibility
+* Start MenuMeters
+  * cpu - graph, show sum of all cores
+  * no disk
+  * network - graph and throughput
+* Start JetBrains toolbox
+  * generate shell scripts & set to `~/bin`
+* Show sound in menu bar
+* Settings > Keyboard > 'Touch Bar shows': 'F1, F2, etc. Keys'
+* KeeWeb
+  * Security & Privacy > Privacy > Accessibility
+* Power source - show percentage
+* Settings > Date & Time > Clock: Show date
+* Neuter Spotlight (stop it crawling & using results from files being changed on disk)
+  * Settings > Spotlight:
+    * Search Results:
+      * Applications
+      * Bookmarks & History
+      * Calculator
+      * Conversion
+      * Definition
+      * System Preferences
+    * Privacy:
+      * Add user folder, e.g. `/Users/wjam`
 
 # TODO
 * CI?
 * Find something cask-like for Ubuntu
-* Test multi
+* Test multi-tab history
+* rustc works but cargo completion doesn't

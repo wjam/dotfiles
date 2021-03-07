@@ -10,6 +10,11 @@ fi
 if [[ -e ~/bin ]]; then export PATH="$PATH:$HOME/bin"; fi
 if [[ -e ~/.cargo/bin ]]; then export PATH="$HOME/.cargo/bin:$PATH"; fi
 
+if type brew &>/dev/null; then
+  # Brew will by default not add `curl` to the path
+  export PATH="$(brew --prefix)/opt/curl/bin:$PATH"
+fi
+
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
@@ -100,6 +105,7 @@ plugins=(
   zsh-syntax-highlighting # syntax highlighting for the typed command
   auto-notify # Send a notification when long running programs end
 )
+# TODO:
 # https://github.com/zsh-users/zsh-completions?
 # https://github.com/Sbodiu-pivotal/fly-zsh-autocomplete-plugin?
 
