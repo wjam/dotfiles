@@ -44,13 +44,11 @@ TODO
   * Settings > Spotlight:
     * Search Results:
       * Applications
-      * Bookmarks & History
       * Calculator
       * Conversion
-      * Definition
       * System Preferences
     * Privacy:
-      * Add user folder, e.g. `/Users/wjam`
+      * Add dev folder, e.g. `/Users/wjam/dev`
 
 # TODO
 * CI?
