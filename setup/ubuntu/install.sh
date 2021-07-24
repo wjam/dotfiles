@@ -47,6 +47,7 @@ function set_putWindow_pref() {
 }
 
 function configure_gnome_shell() {
+  # TODO better way of doing this? make this optional?
   [[ "$(gnome-extensions version)" == 3.36* ]] || (echo "Unsupported version of Gnome!" && exit 1)
 
   # caffeine
@@ -131,7 +132,7 @@ function configure_gnome_terminal() {
 }
 
 install_apt_packages
-install_linuxbrew # TODO depends on sudo access
+install_linuxbrew
 brew_bundle_linux
 brew_bundle
 

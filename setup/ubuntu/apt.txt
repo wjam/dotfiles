@@ -1,4 +1,6 @@
 curl
-docker
+docker.io
 git
 fonts-powerline
+gnome-shell-extension-system-monitor
+gnome-tweaks
