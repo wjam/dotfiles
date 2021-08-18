@@ -21,6 +21,7 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 TODO
 
 ## macOS post installation
+* Add 'Home' network location & create `~/.hammerspoon/ssid.json` like `{"home": "SSIDOfHomeNetwork"}`
 * Tweak Finder
     * Add home directory to the side bar
 * Settings > Display > Resolution: Scaled (More Space)
