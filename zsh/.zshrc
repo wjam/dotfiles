@@ -151,6 +151,12 @@ bindkey "\e\e[C" forward-word
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ll='ls -alF'
 
+if [ -d "$HOME/.bookmarks" ]; then
+  # `ln -s path/to/folder` ~/.bookmarks/@folder to create a new bookmark
+  export CDPATH=".:$HOME/.bookmarks:/"
+  alias goto="cd -P"
+fi
+
 # Support loading bash completions, kept to a minimum to avoid performance problems
 autoload bashcompinit
 bashcompinit
