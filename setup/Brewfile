@@ -1,7 +1,6 @@
 # JDK
 brew "openjdk"
 brew "openjdk@11"
-brew "openjdk@8"
 
 # Java tools
 brew "maven"
