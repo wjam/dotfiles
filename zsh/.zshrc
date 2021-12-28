@@ -151,6 +151,18 @@ bindkey "\e\e[C" forward-word
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ll='ls -alF'
 
+if command -v loginctl > /dev/null 2>&1; then
+  # Linux systems
+  type="$(loginctl show-session $(loginctl --no-legend list-sessions | awk '{print $1}') --property=Type --value)"
+  if [[ "${type}" == "wayland" ]]; then
+    alias pbpaste="wl-paste"
+    alias pbcopy="wl-copy"
+  else
+    alias pbpaste="xclip -out -sel clipboard"
+    alias pbcopy="xclip -in -sel clipboard"
+  fi
+fi
+
 if [ -d "$HOME/.bookmarks" ]; then
   # `ln -s path/to/folder` ~/.bookmarks/@folder to create a new bookmark
   export CDPATH=".:$HOME/.bookmarks:/"
@@ -161,6 +173,6 @@ fi
 autoload bashcompinit
 bashcompinit
 
-if which vault > /dev/null; then complete -C 'vault' vault; fi
+if command -v vault > /dev/null 2>&1; then complete -C 'vault' vault; fi
 
-if which terraform > /dev/null; then complete -C 'terraform' terraform; fi
+if command -v terraform > /dev/null 2>&1; then complete -C 'terraform' terraform; fi
