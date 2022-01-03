@@ -95,7 +95,6 @@ plugins=(
   kubectl # completion & `k` alias
   mvn # Maven completion
   rust # completion
-  rustup # completion
   systemd # completion
   zsh-interactive-cd # interactive list of directories on `cd`
   zsh-autosuggestions # auto-suggest commands based on history
