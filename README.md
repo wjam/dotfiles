@@ -23,7 +23,7 @@ TODO
 ## macOS post installation
 * Add 'Home' network location & create `~/.hammerspoon/ssid.json` like `{"home": "SSIDOfHomeNetwork"}`
 * Tweak Finder
-    * Add home directory to the side bar
+  * Add home directory to the side bar
 * Settings > Display > Resolution: Scaled (More Space)
 * Settings > Display > Show mirroring options in the menu bar when available
 * Start hammerspoon
@@ -56,3 +56,5 @@ TODO
 * Find something cask-like for Ubuntu
 * Test multi-tab history
 * rustc works but cargo completion doesn't
+* Identify outdated tools installed via brew, excluding things installed as a dependency
+  * `for f in $(brew outdated --json | jq -r '.formulae[].name'); do test -z "$(brew uses --recursive --installed $f)" && echo "$f"; done`
