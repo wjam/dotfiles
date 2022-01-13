@@ -56,8 +56,5 @@ TODO
 * Find something cask-like for Ubuntu
 * Test multi-tab history
 * rustc works but cargo completion doesn't
-* Identify outdated tools installed via brew, excluding things installed as a dependency
-```shell
-# TODO if terragrunt is installed, then doesn't spot terraform updates - brew info --json=v2 terraform | jq '.formulae[].installed[].installed_on_request'?
-for f in $(brew outdated --json | jq -r '.formulae[].name'); do test -z "$(brew uses --recursive --installed $f)" && echo "$f"; done; brew outdated --json | jq -r '.casks[].name'
-```
+* Why Homebrew installed a dependency - `brew uses --recursive --installed formulae-name`
+* Remove dependencies automatically installed but no longer needed - `brew autoremove`
