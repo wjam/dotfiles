@@ -16,7 +16,7 @@ cask_args appdir: '~/Applications'
 cask "google-cloud-sdk"
 
 cask "hammerspoon"
-cask "menumeters"
+cask "stats"
 cask "firefox"
 cask "google-chrome"
 cask "atom"
