@@ -17,8 +17,8 @@ echo Updating Homebrew
 brew update
 
 echo Formulae
-for f in $(brew outdated --json | jq -r '.formulae[]  | select(.pinned == false) | .name'); do
-  test "$(brew info --formulae --json=v2 "$f" | jq '.formulae[].installed[].installed_on_request')" = "true" && echo "$f"
+for f in $(brew outdated --json | jq -c '.formulae[]  | select(.pinned == false) | {name, current_version, installed_versions}'); do
+  test "$(brew info --formulae --json=v2 "$(echo "$f" | jq -r '.name')" | jq '.formulae[].installed[].installed_on_request')" = "true" && (echo "$f" | jq -r '"\(.name) \(.installed_versions[0]) -> \(.current_version)"')
 done
 
 echo Casks
