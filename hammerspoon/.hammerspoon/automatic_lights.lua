@@ -13,17 +13,12 @@ function cameraPropertyCallback(camera, property)
       if camera:isInUse() then
         status = 1
       end
-      local numb = 1
 
-      -- example - https://github.com/ecerulm/dotfiles/blob/bba42e7674832d03f66fecf12ce8658f89a294ef/.hammerspoon/init.lua#L138-L170
-      --   curl --silent --fail --header "Content-Type: application/json" --request PUT --data-binary @- --output /dev/null $endpoint
       local data = hs.json.encode({numberOfLights=1, lights = {{on = status}}})
       local headers = {
         ["Content-Type"] = "application/json"
       }
       local code, body, headers = hs.http.put("http://elgato:9123/elgato/lights", data, headers)
-      print(code)
-      print(body)
       if (code > 299) then
         hs.notify.show("Lights failed", tostring(code), "Couldn't switch the lights")
       end

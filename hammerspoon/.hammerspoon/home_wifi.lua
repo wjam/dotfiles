@@ -8,9 +8,9 @@ end
 lastSSID = hs.wifi.currentNetwork()
 
 function ssidChangedCallback()
-  newSSID = hs.wifi.currentNetwork()
+  local newSSID = hs.wifi.currentNetwork()
 
-    config = hs.network.configuration.open()
+  local config = hs.network.configuration.open()
   if newSSID == homeSSID and lastSSID ~= homeSSID then
     -- We just joined our home WiFi network
     config:setLocation("Home")
