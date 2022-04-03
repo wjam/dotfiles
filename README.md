@@ -21,6 +21,7 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 TODO
 
 ## macOS post installation
+* Create two shortcuts (app added with Monterey): `focus-mode` (turn on do not disturb), and `unfocus-mode` (turn off do not disturb)
 * Add 'Home' network location & create `~/.hammerspoon/ssid.json` like `{"home": "SSIDOfHomeNetwork"}`
 * Tweak Finder
   * Add home directory to the side bar
