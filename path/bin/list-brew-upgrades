@@ -23,4 +23,4 @@ while IFS= read -r line; do
 done < <(brew outdated --json | jq -c '.formulae[]  | select(.pinned == false) | {name, current_version, installed_versions}')
 
 echo Casks
-brew outdated --json | jq -r '.casks[].name'
+brew outdated --json | jq -r '.casks[] | "\(.name) \(.installed_versions) -> \(.current_version)"'
