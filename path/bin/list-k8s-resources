@@ -14,13 +14,13 @@ set -o pipefail
 #set -o xtrace
 
 # do core resources first, which are at a separate api location
-kubectl get --raw /api/v1 | jq -r '.resources | .[] | "core \(.name): \(.verbs | join(" "))"'
+kubectl get --raw /api/v1 | jq -r '.resources[] | "core \(.name): \(.verbs | join(" "))"'
 
 while IFS= read -r api; do
   while IFS= read -r version; do
     apis=$(kubectl get --raw "/apis/$api/$version" 2>&1 || true)
     if [ "$apis" != "Error from server (NotFound): the server could not find the requested resource" ]; then
-      echo "$apis" | jq -r --arg api "$api" --arg version "$version" '.resources | .[] | "\($api) \($version) \(.name): \(.verbs | join(" "))"'
+      echo "$apis" | jq -r --arg api "$api" --arg version "$version" '.resources[] | "\($api) \($version) \(.name): \(.verbs | join(" "))"'
     fi
-  done < <(kubectl get --raw "/apis/networking.k8s.io"  | jq -cr '.versions[].version')
-done < <(kubectl get --raw /apis | jq -cr '.groups | .[].name' | sort)
+  done < <(kubectl get --raw "/apis/$api"  | jq -cr '.versions[].version')
+done < <(kubectl get --raw /apis | jq -cr '.groups[].name' | sort)
