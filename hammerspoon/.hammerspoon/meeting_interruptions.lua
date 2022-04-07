@@ -1,11 +1,3 @@
--- hs.application.watcher.new
--- watch for Zoom app
--- when zoom app, watch for windows
--- https://github.com/jpf/Zoom.spoon/blob/main/init.lua#L74-L106
-
--- if meeting started, hs.shortcuts.run("focus-mode")
--- if meeting stopped, hs.shortcuts.run("unfocus-mode")
-
 -- if meeting and muted, update stream deck?
 
 local isFocused = false
