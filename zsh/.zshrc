@@ -103,7 +103,6 @@ plugins=(
 )
 # TODO:
 # https://github.com/zsh-users/zsh-completions?
-# https://github.com/Sbodiu-pivotal/fly-zsh-autocomplete-plugin?
 
 
 source $ZSH/oh-my-zsh.sh

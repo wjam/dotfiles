@@ -2,6 +2,5 @@ curl
 docker.io
 git
 fonts-powerline
-gnome-shell-extension-system-monitor
 gnome-tweaks
 wl-clipboard
