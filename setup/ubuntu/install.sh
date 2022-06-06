@@ -16,7 +16,7 @@ set -o pipefail
 ubuntuDir=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 function install_apt_packages() {
-  xargs --arg-file="${ubuntuDir}"/apt.txt sudo apt install
+  DEBIAN_FRONTEND=noninteractive xargs --arg-file="${ubuntuDir}"/apt.txt sudo apt install
 }
 
 function install_linuxbrew() {
@@ -136,5 +136,5 @@ install_linuxbrew
 brew_bundle_linux
 brew_bundle
 
-configure_gnome_shell
-configure_gnome_terminal
+# TODO plugins not supported on 22.04 configure_gnome_shell
+configure_gnome_terminal # TODO optionally disable?

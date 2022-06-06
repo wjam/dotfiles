@@ -4,3 +4,4 @@ git
 fonts-powerline
 gnome-tweaks
 wl-clipboard
+zsh
