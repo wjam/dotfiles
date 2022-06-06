@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+# Script used to list all updates for manually installed items
+
+# Exit on error. Append || true if you expect an error.
+set -o errexit
+# Exit on error inside any functions or subshells.
+set -o errtrace
+# Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
+set -o nounset
+# Catch the error in case mysqldump fails (but gzip succeeds) in `mysqldump |gzip`
+set -o pipefail
+# Turn on traces, useful while debugging but commented out by default
+#set -o xtrace
+
+echo Updating Homebrew
+brew update
+
+echo Formulae
+while IFS= read -r line; do
+  test "$(brew info --formulae --json=v2 "$(echo "$line" | jq -r '.name')" | jq '.formulae[].installed[].installed_on_request')" = "true" && \
+      (echo "$line" | jq -r '"\(.name) \(.installed_versions[0]) -> \(.current_version)"')
+done < <(brew outdated --json | jq -c '.formulae[]  | select(.pinned == false) | {name, current_version, installed_versions}')
+
+echo Casks
+brew outdated --json | jq -r '.casks[] | "\(.name) \(.installed_versions) -> \(.current_version)"'

@@ -1,0 +1,22 @@
+{{- if (eq .chezmoi.os "linux") -}}
+#!/usr/bin/env bash
+
+set -eufo pipefail
+
+{{ $debs := list
+     "curl"
+     "docker.io"
+     "git"
+     "fonts-powerline"
+     "gnome-tweaks"
+     "wl-clipboard"
+     "zsh"
+ }}
+
+DEBIAN_FRONTEND=noninteractive xargs sudo apt-get install --assume-yes <<EOF
+{{ range ($debs | sortAlpha | uniq) -}}
+{{ . }}
+{{ end -}}
+EOF
+
+{{ end -}}

@@ -9,10 +9,11 @@ brew "cassandra" # only supports macOS
 brew "blueutil"
 
 # Things to make it easier to automatically manage things on the mac
-brew "dockutil"
+# brew "dockutil" # until https://github.com/Homebrew/homebrew-core/pull/97394
 
 # Casks
 cask_args appdir: '~/Applications'
+cask "hpedrorodrigues/tools/dockutil" # until https://github.com/Homebrew/homebrew-core/pull/97394
 cask "google-cloud-sdk"
 
 cask "hammerspoon"
