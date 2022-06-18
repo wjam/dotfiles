@@ -1,7 +1,0 @@
-curl
-docker.io
-git
-fonts-powerline
-gnome-tweaks
-wl-clipboard
-zsh
