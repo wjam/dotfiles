@@ -2,3 +2,6 @@
 .hammerspoon
 .config/iterm
 {{ end }}
+{{ if ne .chezmoi.os "linux" }}
+.config/go/env
+{{ end }}

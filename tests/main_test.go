@@ -12,11 +12,14 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-// run like `PS1=$PS1 go test -v -count=1`
+func TestIterm2PowerlineGoZSHTheme(t *testing.T) {
+	envs := shell.RunCommandAndGetOutput(t, shell.Command{
+		Command: "zsh",
+		Args:    []string{"--allexport", "--interactive", "-c", "env"},
+	})
 
-func TestPowerlineGo(t *testing.T) {
-	assert.NotNil(t, os.Getenv("PS1"))
-	// TODO more tests around PS1
+	// iterm is there, so the powerline-go is probably running?
+	assert.Contains(t, envs, "ITERM_SHELL_INTEGRATION_INSTALLED=Yes")
 }
 
 func TestShellDefaultIsZSH(t *testing.T) {

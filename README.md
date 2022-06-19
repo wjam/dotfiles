@@ -35,6 +35,8 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 | k9s                   | Visualise Kubernetes cluster in CLI     |
 | pgcli                 | PostgreSQL tool                         |
 
+## Workarounds
+* Unable to compile Go programs on Linux using Go installed using Homebrew (`cgo: C compiler "gcc-5" not found: exec: "gcc-5": executable file not found in $PATH`) - see `home/private_dot_config/go/env` (https://stackoverflow.com/questions/59227456/go-1-13-gcc-5-not-in-path)
 
 # Installing
 
@@ -89,6 +91,12 @@ TODO
       * System Preferences
     * Privacy:
       * Add dev folder, e.g. `/Users/wjam/dev`
+
+# Testing
+Run the Go tests inside a Docker container with Homebrew, etc installed:
+```shell
+`docker run -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -q .) /home/docker/.local/share/chezmoi/testing.sh`
+```
 
 # TODO
 * This README
