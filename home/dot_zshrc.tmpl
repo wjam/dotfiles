@@ -154,13 +154,14 @@ bindkey "\e\e[C" forward-word
 alias ll='ls -alF'
 
 {{- if and (eq .chezmoi.os "linux") (not .docker) }}
-if [[ "$(loginctl show-session $(loginctl --no-legend list-sessions | awk '{print $1}') --property=Type --value)" == "wayland" ]]; then
-  alias pbpaste="wl-paste"
-  alias pbcopy="wl-copy"
-else
-  alias pbpaste="xclip -out -sel clipboard"
-  alias pbcopy="xclip -in -sel clipboard"
-fi
+{{    $layout := (output "sh" "-c" "loginctl show-session $(loginctl --no-legend list-sessions | awk '{print $1}') --property=Type --value") | trim }}
+{{-   if eq $layout "wayland" -}}
+alias pbpaste="wl-paste"
+alias pbcopy="wl-copy"
+{{-   else -}}
+alias pbpaste="xclip -out -sel clipboard"
+alias pbcopy="xclip -in -sel clipboard"
+{{-   end -}}
 {{- end }}
 
 if [ -d "$HOME/.bookmarks" ]; then
