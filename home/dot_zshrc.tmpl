@@ -164,16 +164,13 @@ alias pbcopy="xclip -in -sel clipboard"
 {{-   end -}}
 {{- end }}
 
-if [ -d "$HOME/.bookmarks" ]; then
-  # `ln -s path/to/folder` ~/.bookmarks/@folder to create a new bookmark
-  export CDPATH=".:$HOME/.bookmarks:/"
-  alias goto="cd -P"
-fi
+# `ln -s path/to/folder` ~/.bookmarks/@folder to create a new bookmark
+export CDPATH=".:$HOME/.bookmarks:/"
+alias goto="cd -P"
 
 # Support loading bash completions, kept to a minimum to avoid performance problems
 autoload bashcompinit
 bashcompinit
 
-if command -v vault > /dev/null 2>&1; then complete -C 'vault' vault; fi
-
-if command -v terraform > /dev/null 2>&1; then complete -C 'terraform' terraform; fi
+complete -C 'vault' vault
+complete -C 'terraform' terraform
