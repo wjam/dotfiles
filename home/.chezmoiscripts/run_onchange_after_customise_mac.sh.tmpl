@@ -1,0 +1,96 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/usr/bin/env bash
+
+# Exit on error. Append || true if you expect an error.
+set -o errexit
+# Exit on error inside any functions or subshells.
+set -o errtrace
+# Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
+set -o nounset
+# Catch the error in case mysqldump fails (but gzip succeeds) in `mysqldump |gzip`
+set -o pipefail
+# Turn on traces, useful while debugging but commented out by default
+#set -o xtrace
+
+if [[ -e $HOME/dev/brew/bin ]]; then
+  export PATH="$HOME/dev/brew/bin:$PATH"
+elif [[ -e /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+fi
+
+function is_sudoer() {
+  admin_group=$(groups | grep "\<admin\>" || true)
+  if [ "$admin_group" != "" ]; then
+    return 0
+  fi
+  return 1
+}
+
+function mas_uninstall() {
+  installed=$(mas list | grep "$1" || true)
+  if [ "$installed" != "" ]; then
+    sudo mas uninstall "$1"
+  fi
+}
+
+function uninstall_unwanted_default_apps() {
+  mas_uninstall 409203825 # Numbers
+  mas_uninstall 409201541 # Pages
+  mas_uninstall 682658836 # GarageBand
+  mas_uninstall 408981434 # iMovie
+}
+
+function configure_finder() {
+  # TODO defaults write com.apple.finder AppleShowAllFiles YES; # show hidden files
+  # TODO defaults write NSGlobalDomain AppleShowAllExtensions -bool true; # show all file extensions
+  # Set the default view to be list
+  defaults write com.apple.Finder FXPreferredViewStyle Nlsv
+  # Show path bar in Finder
+  defaults write com.apple.finder ShowPathbar -bool true
+  # Don't show tags in Finder
+  defaults write com.apple.finder SidebarTagsSctionDisclosedState -bool false
+  # Get Finder to reload its configuration
+  killall Finder
+}
+
+function configure_dock() {
+  # Don't show recent applications in dock
+  defaults write com.apple.dock "show-recents" -bool false
+  # Set size of icons in dock
+  defaults write com.apple.dock "tilesize" -int 45
+  # Get Dock to reload its configuration
+  killall Dock
+
+  dockutil --remove all
+  dockutil --add "/System/Applications/Notes.app/" --section apps
+  dockutil --add "/System/Applications/App Store.app/" --section apps
+  dockutil --add "/System/Applications/System Preferences.app/" --section apps
+  dockutil --add "$HOME/Applications/iTerm.app/" --section apps
+  dockutil --add "$HOME/Applications/Slack.app/" --section apps
+  dockutil --add "$HOME/Applications/KeeWeb.app/" --section apps
+  dockutil --add "$HOME/Applications/Visual Studio Code.app/" --section apps
+  dockutil --add "$HOME/Applications/Firefox.app/" --section apps
+  dockutil --add "$HOME/Downloads/" --section others --view list --display stack
+}
+
+function configure_iterm2() {
+  # Specify the preferences directory
+  defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$HOME/.config/iterm"
+  # Tell iTerm2 to use the custom preferences in the directory
+  defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+}
+
+function configure_keyboard() {
+  # Stop inserting a "." when accidentally typing "  "
+  defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
+}
+
+if is_sudoer; then
+  uninstall_unwanted_default_apps
+fi
+configure_finder
+configure_dock
+configure_iterm2
+configure_keyboard
+
+{{- end -}}

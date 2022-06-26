@@ -1,0 +1,18 @@
+[user]
+	name = Will May
+	email = {{ .email }}
+[pull]
+	rebase = true
+[push]
+	default = simple
+[core]
+	autocrlf = input
+	attributesfile = ~/.config/git/gitattributes
+{{- if not .headless -}}{{/*Probably won't have a SSH cert inside a container*/}}
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+{{- end }}
+[init]
+	defaultBranch = main
+[commit]
+	template = ~/.config/git/gitmessage

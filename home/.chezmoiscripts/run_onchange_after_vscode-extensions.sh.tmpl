@@ -1,0 +1,32 @@
+{{- if (eq .chezmoi.os "darwin") -}}
+#!/usr/bin/env bash
+
+# Exit on error. Append || true if you expect an error.
+set -o errexit
+# Exit on error inside any functions or subshells.
+set -o errtrace
+# Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
+set -o nounset
+# Catch the error in case mysqldump fails (but gzip succeeds) in `mysqldump |gzip`
+set -o pipefail
+# Turn on traces, useful while debugging but commented out by default
+#set -o xtrace
+
+extensions=(
+  "HashiCorp.terraform" # Terraform
+  "foam.foam-vscode" # Foam - required for https://foambubble.github.io/foam
+  "yzhang.markdown-all-in-one" # Markdown goodies - required for https://foambubble.github.io/foam
+  "mushan.vscode-paste-image" # Image pasting for Markdown - required for https://foambubble.github.io/foam
+  "ban.spellright" # Spell checking for text and Markdown - required for https://foambubble.github.io/foam
+  "bierner.markdown-footnotes" # Support footnotes in Markdown - recommended for https://foambubble.github.io/foam
+  "bierner.markdown-mermaid" # Support mermaid diagrams in Markdown - recommended for https://foambubble.github.io/foam
+  "bpruitt-goddard.mermaid-markdown-syntax-highlighting" # Mermaid syntax highlighting - recommended for https://foambubble.github.io/foam
+)
+
+for ext in "${extensions[@]}"; do
+  code --install-extension "${ext}"
+done
+
+# TODO automatically install vscode on Linux
+# TODO trim down extensions
+{{- end -}}

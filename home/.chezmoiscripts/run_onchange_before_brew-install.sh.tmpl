@@ -1,0 +1,144 @@
+#!/usr/bin/env bash
+
+# Exit on error. Append || true if you expect an error.
+set -o errexit
+# Exit on error inside any functions or subshells.
+set -o errtrace
+# Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
+set -o nounset
+# Catch the error in case mysqldump fails (but gzip succeeds) in `mysqldump |gzip`
+set -o pipefail
+# Turn on traces, useful while debugging but commented out by default
+#set -o xtrace
+
+if [[ -e $HOME/dev/brew/bin ]]; then
+  export PATH="$HOME/dev/brew/bin:$PATH"
+elif [[ -e /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
+fi
+
+{{ $brews := list
+     "openjdk@17"
+     "openjdk@11"
+     "maven"
+     "go"
+     "fzf"
+     "dive"
+     "jq"
+     "git"
+     "htop"
+     "tree"
+     "curl"
+     "direnv"
+     "pandoc"
+     "ipcalc"
+     "powerline-go"
+     "terraform"
+     "terragrunt"
+     "packer"
+     "ansible"
+     "awscli"
+     "azure-cli"
+     "kubernetes-cli"
+     "kubectx"
+     "stern"
+     "aws-iam-authenticator"
+     "k9s"
+     "pgcli"
+     "mysql-client"
+     "vault"
+}}
+# TODO need to install gcc@5 on linux for Go to work... Does it work with
+{{ $casks := list -}}
+{{ $taps := list -}}
+{{ $mases := dict -}}
+
+{{- if eq .chezmoi.os "darwin" -}}
+{{-   $casks = concat $casks (list
+       "google-cloud-sdk"
+       "hammerspoon"
+       "stats"
+       "firefox"
+       "google-chrome"
+       "atom"
+       "jetbrains-toolbox"
+       "drawio"
+       "libreoffice"
+       "iterm2"
+       "keeweb"
+       "font-liberation-mono-for-powerline"
+      )
+-}}
+{{/*
+Temporarily needed until https://github.com/Homebrew/homebrew-core/pull/97394
+Re-add `"dockutil"` to brews list when merged
+*/}}
+{{-   $casks = concat $casks (list
+       "hpedrorodrigues/tools/dockutil"
+      )
+-}}
+
+{{/*
+# readline - .inputrc
+# cassandra - only supports macOS
+# blueutil - used by Hammerspoon scripts
+# dockutil - manipulate the dock
+# svn - Needed by font-liberation-mono-for-powerline, for some reason
+*/}}
+{{-   $brews = concat $brews (list
+      "bash-completion"
+      "readline"
+      "watch"
+      "cassandra"
+      "blueutil"
+      "svn"
+      )
+-}}
+
+{{/*
+# For font-liberation-mono-for-powerline
+*/}}
+{{-   $taps = concat $taps (list
+      "homebrew/cask-fonts"
+      )
+-}}
+
+{{-   if .admin -}}
+{{-     $casks = concat $casks (list
+          "docker"
+        )
+-}}
+{{/* TODO - does this still require admin permissions? */}}
+{{-     $brews = concat $brews (list
+          "neo4j"
+          "mas"
+        )
+-}}
+{{-     $_ := set $mases "1295203466" "Microsoft Remote Desktop 10" -}}
+{{-     $_ := set $mases "803453959" "Slack" -}}
+{{-   end -}}
+{{- else if eq .chezmoi.os "linux" -}}
+{{-   $brews = concat $brews (list
+      "neo4j"
+      )
+-}}
+{{- end -}}
+
+brew bundle --no-lock --file=/dev/stdin <<EOF
+{{ range ($brews | sortAlpha | uniq) -}}
+brew "{{ . }}"
+{{ end -}}
+
+{{ range ($taps | sortAlpha | uniq) -}}
+tap "{{ . }}"
+{{ end -}}
+
+cask_args appdir: '~/Applications'
+{{ range ($casks | sortAlpha | uniq) -}}
+cask "{{ . }}"
+{{ end -}}
+
+{{ range $k, $v := $mases -}}
+mas "{{ $v }}", id: {{ $k }}
+{{ end -}}
+EOF

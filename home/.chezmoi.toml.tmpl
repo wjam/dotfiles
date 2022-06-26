@@ -1,0 +1,22 @@
+{{- $docker := false -}}{{/* true if we are inside a docker container */}}
+{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
+{{- $admin := false -}}{{/* true if have 'admin' access to the machine */}}
+{{- $email := "" -}}
+
+{{- if stat "/.dockerenv" -}}
+{{-   $docker = true -}}
+{{-   $headless = true -}}
+{{-   $admin = true -}}
+{{-   $email = "haedless@example.test" -}}
+{{- else -}}
+{{-   $admin = promptBool "admin"  -}}
+{{-   $email = promptString "email"  -}}
+{{- end -}}
+
+[data]
+  admin = {{ $admin }}
+  docker = {{ $docker }}
+  email = {{ $email | quote }}
+  headless = {{ $headless }}
+[diff]
+  exclude = ["externals"]
