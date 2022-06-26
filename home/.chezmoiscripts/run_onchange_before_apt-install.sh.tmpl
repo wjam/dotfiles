@@ -22,6 +22,7 @@ set -o pipefail
      "zsh"
  }}
 
+sudo apt-get update
 DEBIAN_FRONTEND=noninteractive xargs sudo apt-get install --assume-yes <<EOF
 {{ range ($debs | sortAlpha | uniq) -}}
 {{ . }}
