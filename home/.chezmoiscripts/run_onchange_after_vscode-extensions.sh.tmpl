@@ -14,13 +14,12 @@ set -o pipefail
 
 extensions=(
   "HashiCorp.terraform" # Terraform
-  "foam.foam-vscode" # Foam - required for https://foambubble.github.io/foam
-  "yzhang.markdown-all-in-one" # Markdown goodies - required for https://foambubble.github.io/foam
-  "mushan.vscode-paste-image" # Image pasting for Markdown - required for https://foambubble.github.io/foam
-  "ban.spellright" # Spell checking for text and Markdown - required for https://foambubble.github.io/foam
-  "bierner.markdown-footnotes" # Support footnotes in Markdown - recommended for https://foambubble.github.io/foam
-  "bierner.markdown-mermaid" # Support mermaid diagrams in Markdown - recommended for https://foambubble.github.io/foam
-  "bpruitt-goddard.mermaid-markdown-syntax-highlighting" # Mermaid syntax highlighting - recommended for https://foambubble.github.io/foam
+  "yzhang.markdown-all-in-one" # Markdown goodies
+  "mushan.vscode-paste-image" # Image pasting for Markdown
+  "ban.spellright" # Spell checking for text and Markdown
+  "bierner.markdown-footnotes" # Support footnotes in Markdown
+  "bierner.markdown-mermaid" # Support mermaid diagrams in Markdown
+  "bpruitt-goddard.mermaid-markdown-syntax-highlighting" # Mermaid syntax highlighting
 )
 
 for ext in "${extensions[@]}"; do
@@ -28,5 +27,4 @@ for ext in "${extensions[@]}"; do
 done
 
 # TODO automatically install vscode on Linux
-# TODO trim down extensions
 {{- end -}}
