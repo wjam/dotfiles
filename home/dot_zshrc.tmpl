@@ -164,6 +164,10 @@ alias pbcopy="xclip -in -sel clipboard"
 {{-   end -}}
 {{- end }}
 
+{{- if (eq .chezmoi.os "darwin") }}
+ulimit -n 10240
+{{- end }}
+
 # `ln -s path/to/folder` ~/.bookmarks/@folder to create a new bookmark
 export CDPATH=".:$HOME/.bookmarks:/"
 alias goto="cd -P"
