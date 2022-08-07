@@ -59,6 +59,7 @@ fi
        "hammerspoon"
        "stats"
        "firefox"
+       "thunderbird"
        "google-chrome"
        "atom"
        "jetbrains-toolbox"
@@ -67,6 +68,7 @@ fi
        "iterm2"
        "keeweb"
        "font-liberation-mono-for-powerline"
+       "slack"
       )
 -}}
 {{/*
@@ -108,14 +110,15 @@ Re-add `"dockutil"` to brews list when merged
           "docker"
         )
 -}}
-{{/* TODO - does this still require admin permissions? */}}
+{{/* TODO - does neo4j still require admin permissions? */}}
+{{/*
+# mas occasionally needs admin permissions depending on what it installs
+*/}}
 {{-     $brews = concat $brews (list
           "neo4j"
           "mas"
         )
 -}}
-{{-     $_ := set $mases "1295203466" "Microsoft Remote Desktop 10" -}}
-{{-     $_ := set $mases "803453959" "Slack" -}}
 {{-   end -}}
 {{- else if eq .chezmoi.os "linux" -}}
 {{-   $brews = concat $brews (list
