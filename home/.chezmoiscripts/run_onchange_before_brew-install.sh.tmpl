@@ -18,9 +18,6 @@ elif [[ -e /home/linuxbrew/.linuxbrew/bin/brew ]]; then
 fi
 
 {{ $brews := list
-     "openjdk@17"
-     "openjdk@11"
-     "maven"
      "go"
      "fzf"
      "dive"
@@ -36,24 +33,34 @@ fi
      "terraform"
      "terragrunt"
      "packer"
-     "ansible"
-     "awscli"
-     "azure-cli"
      "kubernetes-cli"
      "kubectx"
      "stern"
-     "aws-iam-authenticator"
      "k9s"
-     "pgcli"
-     "mysql-client"
      "vault"
      "chezmoi"
      "helm"
 }}
+# TODO need to verify that neo4j no longer needs admin access on a mac
 # TODO need to install gcc@5 on linux for Go to work... Does it work with
 {{ $casks := list -}}
 {{ $taps := list -}}
 {{ $mases := dict -}}
+
+{{- if .slow -}}
+{{-   $brews = concat $brews (list
+       "ansible"
+       "awscli"
+       "azure-cli"
+       "openjdk@17"
+       "openjdk@11"
+       "maven"
+       "pgcli"
+       "neo4j"
+      )
+-}}
+{{- end -}}
+
 
 {{- if eq .chezmoi.os "darwin" -}}
 {{-   $casks = concat $casks (list
@@ -63,7 +70,7 @@ fi
        "firefox"
        "thunderbird"
        "google-chrome"
-       "atom"
+       "visual-studio-code"
        "jetbrains-toolbox"
        "drawio"
        "libreoffice"
@@ -114,21 +121,14 @@ Re-add `"dockutil"` to brews list when merged
           "docker"
         )
 -}}
-{{/* TODO - does neo4j still require admin permissions? */}}
 {{/*
-# mas occasionally needs admin permissions depending on what it installs
+# mas needs admin permissions depending on what it installs
 */}}
 {{-     $brews = concat $brews (list
-          "neo4j"
           "mas"
         )
 -}}
 {{-   end -}}
-{{- else if eq .chezmoi.os "linux" -}}
-{{-   $brews = concat $brews (list
-      "neo4j"
-      )
--}}
 {{- end -}}
 
 brew bundle --no-lock --file=/dev/stdin <<EOF

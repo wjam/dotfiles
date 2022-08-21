@@ -4,7 +4,7 @@ FROM ubuntu:22.04
 ENV TZ=Europe/London
 
 # Homebrew dependencies
-RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y sudo build-essential procps curl file git tzdata && \
+RUN apt-get update && DEBIAN_FRONTEND="noninteractive" apt-get install -y sudo build-essential procps curl file git tzdata ca-certificates && \
     ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && dpkg-reconfigure --frontend noninteractive tzdata
 
 RUN useradd -m docker && echo "docker:docker" | chpasswd && adduser docker sudo
@@ -15,9 +15,11 @@ RUN passwd -d docker
 # avoid needing password for sudo
 RUN echo "docker ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
+USER docker
+
 # stop Homebrew from asking for user confirmation
 ENV NONINTERACTIVE=1
+RUN /bin/bash -c "$(curl --show-error --silent --fail --location https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
-USER docker
 CMD /bin/bash
 WORKDIR /home/docker

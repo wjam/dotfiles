@@ -17,19 +17,16 @@ test -f /.dockerenv
 # Make sure that the repo is already present in the right location
 test -d ~/.local/share/chezmoi
 
-# 1. Install Brew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# 2. Add Homebrew to the path
+# 1. Add Homebrew to the path
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
-# 3
+# 2
 brew install chezmoi
 
-# 4
+# 3
 chezmoi init
 
-# 5
+# 4
 chezmoi apply
 
 # Run the tests

@@ -2,15 +2,17 @@
 {{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
 {{- $admin := false -}}{{/* true if have 'admin' access to the machine */}}
 {{- $email := "" -}}
+{{- $slow := true -}}{{/* true if things slow to install should be included */}}
 
 {{- if stat "/.dockerenv" -}}
 {{-   $docker = true -}}
 {{-   $headless = true -}}
 {{-   $admin = true -}}
-{{-   $email = "haedless@example.test" -}}
+{{-   $email = "headless@example.test" -}}
+{{-   $slow = false -}}
 {{- else -}}
-{{-   $admin = promptBool "admin"  -}}
-{{-   $email = promptString "email"  -}}
+{{-   $admin = promptBoolOnce . "admin" "Have admin access? yes or no:"  -}}
+{{-   $email = promptStringOnce . "email" "Email address for Git:"  -}}
 {{- end -}}
 
 [data]
@@ -18,5 +20,6 @@
   docker = {{ $docker }}
   email = {{ $email | quote }}
   headless = {{ $headless }}
+  slow = {{ $slow }}
 [diff]
   exclude = ["externals"]

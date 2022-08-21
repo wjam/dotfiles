@@ -1,4 +1,3 @@
-{{- if (eq .chezmoi.os "darwin") -}}
 #!/usr/bin/env bash
 
 # Exit on error. Append || true if you expect an error.
@@ -25,6 +24,3 @@ extensions=(
 for ext in "${extensions[@]}"; do
   code --install-extension "${ext}"
 done
-
-# TODO automatically install vscode on Linux
-{{- end -}}
