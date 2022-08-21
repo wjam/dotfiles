@@ -11,22 +11,25 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-# Check that this script isn't being accidentally run outside of Docker
-test -f /.dockerenv
-
 # Make sure that the repo is already present in the right location
 test -d ~/.local/share/chezmoi
 
-# 1. Add Homebrew to the path
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+## Ensure Homebrew is on the path
+if ! command -v brew > /dev/null; then
+  if [[ -e $HOME/dev/brew/bin ]]; then
+    eval "$($HOME/dev/brew/bin/brew shellenv)"
+  elif [[ -e /home/linuxbrew/.linuxbrew/bin/brew ]]; then
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+  fi
+fi
 
-# 2
-brew install chezmoi
+# Install chezmoi
+if ! command -v chezmoi > /dev/null; then
+  brew install chezmoi
+fi
 
-# 3
+# Apply chezmoi
 chezmoi init
-
-# 4
 chezmoi apply
 
 # Run the tests
