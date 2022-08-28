@@ -61,16 +61,16 @@ function configure_dock() {
   # Get Dock to reload its configuration
   killall Dock
 
-  dockutil --remove all
-  dockutil --add "/System/Applications/Notes.app/" --section apps
-  dockutil --add "/System/Applications/App Store.app/" --section apps
-  dockutil --add "/System/Applications/System Preferences.app/" --section apps
-  dockutil --add "$HOME/Applications/iTerm.app/" --section apps
-  dockutil --add "$HOME/Applications/Slack.app/" --section apps
-  dockutil --add "$HOME/Applications/KeeWeb.app/" --section apps
-  dockutil --add "$HOME/Applications/Visual Studio Code.app/" --section apps
-  dockutil --add "$HOME/Applications/Firefox.app/" --section apps
-  dockutil --add "$HOME/Downloads/" --section others --view list --display stack
+  dockutil --remove all --no-restart
+  dockutil --add "/System/Applications/App Store.app/" --section apps --no-restart
+  dockutil --add "/System/Applications/System Preferences.app/" --section apps --no-restart
+  dockutil --add "$HOME/Applications/iTerm.app/" --section apps --no-restart
+  dockutil --add "$HOME/Applications/Slack.app/" --section apps --no-restart
+  dockutil --add "$HOME/Applications/KeeWeb.app/" --section apps --no-restart
+  dockutil --add "$HOME/Applications/Visual Studio Code.app/" --section apps --no-restart
+  dockutil --add "$HOME/Applications/Firefox.app/" --section apps --no-restart
+  dockutil --add "$HOME/Applications/Thunderbird.app/" --section apps --no-restart
+  dockutil --add "$HOME/Downloads/" --section others --view list --display stack --restart # restart last to pickup changes
 }
 
 function configure_iterm2() {
