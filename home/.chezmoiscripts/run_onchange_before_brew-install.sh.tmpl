@@ -11,13 +11,9 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-if [[ -e $HOME/dev/brew/bin ]]; then
-  export PATH="$HOME/dev/brew/bin:$PATH"
-elif [[ -e /home/linuxbrew/.linuxbrew/bin/brew ]]; then
-  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-fi
+export PATH="{{ joinPath (output "brew" "--prefix" | trim) "sbin" }}:{{ joinPath (output "brew" "--prefix" | trim) "bin" }}:$PATH"
 
-{{ $brews := list
+{{- $brews := list
      "go"
      "fzf"
      "dive"

@@ -17,13 +17,9 @@ set -o pipefail
 
 {{ range $f := joinPath .chezmoi.sourceDir "man/*.md" | glob -}}
 # {{ . }} hash: {{ include . | sha256sum }}
-{{ end -}}
+{{- end }}
 
-if [[ -e $HOME/dev/brew/bin ]]; then
-  export PATH="$HOME/dev/brew/bin:$PATH"
-elif [[ -e /home/linuxbrew/.linuxbrew/bin/brew ]]; then
-  export PATH="/home/linuxbrew/.linuxbrew/bin:$PATH"
-fi
+export PATH="{{ joinPath (output "brew" "--prefix" | trim) "sbin" }}:{{ joinPath (output "brew" "--prefix" | trim) "bin" }}:$PATH"
 
 cwd="${HOME}/man"
 

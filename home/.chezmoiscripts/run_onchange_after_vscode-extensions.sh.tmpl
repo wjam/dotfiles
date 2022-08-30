@@ -11,6 +11,8 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
+export PATH="{{ joinPath (output "brew" "--prefix" | trim) "sbin" }}:{{ joinPath (output "brew" "--prefix" | trim) "bin" }}:$PATH"
+
 extensions=(
   "HashiCorp.terraform" # Terraform
   "yzhang.markdown-all-in-one" # Markdown goodies
