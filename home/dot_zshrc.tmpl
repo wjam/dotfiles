@@ -108,7 +108,11 @@ plugins=(
 # TODO:
 # https://github.com/zsh-users/zsh-completions?
 
-FPATH="{{ joinPath .chezmoi.homeDir ".rustup/**/site-functions" | glob | concat (list (print (output "brew" "--prefix" | trim) "/share/zsh/site-functions")) | join ":" }}:${FPATH}"
+{{ $fpaths := list (print (output "brew" "--prefix" | trim) "/share/zsh/site-functions") -}}
+{{- $fpaths = concat $fpaths (joinPath .chezmoi.homeDir ".rustup/**/site-functions" | glob) -}}
+{{- $fpaths = concat $fpaths (list (print (output "brew" "--prefix" | trim) "/opt/curl/share/zsh/site-functions")) -}}
+
+FPATH="{{ $fpaths | join ":" }}:${FPATH}"
 source $ZSH/oh-my-zsh.sh
 
 AUTO_NOTIFY_IGNORE+=("docker run" "docker exec" "docker logs" "vi" "dive" "k9s" "stern" "terraform console")
