@@ -31,7 +31,6 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 | kubernetes-cli        | kubectl                                 |
 | kubectx               | Switch between Kubernetes contexts      |
 | stern                 | Tail multiple Kubernetes pods           |
-| aws-iam-authenticator | Authenticate into EKS clusters          |
 | k9s                   | Visualise Kubernetes cluster in CLI     |
 | pgcli                 | PostgreSQL tool                         |
 
@@ -64,23 +63,19 @@ TODO
 * Create two shortcuts (app added with Monterey): `focus-mode` (turn on do not disturb), and `unfocus-mode` (turn off do not disturb)
 * Add 'Home' network location & create `~/.hammerspoon/ssid.json` like `{"home": "SSIDOfHomeNetwork"}`
 * Tweak Finder
-  * Add home directory to the side bar
+  * Add home directory to the sidebar
 * Settings > Display > Resolution: Scaled (More Space)
 * Settings > Display > Show mirroring options in the menu bar when available
 * Start hammerspoon
   * launch at login
   * enable accessibility
-* Start MenuMeters
-  * cpu - graph, show sum of all cores
-  * no disk
-  * network - graph and throughput
+* Start Stats and select start at login
 * Start JetBrains toolbox
   * generate shell scripts & set to `~/bin`
 * Show sound in menu bar
 * Settings > Keyboard > 'Touch Bar shows': 'F1, F2, etc. Keys'
 * KeeWeb
   * Security & Privacy > Privacy > Accessibility
-* Power source - show percentage
 * Settings > Date & Time > Clock: Show date
 * Neuter Spotlight (stop it crawling & using results from files being changed on disk)
   * Settings > Spotlight:
@@ -110,5 +105,3 @@ docker run -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -q .) 
   * `blueutil --power` - https://www.hammerspoon.org/docs/hs.settings.html to save the value between sleeping - example: https://github.com/cmsj/hammerspoon-config/blob/master/hueMotionSensor.lua
 * Find out why meeting interruption stuff isn't working when streamdeck is connected
 * Find something cask-like for Ubuntu
-* Test multi-tab history
-* rustc works but cargo completion doesn't

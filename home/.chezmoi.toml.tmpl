@@ -23,3 +23,8 @@
   slow = {{ $slow }}
 [diff]
   exclude = ["externals"]
+
+[[textconv]]
+  pattern = "**/*.plist"
+  command = "plutil"
+  args = ["-convert", "xml1", "-o", "-", "-"]
