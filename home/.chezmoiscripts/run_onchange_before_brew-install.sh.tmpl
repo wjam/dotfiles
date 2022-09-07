@@ -36,6 +36,7 @@ export PATH="{{ joinPath (output "brew" "--prefix" | trim) "sbin" }}:{{ joinPath
      "vault"
      "chezmoi"
      "helm"
+     "pv"
 }}
 # TODO need to verify that neo4j no longer needs admin access on a mac
 # TODO need to install gcc@5 on linux for Go to work... Does it work with

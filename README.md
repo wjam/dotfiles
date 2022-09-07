@@ -1,5 +1,23 @@
 # Notes
 
+## Tools installed via brew
+
+| Name           | Description                                 |
+|----------------|---------------------------------------------|
+| fzf            | Used by ZSH plugins                         |
+| dive           | Browse contents of Docker images            |
+| jq             | Manipulating JSON                           |
+| direnv         | Per-directory environment-configuration     |
+| pandoc         | Generating man from markdown                |
+| ipcalc         | Working out CIDR ranges                     |
+| powerline-go   | Advanced command prompt                     |
+| kubernetes-cli | kubectl                                     |
+| kubectx        | Switch between Kubernetes contexts          |
+| stern          | Tail multiple Kubernetes pods               |
+| k9s            | Visualise Kubernetes cluster in CLI         |
+| pgcli          | PostgreSQL tool                             |
+| pv             | Monitor the progress of data through a pipe |
+
 ## `bash/.bash_profile`
 When bash is invoked as an interactive login shell, or as a non-interactive shell with the --login option,
 it first reads and executes commands from the file /etc/profile, if that file exists.
@@ -13,26 +31,10 @@ When an interactive shell that is not a login shell is started, bash reads and e
 To get `go get` to work with private Git servers, like BitBucket server, `ssh-add` the SSH key and then
 `git config --global.url url."ssh://git@server:port/".insteadOf "https://server/scm"`
 
-## Useful brew commands
+## Useful commands
 * Why has Homebrew installed a dependency - `brew uses --recursive --installed formulae-name`
 * Remove dependencies automatically installed but no longer needed - `brew autoremove`
-
-## Tools installed via brew
-
-| Name                  | Description                             |
-|-----------------------|-----------------------------------------|
-| fzf                   | Used by ZSH plugins                     |
-| dive                  | Browse contents of Docker images        |
-| jq                    | Manipulating JSON                       |
-| direnv                | Per-directory environment-configuration |
-| pandoc                | Generating man from markdown            |
-| ipcalc                | Working out CIDR ranges                 |
-| powerline-go          | Advanced command prompt                 |
-| kubernetes-cli        | kubectl                                 |
-| kubectx               | Switch between Kubernetes contexts      |
-| stern                 | Tail multiple Kubernetes pods           |
-| k9s                   | Visualise Kubernetes cluster in CLI     |
-| pgcli                 | PostgreSQL tool                         |
+* Slowly display a file - `cat filename | pv --quiet --line-mode --rate-limit 5`
 
 ## Workarounds
 * Unable to compile Go programs on Linux using Go installed using Homebrew (`cgo: C compiler "gcc-5" not found: exec: "gcc-5": executable file not found in $PATH`) - see `home/private_dot_config/go/env` (https://stackoverflow.com/questions/59227456/go-1-13-gcc-5-not-in-path)
