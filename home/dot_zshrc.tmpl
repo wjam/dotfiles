@@ -3,13 +3,12 @@ zmodload zsh/datetime
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
 # Brew will by default not add `curl` to the path
-{{ $paths := list
+{{- $paths := list
      "$HOME/.cargo/bin"
      (joinPath (output "brew" "--prefix" | trim) "/opt/curl/bin")
      (joinPath (output "brew" "--prefix" | trim) "sbin")
      (joinPath (output "brew" "--prefix" | trim) "bin")
 }}
-
 export PATH="{{ $paths | join ":" }}:$PATH:$HOME/bin"
 
 # Path to your oh-my-zsh installation.
