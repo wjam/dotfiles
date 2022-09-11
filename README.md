@@ -53,7 +53,7 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 ## Common steps
 1. [Install Homebrew](https://brew.sh/) - either at the standard location (`/usr/local/bin` or `/home/linuxbrew/.linuxbrew/bin`)
    or at `$HOME/dev/brew`
-2. Add Homebrew to the path (`eval "$(/path/tpo/homebrew/install/bin/brew shellenv)"`)
+2. Add Homebrew to the path (`eval "$(/path/to/homebrew/install/bin/brew shellenv)"`)
 3. `brew install chezmoi`
 4. `chezmoi init wjam`
 5. `chezmoi apply`
@@ -102,7 +102,6 @@ docker run -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -q .) 
   2. run and install chezmoi in headless mode
   3. verify it's working
     * common tools work?
-* Find other ideas for Chezmoi - https://github.com/topics/chezmoi?o=desc&s=stars
 * Make hammerspoon bluetooth script remember what the state was when resuming.
   * `blueutil --power` - https://www.hammerspoon.org/docs/hs.settings.html to save the value between sleeping - example: https://github.com/cmsj/hammerspoon-config/blob/master/hueMotionSensor.lua
 * Find out why meeting interruption stuff isn't working when streamdeck is connected
