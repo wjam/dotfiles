@@ -90,7 +90,7 @@ TODO
       * Add dev folder, e.g. `/Users/wjam/dev`
 
 # Testing
-Run the Go tests inside a Docker container with Homebrew, etc installed:
+Run the Go tests inside a Docker container with Homebrew, etc. installed:
 ```shell
 docker run -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -q .) /home/docker/.local/share/chezmoi/testing.sh
 ```
