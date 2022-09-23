@@ -18,7 +18,7 @@ function powerline_precmd() {
     local __ERT=$EPOCHREALTIME
     __DURATION="$(($__ERT - ${__TIMER:-__ERT}))"
   fi
-  eval "$(powerline-go -duration $__DURATION -error $__ERRCODE -jobs $__JOBS)"
+  eval "$(powerline-go -duration $__DURATION -error $__ERRCODE -jobs $__JOBS -shorten-eks-names)"
   unset __TIMER
 }
 
