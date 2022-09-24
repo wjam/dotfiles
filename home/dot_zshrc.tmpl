@@ -4,11 +4,10 @@ export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
 # Brew will by default not add `curl` to the path
 {{- $paths := list
-     "$HOME/.cargo/bin"
-     (joinPath (output "brew" "--prefix" | trim) "/opt/curl/bin")
-     (joinPath (output "brew" "--prefix" | trim) "sbin")
-     (joinPath (output "brew" "--prefix" | trim) "bin")
-     "$HOME/bin/.fpath"
+    "$HOME/.cargo/bin"
+    (joinPath (output "brew" "--prefix" | trim) "/opt/curl/bin")
+    (joinPath (output "brew" "--prefix" | trim) "sbin")
+    (joinPath (output "brew" "--prefix" | trim) "bin")
 }}
 export PATH="{{ $paths | join ":" }}:$PATH:$HOME/bin"
 
@@ -77,9 +76,10 @@ HIST_STAMPS="yyyy-mm-dd"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
-# Use a different custom folder to avoid not updating when applying workaround
-# https://github.com/twpayne/chezmoi/issues/1614#issuecomment-966524408
+# Move the omz cache and custom folders out of $ZSH so that omz doesn't modify the contents of $ZSH
+# This avoids issues when setting `exact` for an external as well as chezmoi not updating properly
 ZSH_CUSTOM="$HOME/.oh-my-zsh_custom"
+ZSH_CACHE_DIR="$HOME/.cache/oh-my-zsh"
 
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
@@ -108,9 +108,12 @@ plugins=(
 # TODO:
 # https://github.com/zsh-users/zsh-completions?
 
-{{ $fpaths := list (print (output "brew" "--prefix" | trim) "/share/zsh/site-functions") -}}
-{{- $fpaths = concat $fpaths (joinPath .chezmoi.homeDir ".rustup/**/site-functions" | glob) -}}
-{{- $fpaths = concat $fpaths (list (print (output "brew" "--prefix" | trim) "/opt/curl/share/zsh/site-functions")) -}}
+{{ $fpaths := list
+    (joinPath (output "brew" "--prefix" | trim) "/share/zsh/site-functions")
+    (joinPath .chezmoi.homeDir ".rustup/**/site-functions" | glob)
+    (joinPath (output "brew" "--prefix" | trim) "/opt/curl/share/zsh/site-functions")
+    "$HOME/bin/.fpath"
+-}}
 
 FPATH="{{ $fpaths | join ":" }}:${FPATH}"
 source $ZSH/oh-my-zsh.sh

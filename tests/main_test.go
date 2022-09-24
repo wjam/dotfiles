@@ -12,11 +12,7 @@ import (
 )
 
 func TestIterm2PowerlineGoZSHTheme(t *testing.T) {
-	envs := shell.RunCommandAndGetOutput(t, shell.Command{
-		Command: "zsh",
-		Args:    []string{"--allexport", "--interactive", "-c", "env"},
-		Env:     map[string]string{"DISABLE_AUTO_UPDATE": "true"},
-	})
+	envs := runShellCommand(t, "env")
 
 	// iterm is there, so the powerline-go is probably running?
 	assert.Contains(t, envs, "ITERM_SHELL_INTEGRATION_INSTALLED=Yes")
@@ -47,6 +43,7 @@ func TestToolsInstalled(t *testing.T) {
 		"powerline-go",
 		"direnv",
 		"htop",
+		"rustc",
 		// TODO more tools
 	}
 	for _, tool := range tools {
@@ -66,10 +63,7 @@ func TestChezmoiHasNoDiff(t *testing.T) {
 }
 
 func findTool(t *testing.T, tool string) string {
-	path := strings.Split(shell.RunCommandAndGetOutput(t, shell.Command{
-		Command: getDefaultShell(t),
-		Args:    []string{"-c", "echo $PATH"},
-	}), string(os.PathListSeparator))
+	path := strings.Split(runShellCommand(t, "echo $PATH"), string(os.PathListSeparator))
 
 	for _, p := range path {
 		toolPath := filepath.Join(p, tool)
@@ -83,4 +77,15 @@ func findTool(t *testing.T, tool string) string {
 
 	require.Fail(t, "unable to find %s", tool)
 	return ""
+}
+
+func runShellCommand(t *testing.T, cmd string) string {
+	// Need to run with --interactive to pick up the PATH from the _new_ shell, rather than this shell
+	// but that will include iTerm related things, which are separated by '\a'
+	split := strings.Split(shell.RunCommandAndGetOutput(t, shell.Command{
+		Command: "zsh",
+		Args:    []string{"--allexport", "--interactive", "-c", cmd},
+		Env:     map[string]string{"DISABLE_AUTO_UPDATE": "true"},
+	}), "\a")
+	return split[len(split)-1]
 }

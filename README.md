@@ -53,7 +53,7 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 ## Common steps
 1. [Install Homebrew](https://brew.sh/) - either at the standard location (`/usr/local/bin` or `/home/linuxbrew/.linuxbrew/bin`)
    or at `$HOME/dev/brew`
-2. Add Homebrew to the path (`eval "$(/path/to/homebrew/install/bin/brew shellenv)"`)
+2. Add Homebrew to the path of the current shell (`eval "$(/path/to/homebrew/install/bin/brew shellenv)"`)
 3. `brew install chezmoi`
 4. `chezmoi init wjam`
 5. `chezmoi apply`

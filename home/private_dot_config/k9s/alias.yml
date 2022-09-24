@@ -1,0 +1,4 @@
+# See https://k9scli.io/topics/aliases/
+alias:
+  # Use dep as an alias for Deployments
+  dep: apps/v1/deployments
