@@ -108,12 +108,10 @@ plugins=(
 # TODO:
 # https://github.com/zsh-users/zsh-completions?
 
-{{ $fpaths := list
-    (joinPath (output "brew" "--prefix" | trim) "/share/zsh/site-functions")
-    (joinPath .chezmoi.homeDir ".rustup/**/site-functions" | glob)
-    (joinPath (output "brew" "--prefix" | trim) "/opt/curl/share/zsh/site-functions")
-    "$HOME/bin/.fpath"
--}}
+{{ $fpaths := (joinPath .chezmoi.homeDir ".rustup/**/site-functions" | glob) -}}
+{{ $fpaths := append $fpaths (joinPath (output "brew" "--prefix" | trim) "/opt/curl/share/zsh/site-functions") -}}
+{{ $fpaths := append $fpaths (joinPath (output "brew" "--prefix" | trim) "/share/zsh/site-functions") -}}
+{{ $fpaths := append $fpaths "$HOME/bin/.fpath" -}}
 
 FPATH="{{ $fpaths | join ":" }}:${FPATH}"
 source $ZSH/oh-my-zsh.sh
