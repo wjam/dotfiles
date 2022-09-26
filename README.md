@@ -38,6 +38,7 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 
 ## Workarounds
 * Unable to compile Go programs on Linux using Go installed using Homebrew (`cgo: C compiler "gcc-5" not found: exec: "gcc-5": executable file not found in $PATH`) - see `home/private_dot_config/go/env` (https://stackoverflow.com/questions/59227456/go-1-13-gcc-5-not-in-path)
+* Repeatedly ask to install clang on macOS when running Homebrew - run `sudo xcode-select --switch /Library/Developer/CommandLineTools`
 
 # Installing
 
@@ -102,7 +103,5 @@ docker run -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -q .) 
   2. run and install chezmoi in headless mode
   3. verify it's working
     * common tools work?
-* Make hammerspoon bluetooth script remember what the state was when resuming.
-  * `blueutil --power` - https://www.hammerspoon.org/docs/hs.settings.html to save the value between sleeping - example: https://github.com/cmsj/hammerspoon-config/blob/master/hueMotionSensor.lua
 * Find out why meeting interruption stuff isn't working when streamdeck is connected
 * Find something cask-like for Ubuntu
