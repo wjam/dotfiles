@@ -60,6 +60,7 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 5. `chezmoi apply`
 
 ## Ubuntu post installation
+* [Configure rclone](https://rclone.org/googlephotos/)
 TODO
 
 ## macOS post installation
@@ -97,11 +98,9 @@ docker run -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -q .) 
 ```
 
 # TODO
-* This README
 * CI
-  1. cache homebrew cache dir (`~/.cache/Homebrew` on Linux)
-  2. run and install chezmoi in headless mode
-  3. verify it's working
-    * common tools work?
+  1. cache homebrew cache dir (`~/.cache/Homebrew` on Linux)?
+  2. run `testing.sh`
+  3. Work out how to do the same thing on macOS
 * Find out why meeting interruption stuff isn't working when streamdeck is connected
 * Find something cask-like for Ubuntu

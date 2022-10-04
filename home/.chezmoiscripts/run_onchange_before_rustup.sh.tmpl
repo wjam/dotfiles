@@ -11,6 +11,6 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-export PATH="{{ joinPath (output "brew" "--prefix" | trim) "sbin" }}:{{ joinPath (output "brew" "--prefix" | trim) "bin" }}:$PATH"
+export PATH="{{- template "path" -}}"
 
 echo 1 | rustup-init --no-modify-path

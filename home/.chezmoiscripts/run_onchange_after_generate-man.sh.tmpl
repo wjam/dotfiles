@@ -19,7 +19,7 @@ set -o pipefail
 # {{ . }} hash: {{ include . | sha256sum }}
 {{- end }}
 
-export PATH="{{ joinPath (output "brew" "--prefix" | trim) "sbin" }}:{{ joinPath (output "brew" "--prefix" | trim) "bin" }}:$PATH"
+export PATH="{{- template "path" -}}"
 
 cwd="${HOME}/man"
 

@@ -6,4 +6,5 @@ Library
 {{ if ne .chezmoi.os "linux" }}
 .config/go/env
 .config/k9s
+.config/systemd
 {{ end }}

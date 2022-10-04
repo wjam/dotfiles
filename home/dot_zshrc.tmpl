@@ -2,14 +2,7 @@ zmodload zsh/datetime
 
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
-# Brew will by default not add `curl` to the path
-{{- $paths := list
-    "$HOME/.cargo/bin"
-    (joinPath (output "brew" "--prefix" | trim) "/opt/curl/bin")
-    (joinPath (output "brew" "--prefix" | trim) "sbin")
-    (joinPath (output "brew" "--prefix" | trim) "bin")
-}}
-export PATH="{{ $paths | join ":" }}:$PATH:$HOME/bin"
+export PATH="{{- template "path" -}}"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
@@ -116,7 +109,7 @@ plugins=(
 FPATH="{{ $fpaths | join ":" }}:${FPATH}"
 source $ZSH/oh-my-zsh.sh
 
-AUTO_NOTIFY_IGNORE+=("docker run" "docker exec" "docker logs" "vi" "dive" "k9s" "stern" "terraform console")
+AUTO_NOTIFY_IGNORE+=("docker run" "docker exec" "docker logs" "vi" "dive" "k9s" "stern" "terraform console" "chezmoi diff")
 
 # make `*` slightly easier to see
 ZSH_HIGHLIGHT_STYLES[globbing]=fg=blue,bold

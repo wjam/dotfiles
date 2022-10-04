@@ -1,0 +1,8 @@
+{{/*Brew will by default not add `curl` to the path*/}}
+{{- $paths := list
+    "$HOME/.cargo/bin"
+    (joinPath (output "brew" "--prefix" | trim) "/opt/curl/bin")
+    (joinPath (output "brew" "--prefix" | trim) "sbin")
+    (joinPath (output "brew" "--prefix" | trim) "bin")
+-}}
+{{- $paths | join ":" -}}:$PATH:$HOME/bin

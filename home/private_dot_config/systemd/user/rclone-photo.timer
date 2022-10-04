@@ -1,0 +1,10 @@
+[Unit]
+Description=Run Photo sync every day
+
+[Timer]
+Unit=rclone-photo.service
+OnCalendar=daily
+Persistent=true
+
+[Install]
+WantedBy=default.target

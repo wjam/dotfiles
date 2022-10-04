@@ -11,7 +11,7 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-export PATH="{{ joinPath (output "brew" "--prefix" | trim) "sbin" }}:{{ joinPath (output "brew" "--prefix" | trim) "bin" }}:$PATH"
+export PATH="{{- template "path" -}}"
 
 extensions=(
   "HashiCorp.terraform" # Terraform
@@ -22,6 +22,7 @@ extensions=(
   "bierner.markdown-mermaid" # Support mermaid diagrams in Markdown
   "bpruitt-goddard.mermaid-markdown-syntax-highlighting" # Mermaid syntax highlighting
   "EditorConfig.EditorConfig" # EditorConfig support
+  "ms-vscode.hexeditor" # hex editor
 )
 
 for ext in "${extensions[@]}"; do

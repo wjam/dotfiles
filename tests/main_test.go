@@ -33,33 +33,52 @@ func TestManPagesRendered(t *testing.T) {
 }
 
 func TestToolsInstalled(t *testing.T) {
-	// TODO test that the tool actually works, somehow
+	// chezmoi checked through another test
+	// go tested by this test running
 	tools := []string{
+		"fzf",
+		"dive",
+		"jq",
+		"git",
+		"htop",
+		"tree",
 		"curl",
+		"direnv",
+		"pandoc",
+		"ipcalc",
+		"powerline-go",
+		"terraform",
+		"terragrunt",
+		"packer",
 		"kubectl",
 		"kubectx",
-		"watch",
-		"terraform",
-		"powerline-go",
-		"direnv",
-		"htop",
+		"stern",
+		"k9s",
+		"vault",
+		"helm",
+		"pv",
 		"rustc",
-		// TODO more tools
+		"watch",
 	}
 	for _, tool := range tools {
 		t.Run(tool, func(t *testing.T) {
-			toolPath := findTool(t, tool)
-			t.Logf("%s found at %s", tool, toolPath)
+			runCommand(t, tool, "--help")
 		})
 	}
 }
 
 func TestChezmoiHasNoDiff(t *testing.T) {
-	diff := shell.RunCommandAndGetOutput(t, shell.Command{
-		Command: findTool(t, "chezmoi"),
-		Args:    []string{"diff", "--no-pager"},
-	})
+	diff := runCommand(t, "chezmoi", "diff", "--no-pager")
 	assert.Equal(t, "", diff)
+}
+
+func runCommand(t *testing.T, cmd string, args ...string) string {
+	output := shell.RunCommandAndGetOutput(t, shell.Command{
+		Command: findTool(t, cmd),
+		Args:    args,
+		Env:     map[string]string{"PATH": runShellCommand(t, "echo $PATH")},
+	})
+	return output
 }
 
 func findTool(t *testing.T, tool string) string {
