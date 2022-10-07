@@ -98,8 +98,6 @@ plugins=(
   auto-notify # Send a notification when long running programs end
 {{- end }}
 )
-# TODO:
-# https://github.com/zsh-users/zsh-completions?
 
 {{ $fpaths := (joinPath .chezmoi.homeDir ".rustup/**/site-functions" | glob) -}}
 {{ $fpaths := append $fpaths (joinPath (output "brew" "--prefix" | trim) "/opt/curl/share/zsh/site-functions") -}}

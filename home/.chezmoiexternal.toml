@@ -35,4 +35,3 @@
   type = "file"
   url = "https://github.com/wjam/aws_finder/releases/download/v0.5/aws_finder-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
   executable = true
-# TODO move iterm2 powerline go theme to an external repo like https://github.com/agnoster/agnoster-zsh-theme?
