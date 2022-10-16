@@ -11,4 +11,7 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-/usr/local/bin/kubectl logs "$@" | /usr/local/bin/jlog --lax --no-summary
+# kubectl plugins seem to get run without a real PATH?
+export PATH="{{- template "path" -}}"
+
+kubectl logs "$@" | jlog --lax --no-summary
