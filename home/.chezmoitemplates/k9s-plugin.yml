@@ -17,3 +17,42 @@ plugin:
       - $NAMESPACE
       - --context
       - $CONTEXT
+  # Pretty print JSON logs (https://github.com/jrockway/json-logs)
+  pod-json-logs:
+    shortCut: Ctrl-J
+    confirm: false
+    description: "Logs <json-logs>"
+    scopes:
+      - pods
+    command: kubectl
+    background: false
+    args:
+      - jlog
+      - --tail
+      - 50
+      - --follow
+      - $FILTER
+      - -n
+      - $NAMESPACE
+      - --context
+      - $CONTEXT
+  container-json-logs:
+    shortCut: Ctrl-J
+    confirm: false
+    description: "Logs <json-logs>"
+    scopes:
+      - containers
+    command: kubectl
+    background: false
+    args:
+      - jlog
+      - --tail
+      - 50
+      - --follow
+      - $POD
+      - -n
+      - $NAMESPACE
+      - --container
+      - $NAME
+      - --context
+      - $CONTEXT

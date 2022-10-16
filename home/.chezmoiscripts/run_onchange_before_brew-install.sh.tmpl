@@ -38,11 +38,12 @@ export PATH="{{- template "path" -}}"
      "helm"
      "pv"
      "rustup-init"
+     "jrockway/tap/jlog"
 }}
 # TODO need to verify that neo4j no longer needs admin access on a mac
 # TODO need to install gcc@5 on linux for Go to work... Does it work with
 {{ $casks := list -}}
-{{ $taps := list -}}
+{{ $taps := list "jrockway/tap" -}}
 {{ $mases := dict -}}
 
 {{- if .slow -}}
@@ -130,12 +131,12 @@ Re-add `"dockutil"` to brews list when merged
 {{- end -}}
 
 brew bundle --no-lock --file=/dev/stdin <<EOF
-{{ range ($brews | sortAlpha | uniq) -}}
-brew "{{ . }}"
-{{ end -}}
-
 {{ range ($taps | sortAlpha | uniq) -}}
 tap "{{ . }}"
+{{ end -}}
+
+{{ range ($brews | sortAlpha | uniq) -}}
+brew "{{ . }}"
 {{ end -}}
 
 cask_args appdir: '~/Applications'
