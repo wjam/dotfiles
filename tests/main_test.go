@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"os"
 	"path/filepath"
 	"strings"
@@ -68,8 +69,20 @@ func TestToolsInstalled(t *testing.T) {
 }
 
 func TestChezmoiHasNoDiff(t *testing.T) {
-	diff := runCommand(t, "chezmoi", "diff", "--no-pager")
-	assert.Equal(t, "", diff)
+	runCommand(t, "chezmoi", "verify")
+}
+
+func TestChezmoiDiffWorks(t *testing.T) {
+	chezmoiPath := runCommand(t, "chezmoi", "source-path")
+
+	f, err := os.CreateTemp(chezmoiPath, fmt.Sprintf("create_%s-*.txt", t.Name()))
+	require.NoError(t, err)
+	t.Cleanup(func() {
+		assert.NoError(t, os.Remove(f.Name()))
+	})
+
+	output := runCommand(t, "chezmoi", "diff", "--no-pager")
+	assert.NotEqual(t, "", output)
 }
 
 func runCommand(t *testing.T, cmd string, args ...string) string {
