@@ -52,7 +52,6 @@ export PATH="{{- template "path" -}}"
        "awscli"
        "azure-cli"
        "openjdk@17"
-       "openjdk@11"
        "maven"
        "pgcli"
        "neo4j"
@@ -92,7 +91,6 @@ Re-add `"dockutil"` to brews list when merged
 
 {{/*
 # readline - .inputrc
-# cassandra - only supports macOS
 # blueutil - used by Hammerspoon scripts
 # dockutil - manipulate the dock
 # svn - Needed by font-liberation-mono-for-powerline, for some reason
@@ -101,7 +99,6 @@ Re-add `"dockutil"` to brews list when merged
       "bash-completion"
       "readline"
       "watch"
-      "cassandra"
       "blueutil"
       "svn"
       )
