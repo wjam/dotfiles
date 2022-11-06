@@ -7,4 +7,5 @@ Library
 .config/go/env
 .config/k9s
 .config/systemd
+.config/tealdeer
 {{ end }}

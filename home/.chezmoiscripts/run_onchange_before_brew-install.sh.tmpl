@@ -39,9 +39,9 @@ export PATH="{{- template "path" -}}"
      "pv"
      "rustup-init"
      "jrockway/tap/jlog"
+     "tealdeer"
 }}
 # TODO need to verify that neo4j no longer needs admin access on a mac
-# TODO need to install gcc@5 on linux for Go to work... Does it work with
 {{ $casks := list -}}
 {{ $taps := list "jrockway/tap" -}}
 {{ $mases := dict -}}

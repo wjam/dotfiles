@@ -2,6 +2,7 @@
 {{- $paths := list
     "$HOME/.cargo/bin"
     (joinPath (output "brew" "--prefix" | trim) "/opt/curl/bin")
+    (joinPath (output "brew" "--prefix" | trim) "/opt/openjdk@17/bin")
     (joinPath (output "brew" "--prefix" | trim) "sbin")
     (joinPath (output "brew" "--prefix" | trim) "bin")
 -}}
