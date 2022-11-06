@@ -1,4 +1,4 @@
-{{- if (eq .chezmoi.os "darwin") -}}
+{{- if and (eq .chezmoi.os "darwin") (not .headless) -}}
 #!/usr/bin/env bash
 
 # Exit on error. Append || true if you expect an error.
@@ -13,14 +13,6 @@ set -o pipefail
 #set -o xtrace
 
 export PATH="{{- template "path" -}}"
-
-function is_sudoer() {
-  admin_group=$(groups | grep "\<admin\>" || true)
-  if [ "$admin_group" != "" ]; then
-    return 0
-  fi
-  return 1
-}
 
 function mas_uninstall() {
   installed=$(mas list | grep "$1" || true)
@@ -80,9 +72,9 @@ function configure_keyboard() {
   defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 }
 
-if is_sudoer; then
-  uninstall_unwanted_default_apps
-fi
+{{ if .admin -}}
+uninstall_unwanted_default_apps
+{{- end }}
 configure_finder
 configure_dock
 configure_iterm2
