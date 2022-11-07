@@ -15,7 +15,6 @@ set -o pipefail
 # apt-transport-https needed to install vscode - https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions
 {{ $debs := list
      "curl"
-     "docker.io"
      "git"
      "fonts-powerline"
      "gnome-tweaks"
@@ -26,6 +25,10 @@ set -o pipefail
      "build-essential"
      "rclone"
 }}
+
+{{- if not .docker }}
+  {{- $debs = concat $debs (list "docker.io") -}}
+{{- end }}
 
 # curl -fsL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | base64
 cat <<EOPGP | base64 --decode | sudo tee /etc/apt/keyrings/packages.microsoft.gpg

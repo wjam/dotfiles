@@ -14,32 +14,32 @@ set -o pipefail
 export PATH="{{- template "path" -}}"
 
 {{- $brews := list
-     "go"
-     "fzf"
-     "dive"
-     "jq"
-     "git"
-     "htop"
-     "tree"
-     "curl"
-     "direnv"
-     "pandoc"
-     "ipcalc"
-     "powerline-go"
-     "terraform"
-     "terragrunt"
-     "packer"
-     "kubernetes-cli"
-     "kubectx"
-     "stern"
-     "k9s"
-     "vault"
-     "chezmoi"
-     "helm"
-     "pv"
-     "rustup-init"
-     "jrockway/tap/jlog"
-     "tealdeer"
+      "go"
+      "fzf"
+      "dive"
+      "jq"
+      "git"
+      "htop"
+      "tree"
+      "curl"
+      "direnv"
+      "pandoc"
+      "ipcalc"
+      "powerline-go"
+      "terraform"
+      "terragrunt"
+      "packer"
+      "kubernetes-cli"
+      "kubectx"
+      "stern"
+      "k9s"
+      "vault"
+      "chezmoi"
+      "helm"
+      "pv"
+      "rustup-init"
+      "jrockway/tap/jlog"
+      "tealdeer"
 }}
 # TODO need to verify that neo4j no longer needs admin access on a mac
 {{ $casks := list -}}
@@ -48,13 +48,13 @@ export PATH="{{- template "path" -}}"
 
 {{- if .slow -}}
 {{-   $brews = concat $brews (list
-       "ansible"
-       "awscli"
-       "azure-cli"
-       "openjdk@17"
-       "maven"
-       "pgcli"
-       "neo4j"
+        "ansible"
+        "awscli"
+        "azure-cli"
+        "openjdk@17"
+        "maven"
+        "pgcli"
+        "neo4j"
       )
 -}}
 {{- end -}}
@@ -62,27 +62,21 @@ export PATH="{{- template "path" -}}"
 
 {{- if eq .chezmoi.os "darwin" -}}
 {{-   $casks = concat $casks (list
-       "google-cloud-sdk"
-       "hammerspoon"
-       "stats"
-       "firefox"
-       "thunderbird"
-       "google-chrome"
-       "visual-studio-code"
-       "jetbrains-toolbox"
-       "drawio"
-       "libreoffice"
-       "iterm2"
-       "keeweb"
-       "font-liberation-mono-for-powerline"
-       "slack"
-       "gimp"
-       "inkscape"
+        "hammerspoon"
+        "stats"
+        "firefox"
+        "google-chrome"
+        "visual-studio-code"
+        "jetbrains-toolbox"
+        "iterm2"
+        "keeweb"
+        "font-liberation-mono-for-powerline"
+        "slack"
       )
 -}}
 {{/*
-Temporarily needed until https://github.com/Homebrew/homebrew-core/pull/97394
-Re-add `"dockutil"` to brews list when merged
+# Temporarily needed until https://github.com/Homebrew/homebrew-core/pull/97394
+# Re-add `"dockutil"` to brews list when merged
 */}}
 {{-   $casks = concat $casks (list
        "hpedrorodrigues/tools/dockutil"
@@ -112,18 +106,28 @@ Re-add `"dockutil"` to brews list when merged
       )
 -}}
 
-{{-   if .admin -}}
+{{-   if .slow -}}
 {{-     $casks = concat $casks (list
-          "docker"
+          "google-cloud-sdk"
+          "drawio"
+          "libreoffice"
+          "gimp"
+          "inkscape"
         )
+-}}
+{{-     if .admin -}}
+{{-       $casks = concat $casks (list
+            "docker"
+          )
 -}}
 {{/*
 # mas needs admin permissions depending on what it installs
 */}}
-{{-     $brews = concat $brews (list
-          "mas"
-        )
+{{-       $brews = concat $brews (list
+            "mas"
+          )
 -}}
+{{-     end -}}
 {{-   end -}}
 {{- end -}}
 

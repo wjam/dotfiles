@@ -1,0 +1,27 @@
+name: CI
+permissions:
+  contents: read
+
+on: [push]
+
+jobs:
+  test:
+
+    #   https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
+    #   https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: ["ubuntu-22.04", "macos-12"]
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Link to correct location
+        run: |
+          mkdir -p $HOME/.local/share
+          ln -s $GITHUB_WORKSPACE $HOME/.local/share/chezmoi
+      - name: Clean up existing binaries if present # needed for mac
+        run: |
+          sudo rm -fr /usr/local/bin/go /usr/local/bin/gofmt
+      - name: Test
+        run: ./testing.sh

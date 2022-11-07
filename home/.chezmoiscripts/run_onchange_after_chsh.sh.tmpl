@@ -11,4 +11,9 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
+{{ if .headless -}}
+{{/* Unable to just chsh in a GitHub action */}}
+sudo chsh -s "$(which zsh)" "$USER"
+{{- else -}}
 chsh -s /bin/zsh
+{{- end }}

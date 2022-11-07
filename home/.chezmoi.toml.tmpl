@@ -4,7 +4,7 @@
 {{- $email := "" -}}
 {{- $slow := true -}}{{/* true if things slow to install should be included */}}
 
-{{- if stat "/.dockerenv" -}}
+{{- if or (stat "/.dockerenv") (eq (env "CI") "true") -}}
 {{-   $docker = true -}}
 {{-   $headless = true -}}
 {{-   $admin = true -}}
