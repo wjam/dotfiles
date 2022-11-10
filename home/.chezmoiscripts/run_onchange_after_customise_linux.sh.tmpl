@@ -1,4 +1,4 @@
-{{- if and (eq .chezmoi.os "linux") (not .headless) -}}
+{{- if and (eq .chezmoi.os "linux") (.full) -}}
 #!/usr/bin/env bash
 
 # Exit on error. Append || true if you expect an error.

@@ -16,6 +16,7 @@ RUN passwd -d docker
 RUN echo "docker ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 USER docker
+ENV USER=docker
 
 # stop Homebrew from asking for user confirmation
 ENV NONINTERACTIVE=1

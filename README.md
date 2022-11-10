@@ -94,13 +94,10 @@ TODO
 # Testing
 Run the Go tests inside a Docker container with Homebrew, etc. installed:
 ```shell
-docker run -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -q .) /home/docker/.local/share/chezmoi/testing.sh
+docker run --rm -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -q .) /home/docker/.local/share/chezmoi/testing.sh --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test
 ```
 
 # TODO
-* CI
-  1. cache homebrew cache dir (`~/.cache/Homebrew` on Linux)?
-  2. run `testing.sh`
-  3. Work out how to do the same thing on macOS
 * Find out why meeting interruption stuff isn't working when streamdeck is connected
 * Find something cask-like for Ubuntu
+* Find a way to disable sudo access in CI to test no admin access (apt will fail as `code` is assumed to be present at vscode-extensions script (install via snap?))

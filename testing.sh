@@ -29,7 +29,7 @@ if ! command -v chezmoi > /dev/null; then
 fi
 
 # Apply chezmoi
-chezmoi init
+chezmoi init "$@"
 chezmoi apply
 
 # Run the tests

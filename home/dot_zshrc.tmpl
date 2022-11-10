@@ -89,13 +89,13 @@ plugins=(
   kubectl # completion & `k` alias
   mvn # Maven completion
   rust # completion
-{{- if not .docker }}
+{{- if .full }}
   systemd # completion
 {{- end }}
   zsh-interactive-cd # interactive list of directories on `cd`
   zsh-autosuggestions # auto-suggest commands based on history
   zsh-syntax-highlighting # syntax highlighting for the typed command
-{{- if not .headless }}
+{{- if .full }}
   auto-notify # Send a notification when long running programs end
 {{- end }}
 )
@@ -146,7 +146,7 @@ bindkey "\e\e[C" forward-word
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ll='ls -alF'
 
-{{- if and (eq .chezmoi.os "linux") (not .docker) }}
+{{- if and (eq .chezmoi.os "linux") (.full) }}
 {{    $layout := (output "sh" "-c" "loginctl show-session $(loginctl --no-legend list-sessions | awk '{print $1}') --property=Type --value") | trim }}
 {{-   if eq $layout "wayland" -}}
 alias pbpaste="wl-paste"

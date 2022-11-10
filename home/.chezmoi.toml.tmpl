@@ -1,26 +1,9 @@
-{{- $docker := false -}}{{/* true if we are inside a docker container */}}
-{{- $headless := false -}}{{/* true if this machine does not have a screen and keyboard */}}
-{{- $admin := false -}}{{/* true if have 'admin' access to the machine */}}
-{{- $email := "" -}}
-{{- $slow := true -}}{{/* true if things slow to install should be included */}}
-
-{{- if or (stat "/.dockerenv") (eq (env "CI") "true") -}}
-{{-   $docker = true -}}
-{{-   $headless = true -}}
-{{-   $admin = true -}}
-{{-   $email = "headless@example.test" -}}
-{{-   $slow = false -}}
-{{- else -}}
-{{-   $admin = promptBoolOnce . "admin" "Have admin access? yes or no:"  -}}
-{{-   $email = promptStringOnce . "email" "Email address for Git:"  -}}
-{{- end -}}
-
 [data]
-  admin = {{ $admin }}
-  docker = {{ $docker }}
-  email = {{ $email | quote }}
-  headless = {{ $headless }}
-  slow = {{ $slow }}
+{{/* REMEMBER TO UPDATE ci.yaml AND README.md WHEN CHANGING QUESTIONS */}}
+  admin = {{ promptBoolOnce . "admin" "Have admin access? y or n:" }} # true if have 'admin' access to the machine
+  email = {{ promptStringOnce . "email" "Email address for Git:" | quote }} # Email address for Git
+  full = {{ promptBoolOnce . "full" "Install everything? y or n:" }} # false if we're having to limit things because it's CI
+
 [diff]
 
 [[textconv]]
