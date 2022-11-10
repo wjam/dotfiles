@@ -26,7 +26,7 @@ set -o pipefail
      "rclone"
 }}
 
-{{- if not .docker }}
+{{- if .full }}
   {{- $debs = concat $debs (list "docker.io") -}}
 {{- end }}
 

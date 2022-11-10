@@ -8,7 +8,7 @@
 [core]
 	autocrlf = input
 	attributesfile = ~/.config/git/gitattributes
-{{- if not .headless -}}{{/*Probably won't have a SSH cert inside a container*/}}
+{{- if .full -}}{{/*Probably won't have a SSH cert if doing CI*/}}
 [url "git@github.com:"]
 	insteadOf = https://github.com/
 {{- end }}

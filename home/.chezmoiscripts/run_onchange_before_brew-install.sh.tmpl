@@ -46,7 +46,7 @@ export PATH="{{- template "path" -}}"
 {{ $taps := list "jrockway/tap" -}}
 {{ $mases := dict -}}
 
-{{- if .slow -}}
+{{- if .full -}}
 {{-   $brews = concat $brews (list
         "ansible"
         "awscli"
@@ -106,7 +106,7 @@ export PATH="{{- template "path" -}}"
       )
 -}}
 
-{{-   if .slow -}}
+{{-   if .full -}}
 {{-     $casks = concat $casks (list
           "google-cloud-sdk"
           "drawio"
