@@ -13,4 +13,4 @@ set -o pipefail
 
 export PATH="{{- template "path" -}}"
 
-echo 1 | rustup-init --no-modify-path
+rustup-init --no-modify-path -y
