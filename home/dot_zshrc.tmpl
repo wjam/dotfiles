@@ -89,13 +89,12 @@ plugins=(
   kubectl # completion & `k` alias
   mvn # Maven completion
   rust # completion
-{{- if .full }}
-  systemd # completion
-{{- end }}
+  safe-paste # prevent pasting \n from running shell commands
   zsh-interactive-cd # interactive list of directories on `cd`
   zsh-autosuggestions # auto-suggest commands based on history
   zsh-syntax-highlighting # syntax highlighting for the typed command
 {{- if .full }}
+  systemd # completion
   auto-notify # Send a notification when long running programs end
 {{- end }}
 )
@@ -147,7 +146,7 @@ bindkey "\e\e[C" forward-word
 alias ll='ls -alF'
 
 {{- if and (eq .chezmoi.os "linux") (.full) }}
-{{    $layout := (output "sh" "-c" "loginctl show-session $(loginctl --no-legend list-sessions | awk '{print $1}') --property=Type --value") | trim }}
+{{    $layout := (output "sh" "-c" "loginctl show-session $(loginctl show-user $(whoami) --property=Sessions --value) --property=Type --value") | trim }}
 {{-   if eq $layout "wayland" -}}
 alias pbpaste="wl-paste"
 alias pbcopy="wl-copy"
