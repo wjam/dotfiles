@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# chezmoi:template:left-delimiter="# [[" right-delimiter=]]
 
 # Exit on error. Append || true if you expect an error.
 set -o errexit
@@ -11,9 +12,9 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-export PATH="{{- template "path" -}}"
+export PATH=# [[ includeTemplate "path" | trim | quote ]]
 
-{{- $brews := list
+# [[- $brews := list
       "go"
       "fzf"
       "dive"
@@ -40,14 +41,14 @@ export PATH="{{- template "path" -}}"
       "rustup-init"
       "jrockway/tap/jlog"
       "tealdeer"
-}}
+]]
 # TODO need to verify that neo4j no longer needs admin access on a mac
-{{ $casks := list -}}
-{{ $taps := list "jrockway/tap" -}}
-{{ $mases := dict -}}
+# [[ $casks := list -]]
+# [[ $taps := list "jrockway/tap" -]]
+# [[ $mases := dict -]]
 
-{{- if .full -}}
-{{-   $brews = concat $brews (list
+# [[- if .full -]]
+# [[-   $brews = concat $brews (list
         "ansible"
         "awscli"
         "azure-cli"
@@ -56,12 +57,12 @@ export PATH="{{- template "path" -}}"
         "pgcli"
         "neo4j"
       )
--}}
-{{- end -}}
+-]]
+# [[- end -]]
 
 
-{{- if eq .chezmoi.os "darwin" -}}
-{{-   $casks = concat $casks (list
+# [[- if eq .chezmoi.os "darwin" -]]
+# [[-   $casks = concat $casks (list
         "hammerspoon"
         "stats"
         "firefox"
@@ -73,79 +74,79 @@ export PATH="{{- template "path" -}}"
         "font-liberation-mono-for-powerline"
         "slack"
       )
--}}
-{{/*
+-]]
+# [[/*
 # Temporarily needed until https://github.com/Homebrew/homebrew-core/pull/97394
 # Re-add `"dockutil"` to brews list when merged
-*/}}
-{{-   $casks = concat $casks (list
+*/]]
+# [[-   $casks = concat $casks (list
        "hpedrorodrigues/tools/dockutil"
       )
--}}
+-]]
 
-{{/*
+# [[/*
 # readline - .inputrc
 # blueutil - used by Hammerspoon scripts
 # dockutil - manipulate the dock
 # svn - Needed by font-liberation-mono-for-powerline, for some reason
-*/}}
-{{-   $brews = concat $brews (list
+*/]]
+# [[-   $brews = concat $brews (list
       "bash-completion"
       "readline"
       "watch"
       "blueutil"
       "svn"
       )
--}}
+-]]
 
-{{/*
+# [[/*
 # For font-liberation-mono-for-powerline
-*/}}
-{{-   $taps = concat $taps (list
+*/]]
+# [[-   $taps = concat $taps (list
       "homebrew/cask-fonts"
       )
--}}
+-]]
 
-{{-   if .full -}}
-{{-     $casks = concat $casks (list
+# [[-   if .full -]]
+# [[-     $casks = concat $casks (list
           "google-cloud-sdk"
           "drawio"
           "libreoffice"
           "gimp"
           "inkscape"
         )
--}}
-{{-     if .admin -}}
-{{-       $casks = concat $casks (list
+-]]
+# [[-     if .admin -]]
+# [[-       $casks = concat $casks (list
             "docker"
           )
--}}
-{{/*
+-]]
+# [[/*
 # mas needs admin permissions depending on what it installs
-*/}}
-{{-       $brews = concat $brews (list
+*/]]
+# [[-       $brews = concat $brews (list
             "mas"
           )
--}}
-{{-     end -}}
-{{-   end -}}
-{{- end -}}
+-]]
+# [[-     end -]]
+# [[-   end -]]
+# [[- end -]]
 
 brew bundle --no-lock --file=/dev/stdin <<EOF
-{{ range ($taps | sortAlpha | uniq) -}}
-tap "{{ . }}"
-{{ end -}}
+# [[ range ($taps | sortAlpha | uniq) -]]
+tap "# [[ . ]]"
+# [[ end -]]
 
-{{ range ($brews | sortAlpha | uniq) -}}
-brew "{{ . }}"
-{{ end -}}
+# [[ range ($brews | sortAlpha | uniq) -]]
+brew "# [[ . ]]"
+# [[ end -]]
 
 cask_args appdir: '~/Applications'
-{{ range ($casks | sortAlpha | uniq) -}}
-cask "{{ . }}"
-{{ end -}}
+# [[ range ($casks | sortAlpha | uniq) -]]
+cask "# [[ . ]]"
+# [[ end -]]
 
-{{ range $k, $v := $mases -}}
-mas "{{ $v }}", id: {{ $k }}
-{{ end -}}
+# [[ range $k, $v := $mases -]]
+mas "# [[ $v ]]", id: # [[ $k ]]
+# [[ end -]]
 EOF

@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# chezmoi:template:left-delimiter="# [[" right-delimiter=]]
 
 # Exit on error. Append || true if you expect an error.
 set -o errexit
@@ -11,9 +12,9 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-{{ if not .full -}}
-{{/* Unable to just chsh in a GitHub action */}}
+# [[ if not .full -]]
+# [[/* Unable to just chsh in a GitHub action */]]
 sudo chsh -s "$(which zsh)" "$USER"
-{{- else -}}
+# [[- else -]]
 chsh -s /bin/zsh
-{{- end }}
+# [[- end ]]

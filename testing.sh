@@ -17,7 +17,7 @@ test -d ~/.local/share/chezmoi
 ## Ensure Homebrew is on the path
 if ! command -v brew > /dev/null; then
   if [[ -e $HOME/dev/brew/bin ]]; then
-    eval "$($HOME/dev/brew/bin/brew shellenv)"
+    eval "$("$HOME"/dev/brew/bin/brew shellenv)"
   elif [[ -e /home/linuxbrew/.linuxbrew/bin/brew ]]; then
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
   fi
