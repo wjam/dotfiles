@@ -1,5 +1,6 @@
-{{- if (eq .chezmoi.os "linux") -}}
 #!/usr/bin/env bash
+# chezmoi:template:left-delimiter="# [[" right-delimiter=]]
+# [[ if (eq .chezmoi.os "linux") ]]
 
 # Exit on error. Append || true if you expect an error.
 set -o errexit
@@ -13,7 +14,7 @@ set -o pipefail
 #set -o xtrace
 
 # apt-transport-https needed to install vscode - https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions
-{{ $debs := list
+# [[ $debs := list
      "curl"
      "git"
      "fonts-powerline"
@@ -26,11 +27,11 @@ set -o pipefail
      "rclone"
      "vim-runtime"
      "vim-gui-common"
-}}
+]]
 
-{{- if .full }}
-  {{- $debs = concat $debs (list "docker.io") -}}
-{{- end }}
+# [[- if .full ]]
+  # [[- $debs = concat $debs (list "docker.io") -]]
+# [[- end ]]
 
 # curl -fsL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | base64
 cat <<EOPGP | base64 --decode | sudo tee /etc/apt/keyrings/packages.microsoft.gpg
@@ -54,9 +55,9 @@ EOAPT
 
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive xargs sudo apt-get install --assume-yes <<EOF
-{{ range ($debs | sortAlpha | uniq) -}}
-{{ . }}
-{{ end -}}
+# [[ range ($debs | sortAlpha | uniq) -]]
+# [[ . ]]
+# [[ end -]]
 EOF
 
-{{ end -}}
+# [[ end ]]

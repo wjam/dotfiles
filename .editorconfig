@@ -13,7 +13,3 @@ insert_final_newline = true
 [*.go]
 indent_style = tab
 indent_size = 4
-
-# newlines in this file can cause problems with templating
-[home/.chezmoitemplates/path]
-insert_final_newline = false
