@@ -13,24 +13,10 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-# apt-transport-https needed to install vscode - https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions
-# [[ $debs := list
-     "curl"
-     "git"
-     "fonts-powerline"
-     "gnome-tweaks"
-     "wl-clipboard"
-     "zsh"
-     "apt-transport-https"
-     "code"
-     "build-essential"
-     "rclone"
-     "vim-runtime"
-     "vim-gui-common"
-]]
+# [[ $debs := .linux_os_admin.debs ]]
 
 # [[- if .full ]]
-  # [[- $debs = concat $debs (list "docker.io") -]]
+  # [[- $debs = concat $debs .linux_os_admin.full_debs -]]
 # [[- end ]]
 
 # curl -fsL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | base64

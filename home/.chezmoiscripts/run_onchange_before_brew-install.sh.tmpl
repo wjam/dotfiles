@@ -14,120 +14,26 @@ set -o pipefail
 
 export PATH=# [[ includeTemplate "path" | trim | quote ]]
 
-# [[- $brews := list
-      "go"
-      "fzf"
-      "dive"
-      "jq"
-      "git"
-      "htop"
-      "tree"
-      "curl"
-      "direnv"
-      "pandoc"
-      "ipcalc"
-      "powerline-go"
-      "terraform"
-      "terragrunt"
-      "packer"
-      "kubernetes-cli"
-      "kubectx"
-      "stern"
-      "k9s"
-      "vault"
-      "chezmoi"
-      "helm"
-      "pv"
-      "rustup-init"
-      "jrockway/tap/jlog"
-      "tealdeer"
-]]
+# [[- $brews := .all_os.brews ]]
 # TODO need to verify that neo4j no longer needs admin access on a mac
 # [[ $casks := list -]]
-# [[ $taps := list "jrockway/tap" -]]
+# [[ $taps := .all_os.taps -]]
 # [[ $mases := dict -]]
 
 # [[- if .full -]]
-# [[-   $brews = concat $brews (list
-        "ansible"
-        "awscli"
-        "azure-cli"
-        "openjdk@17"
-        "maven"
-        "pgcli"
-        "neo4j"
-      )
--]]
+# [[-   $brews = concat $brews .all_os.full_brews -]]
 # [[- end -]]
 
-
 # [[- if eq .chezmoi.os "darwin" -]]
-# [[-   $casks = concat $casks (list
-        "hammerspoon"
-        "stats"
-        "firefox"
-        "google-chrome"
-        "visual-studio-code"
-        "jetbrains-toolbox"
-        "iterm2"
-        "keeweb"
-        "font-liberation-mono-for-powerline"
-        "slack"
-      )
--]]
-# [[/*
-# Temporarily needed until https://github.com/Homebrew/homebrew-core/pull/97394
-# Re-add `"dockutil"` to brews list when merged
-*/]]
-# [[-   $casks = concat $casks (list
-       "hpedrorodrigues/tools/dockutil"
-      )
--]]
-
-# [[/*
-# readline - .inputrc
-# blueutil - used by Hammerspoon scripts
-# dockutil - manipulate the dock
-# svn - Needed by font-liberation-mono-for-powerline, for some reason
-*/]]
-# [[-   $brews = concat $brews (list
-      "bash-completion"
-      "readline"
-      "watch"
-      "blueutil"
-      "svn"
-      )
--]]
-
-# [[/*
-# For font-liberation-mono-for-powerline
-*/]]
-# [[-   $taps = concat $taps (list
-      "homebrew/cask-fonts"
-      )
--]]
+# [[-   $casks = concat $casks .mac_os.casks -]]
+# [[-   $brews = concat $brews .mac_os.brews -]]
+# [[-   $taps = concat $taps .mac_os.taps -]]
 
 # [[-   if .full -]]
-# [[-     $casks = concat $casks (list
-          "google-cloud-sdk"
-          "drawio"
-          "libreoffice"
-          "gimp"
-          "inkscape"
-        )
--]]
+# [[-     $casks = concat $casks .mac_os.full_casks -]]
 # [[-     if .admin -]]
-# [[-       $casks = concat $casks (list
-            "docker"
-          )
--]]
-# [[/*
-# mas needs admin permissions depending on what it installs
-*/]]
-# [[-       $brews = concat $brews (list
-            "mas"
-          )
--]]
+# [[-       $casks = concat $casks .mac_os_admin.full_casks -]]
+# [[-       $brews = concat $brews .mac_os_admin.full_brews -]]
 # [[-     end -]]
 # [[-   end -]]
 # [[- end -]]

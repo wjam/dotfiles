@@ -1,0 +1,105 @@
+# Contents of this file drives installation of software
+# .chezmoiscripts/run_onchange_before_brew-install.sh.tmpl
+# .chezmoiscripts/run_onchange_before_apt-install.sh.tmpl
+[all_os]
+brews = [
+  "go",
+  "fzf",
+  "dive",
+  "jq",
+  "git",
+  "htop",
+  "tree",
+  "curl",
+  "direnv",
+  "pandoc",
+  "ipcalc",
+  "powerline-go",
+  "terraform",
+  "terragrunt",
+  "packer",
+  "kubernetes-cli",
+  "kubectx",
+  "stern",
+  "k9s",
+  "vault",
+  "chezmoi",
+  "helm",
+  "pv",
+  "rustup-init",
+  "jrockway/tap/jlog",
+  "tealdeer",
+]
+full_brews = [
+  "ansible",
+  "awscli",
+  "azure-cli",
+  "openjdk@17",
+  "maven",
+  "pgcli",
+  "neo4j", # TODO need to verify that neo4j no longer needs admin access on a mac
+]
+taps = [
+  "jrockway/tap",
+]
+
+[mac_os]
+brews = [
+  "bash-completion",
+  "readline", # .inputrc
+  "watch",
+  "blueutil", # used by Hammerspoon scripts
+  "svn", # Needed by font-liberation-mono-for-powerline, for some reason
+]
+taps = [
+  "homebrew/cask-fonts", # For font-liberation-mono-for-powerline
+]
+casks = [
+  "hammerspoon",
+  "stats",
+  "firefox",
+  "google-chrome",
+  "visual-studio-code",
+  "jetbrains-toolbox",
+  "iterm2",
+  "keeweb",
+  "font-liberation-mono-for-powerline",
+  "slack",
+  # TODO Temporarily needed until https://github.com/Homebrew/homebrew-core/pull/97394
+  # Re-add `"dockutil"` to brews list when merged
+  "hpedrorodrigues/tools/dockutil",
+]
+full_casks = [
+  "google-cloud-sdk",
+  "drawio",
+  "libreoffice",
+  "gimp",
+  "inkscape",
+]
+
+[mac_os_admin]
+full_brews = [
+  "mas", # mas needs admin permissions depending on what it installs
+]
+full_casks = [
+  "docker",
+]
+
+[linux_os_admin]
+debs = [
+  "curl",
+  "git",
+  "fonts-powerline",
+  "gnome-tweaks",
+  "wl-clipboard",
+  "zsh",
+  "apt-transport-https", # needed to install vscode - https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions
+  "code",
+  "build-essential",
+  "rclone",
+  "vim-runtime",
+  "vim-gui-common",
+]
+full_deps = [
+  "docker.io",
+]
