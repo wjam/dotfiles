@@ -100,6 +100,6 @@ debs = [
   "vim-runtime",
   "vim-gui-common",
 ]
-full_deps = [
+full_debs = [
   "docker.io",
 ]
