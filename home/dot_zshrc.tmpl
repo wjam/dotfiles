@@ -99,9 +99,10 @@ plugins=(
 {{- end }}
 )
 
+{{ $brewPrefix := output "brew" "--prefix" | trim -}}
 {{ $fpaths := (joinPath .chezmoi.homeDir ".rustup/**/site-functions" | glob) -}}
-{{ $fpaths = append $fpaths (joinPath (output "brew" "--prefix" | trim) "/opt/curl/share/zsh/site-functions") -}}
-{{ $fpaths = append $fpaths (joinPath (output "brew" "--prefix" | trim) "/share/zsh/site-functions") -}}
+{{ $fpaths = append $fpaths (joinPath $brewPrefix "/opt/curl/share/zsh/site-functions") -}}
+{{ $fpaths = append $fpaths (joinPath $brewPrefix "/share/zsh/site-functions") -}}
 {{ $fpaths = append $fpaths "$HOME/bin/.fpath" -}}
 {{- if eq .chezmoi.os "darwin" -}}
 {{   $fpaths = append $fpaths "$HOME/Applications/Docker.app/Contents/Resources/etc" -}}

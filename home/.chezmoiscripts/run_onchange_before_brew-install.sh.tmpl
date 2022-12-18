@@ -15,10 +15,9 @@ set -o pipefail
 export PATH=# [[ includeTemplate "path" | trim | quote ]]
 
 # [[- $brews := .all_os.brews ]]
-# TODO need to verify that neo4j no longer needs admin access on a mac
-# [[ $casks := list -]]
-# [[ $taps := .all_os.taps -]]
-# [[ $mases := dict -]]
+# [[- $casks := list ]]
+# [[- $taps := .all_os.taps ]]
+# [[- $mases := dict ]]
 
 # [[- if .full -]]
 # [[-   $brews = concat $brews .all_os.full_brews -]]
@@ -29,14 +28,14 @@ export PATH=# [[ includeTemplate "path" | trim | quote ]]
 # [[-   $brews = concat $brews .mac_os.brews -]]
 # [[-   $taps = concat $taps .mac_os.taps -]]
 
-# [[-   if .full -]]
-# [[-     $casks = concat $casks .mac_os.full_casks -]]
-# [[-     if .admin -]]
-# [[-       $casks = concat $casks .mac_os_admin.full_casks -]]
-# [[-       $brews = concat $brews .mac_os_admin.full_brews -]]
-# [[-     end -]]
-# [[-   end -]]
-# [[- end -]]
+# [[-   if .full ]]
+# [[-     $casks = concat $casks .mac_os.full_casks ]]
+# [[-     if .admin ]]
+# [[-       $casks = concat $casks .mac_os_admin.full_casks ]]
+# [[-       $brews = concat $brews .mac_os_admin.full_brews ]]
+# [[-     end ]]
+# [[-   end ]]
+# [[- end ]]
 
 brew bundle --no-lock --file=/dev/stdin <<EOF
 # [[ range ($taps | sortAlpha | uniq) -]]
