@@ -3,8 +3,8 @@ module github.com/wjam/dotfiles/tests
 go 1.18
 
 require (
-	github.com/gruntwork-io/terratest v0.41.3
-	github.com/samber/lo v1.35.0
+	github.com/gruntwork-io/terratest v0.41.6
+	github.com/samber/lo v1.37.0
 	github.com/stretchr/testify v1.8.1
 )
 
