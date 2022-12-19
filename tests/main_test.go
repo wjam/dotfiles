@@ -7,7 +7,9 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/gruntwork-io/terratest/modules/logger"
 	"github.com/gruntwork-io/terratest/modules/shell"
+	terraTesting "github.com/gruntwork-io/terratest/modules/testing"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
@@ -90,6 +92,7 @@ func runCommand(t *testing.T, cmd string, args ...string) string {
 		Command: findTool(t, cmd),
 		Args:    args,
 		Env:     map[string]string{"PATH": runShellCommand(t, "echo $PATH")},
+		Logger:  logger.New(testLogger{}),
 	})
 	return output
 }
@@ -118,6 +121,20 @@ func runShellCommand(t *testing.T, cmd string) string {
 		Command: "zsh",
 		Args:    []string{"--allexport", "--interactive", "-c", cmd},
 		Env:     map[string]string{"DISABLE_AUTO_UPDATE": "true"},
+		Logger:  logger.New(testLogger{}),
 	}), "\a")
 	return split[len(split)-1]
+}
+
+var _ logger.TestLogger = testLogger{}
+
+type testLogger struct{}
+
+func (_ testLogger) Logf(t terraTesting.TestingT, format string, args ...interface{}) {
+	if t, ok := t.(*testing.T); ok {
+		t.Helper()
+		t.Logf(format, args...)
+	} else {
+		fmt.Printf(format, args...)
+	}
 }
