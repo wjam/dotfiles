@@ -7,4 +7,4 @@
     (joinPath $brewPrefix "sbin")
     (joinPath $brewPrefix "bin")
 -}}
-{{- $paths | join ":" -}}:$PATH:$HOME/bin
+{{- $paths | join ":" -}}:$PATH:$HOME/.local/bin

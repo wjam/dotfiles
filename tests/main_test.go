@@ -15,7 +15,7 @@ import (
 )
 
 func TestIterm2PowerlineGoZSHTheme(t *testing.T) {
-	envs := runShellCommand(t, "env")
+	envs := runCommandInShell(t, "env")
 
 	// iterm is there, so the powerline-go is probably running?
 	assert.Contains(t, envs, "ITERM_SHELL_INTEGRATION_INSTALLED=Yes")
@@ -29,10 +29,7 @@ func TestShellDefaultIsZSH(t *testing.T) {
 }
 
 func TestManPagesRendered(t *testing.T) {
-	home, err := os.UserHomeDir()
-	require.NoError(t, err)
-
-	assert.FileExists(t, filepath.Join(home, "man", "man1", "goland.1"))
+	runCommand(t, "man", "-P", "cat", "goland")
 }
 
 func TestToolsInstalled(t *testing.T) {
@@ -91,14 +88,14 @@ func runCommand(t *testing.T, cmd string, args ...string) string {
 	output := shell.RunCommandAndGetOutput(t, shell.Command{
 		Command: findTool(t, cmd),
 		Args:    args,
-		Env:     map[string]string{"PATH": runShellCommand(t, "echo $PATH")},
+		Env:     map[string]string{"PATH": runCommandInShell(t, "echo $PATH")},
 		Logger:  logger.New(testLogger{}),
 	})
 	return output
 }
 
 func findTool(t *testing.T, tool string) string {
-	path := strings.Split(runShellCommand(t, "echo $PATH"), string(os.PathListSeparator))
+	path := strings.Split(runCommandInShell(t, "echo $PATH"), string(os.PathListSeparator))
 
 	for _, p := range path {
 		toolPath := filepath.Join(p, tool)
@@ -114,7 +111,7 @@ func findTool(t *testing.T, tool string) string {
 	return ""
 }
 
-func runShellCommand(t *testing.T, cmd string) string {
+func runCommandInShell(t *testing.T, cmd string) string {
 	// Need to run with --interactive to pick up the PATH from the _new_ shell, rather than this shell
 	// but that will include iTerm related things, which are separated by '\a'
 	split := strings.Split(shell.RunCommandAndGetOutput(t, shell.Command{

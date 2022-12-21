@@ -31,7 +31,7 @@
   [".iterm2_shell_integration.zsh".filter]
     command = "tar"
     args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "iTerm2-shell-integration-main/shell_integration/zsh"]
-["bin/aws_finder"]
+[".local/bin/aws_finder"]
   type = "file"
   url = "https://github.com/wjam/aws_finder/releases/download/v0.5/aws_finder-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
   executable = true

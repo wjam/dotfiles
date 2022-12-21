@@ -103,7 +103,7 @@ plugins=(
 {{ $fpaths := (joinPath .chezmoi.homeDir ".rustup/**/site-functions" | glob) -}}
 {{ $fpaths = append $fpaths (joinPath $brewPrefix "/opt/curl/share/zsh/site-functions") -}}
 {{ $fpaths = append $fpaths (joinPath $brewPrefix "/share/zsh/site-functions") -}}
-{{ $fpaths = append $fpaths "$HOME/bin/.fpath" -}}
+{{ $fpaths = append $fpaths "$HOME/.local/fpath" -}}
 {{- if eq .chezmoi.os "darwin" -}}
 {{   $fpaths = append $fpaths "$HOME/Applications/Docker.app/Contents/Resources/etc" -}}
 {{- end -}}
