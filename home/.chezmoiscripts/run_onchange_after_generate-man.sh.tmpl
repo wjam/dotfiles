@@ -22,10 +22,10 @@ set -o pipefail
 
 export PATH=# [[ includeTemplate "path" | trim | quote ]]
 
-cwd="${HOME}/man"
+cwd="${HOME}/.local/man"
 
 for i in {1..9} ; do
-  rm  -f "${HOME}/man${i}/*.${i}"
+  rm  -f "${HOME}/.local/man${i}/*.${i}"
 
   find "${cwd}"/ -name "*.${i}.md" -exec sh -c '
     mkdir -p "${1}"/man${2}

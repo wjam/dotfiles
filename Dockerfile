@@ -22,5 +22,7 @@ ENV USER=docker
 ENV NONINTERACTIVE=1
 RUN /bin/bash -c "$(curl --show-error --silent --fail --location https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 
+RUN mkdir --mode=0700 /home/docker/.local
+
 CMD /bin/bash
 WORKDIR /home/docker

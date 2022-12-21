@@ -30,8 +30,9 @@ function uninstall_unwanted_default_apps() {
 }
 
 function configure_finder() {
-  # TODO defaults write com.apple.finder AppleShowAllFiles YES; # show hidden files
   # TODO defaults write NSGlobalDomain AppleShowAllExtensions -bool true; # show all file extensions
+  # show hidden files
+  defaults write com.apple.finder AppleShowAllFiles YES
   # Set the default view to be list
   defaults write com.apple.Finder FXPreferredViewStyle Nlsv
   # Show path bar in Finder
@@ -52,7 +53,7 @@ function configure_dock() {
 
   dockutil --remove all --no-restart
   dockutil --add "/System/Applications/App Store.app/" --section apps --no-restart
-  dockutil --add "/System/Applications/System Preferences.app/" --section apps --no-restart
+  dockutil --add "/System/Applications/System Settings.app/" --section apps --no-restart
   dockutil --add "$HOME/Applications/iTerm.app/" --section apps --no-restart
   dockutil --add "$HOME/Applications/Slack.app/" --section apps --no-restart
   dockutil --add "$HOME/Applications/KeeWeb.app/" --section apps --no-restart
