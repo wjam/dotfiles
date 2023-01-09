@@ -34,4 +34,3 @@ for i in {1..9} ; do
     pandoc -s -t man "${3}" -o ${1}/man${2}/"${without_extension}"
   ' sh "${cwd}" "${i}" {} \;
 done
-

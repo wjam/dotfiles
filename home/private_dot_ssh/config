@@ -1,0 +1,20 @@
+# Per-host key, e.g. ~/.ssh/keys/github.com or ~/.ssh/keys/company.github.com
+IdentityFile ~/.ssh/keys/%n
+
+# Fallback keys
+IdentityFile ~/.ssh/id_rsa
+
+# Don't send all keys to everyone
+IdentitiesOnly yes
+
+# Keep who you've connected to secret in case it gets leaked
+HashKnownHosts yes
+
+# Disable strict key checking on localhost connections and using /dev/null as the known hosts file
+Host localhost
+	UserKnownHostsFile /dev/null
+	StrictHostKeyChecking no
+
+# Allow multiple ssh keys for different GitHub accounts - e.g. ~/.ssh/keys/company.github.com
+Match host *.github.com
+	HostName github.com

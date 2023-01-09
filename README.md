@@ -75,7 +75,7 @@ TODO
   * enable accessibility
 * Start Stats and select start at login
 * Start JetBrains toolbox
-  * generate shell scripts & set to `~/bin`
+  * generate shell scripts & set to `~/.local/bin`
 * Show sound in menu bar
 * Settings > Keyboard > 'Touch Bar shows': 'F1, F2, etc. Keys'
 * KeeWeb

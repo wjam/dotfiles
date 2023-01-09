@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
+	"sync"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/logger"
@@ -13,6 +14,9 @@ import (
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 )
+
+var pathEnvVar string
+var pathEnvVarOnce sync.Once
 
 func TestIterm2PowerlineGoZSHTheme(t *testing.T) {
 	envs := runCommandInShell(t, "env")
@@ -84,18 +88,25 @@ func TestChezmoiDiffWorks(t *testing.T) {
 	assert.NotEqual(t, "", output)
 }
 
+func TestSSHConfigSupportsMultiGitHubAccounts(t *testing.T) {
+	config := runCommand(t, "ssh", "-G", "git@company.github.com")
+
+	assert.Contains(t, config, "hostname github.com")
+	assert.Contains(t, config, "identityfile ~/.ssh/keys/%n")
+}
+
 func runCommand(t *testing.T, cmd string, args ...string) string {
 	output := shell.RunCommandAndGetOutput(t, shell.Command{
 		Command: findTool(t, cmd),
 		Args:    args,
-		Env:     map[string]string{"PATH": runCommandInShell(t, "echo $PATH")},
+		Env:     map[string]string{"PATH": path(t)},
 		Logger:  logger.New(testLogger{}),
 	})
 	return output
 }
 
 func findTool(t *testing.T, tool string) string {
-	path := strings.Split(runCommandInShell(t, "echo $PATH"), string(os.PathListSeparator))
+	path := strings.Split(path(t), string(os.PathListSeparator))
 
 	for _, p := range path {
 		toolPath := filepath.Join(p, tool)
@@ -109,6 +120,13 @@ func findTool(t *testing.T, tool string) string {
 
 	require.Fail(t, "unable to find %s", tool)
 	return ""
+}
+
+func path(t *testing.T) string {
+	pathEnvVarOnce.Do(func() {
+		pathEnvVar = runCommandInShell(t, "echo $PATH")
+	})
+	return pathEnvVar
 }
 
 func runCommandInShell(t *testing.T, cmd string) string {
