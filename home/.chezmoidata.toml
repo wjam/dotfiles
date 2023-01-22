@@ -31,7 +31,6 @@ brews = [
   "tealdeer",
 ]
 full_brews = [
-  "ansible",
   "awscli",
   "azure-cli",
   "openjdk@17",
