@@ -36,7 +36,6 @@ full_brews = [
   "openjdk@17",
   "maven",
   "pgcli",
-  "neo4j", # TODO need to verify that neo4j no longer needs admin access on a mac
 ]
 taps = [
   "jrockway/tap",
