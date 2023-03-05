@@ -47,10 +47,9 @@ brews = [
   "readline", # .inputrc
   "watch",
   "blueutil", # used by Hammerspoon scripts
-  "svn", # Needed by font-liberation-mono-for-powerline, for some reason
 ]
 taps = [
-  "homebrew/cask-fonts", # For font-liberation-mono-for-powerline
+  "wez/wezterm",
 ]
 casks = [
   "hammerspoon",
@@ -59,9 +58,8 @@ casks = [
   "google-chrome",
   "visual-studio-code",
   "jetbrains-toolbox",
-  "iterm2",
+  "wez/wezterm/wezterm",
   "keeweb",
-  "font-liberation-mono-for-powerline",
   "slack",
   # TODO Temporarily needed until https://github.com/Homebrew/homebrew-core/pull/97394
   # Re-add `"dockutil"` to brews list when merged
@@ -84,10 +82,15 @@ full_casks = [
 ]
 
 [linux_os_admin]
+brews = [
+  "wezterm",
+]
+taps = [
+  "wez/wezterm-linuxbrew",
+]
 debs = [
   "curl",
   "git",
-  "fonts-powerline",
   "gnome-tweaks",
   "wl-clipboard",
   "zsh",

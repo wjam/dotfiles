@@ -22,15 +22,6 @@
   exact = true
   stripComponents = 1
   refreshPeriod = "168h"
-[".iterm2_shell_integration.zsh"]
-  type = "file"
-  url = "https://github.com/gnachman/iTerm2-shell-integration/archive/main.tar.gz"
-  executable = true
-  refreshPeriod = "168h"
-  stripComponents = 1
-  [".iterm2_shell_integration.zsh".filter]
-    command = "tar"
-    args = ["--extract", "--file", "/dev/stdin", "--gzip", "--to-stdout", "iTerm2-shell-integration-main/shell_integration/zsh"]
 [".local/bin/aws_finder"]
   type = "file"
   url = "https://github.com/wjam/aws_finder/releases/download/v0.5/aws_finder-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"

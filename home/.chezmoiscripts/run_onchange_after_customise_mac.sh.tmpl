@@ -54,19 +54,12 @@ function configure_dock() {
   dockutil --remove all --no-restart
   dockutil --add "/System/Applications/App Store.app/" --section apps --no-restart
   dockutil --add "/System/Applications/System Settings.app/" --section apps --no-restart
-  dockutil --add "$HOME/Applications/iTerm.app/" --section apps --no-restart
+  dockutil --add "$HOME/Applications/WezTerm.app/" --section apps --no-restart
   dockutil --add "$HOME/Applications/Slack.app/" --section apps --no-restart
   dockutil --add "$HOME/Applications/KeeWeb.app/" --section apps --no-restart
   dockutil --add "$HOME/Applications/Visual Studio Code.app/" --section apps --no-restart
   dockutil --add "$HOME/Applications/Firefox.app/" --section apps --no-restart
   dockutil --add "$HOME/Downloads/" --section others --view list --display stack --restart # restart last to pickup changes
-}
-
-function configure_iterm2() {
-  # Specify the preferences directory
-  defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "$HOME/.config/iterm"
-  # Tell iTerm2 to use the custom preferences in the directory
-  defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 }
 
 function configure_keyboard() {
@@ -79,7 +72,6 @@ uninstall_unwanted_default_apps
 # [[- end ]]
 configure_finder
 configure_dock
-configure_iterm2
 configure_keyboard
 
 # [[- end ]]
