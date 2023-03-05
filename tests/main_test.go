@@ -18,11 +18,11 @@ import (
 var pathEnvVar string
 var pathEnvVarOnce sync.Once
 
-func TestIterm2PowerlineGoZSHTheme(t *testing.T) {
+func TestZSHTheme(t *testing.T) {
 	envs := runCommandInShell(t, "env")
 
-	// iterm is there, so the powerline-go is probably running?
-	assert.Contains(t, envs, "ITERM_SHELL_INTEGRATION_INSTALLED=Yes")
+	// shell integration is there, so the powerline-go is probably running?
+	assert.Contains(t, envs, "WEZTERM_SHELL_INTEGRATION_INSTALLED=Yes")
 }
 
 func TestShellDefaultIsZSH(t *testing.T) {
@@ -99,7 +99,7 @@ func runCommand(t *testing.T, cmd string, args ...string) string {
 	output := shell.RunCommandAndGetOutput(t, shell.Command{
 		Command: findTool(t, cmd),
 		Args:    args,
-		Env:     map[string]string{"PATH": path(t)},
+		Env:     map[string]string{"PATH": path(t), "DISABLE_AUTO_UPDATE": "true", "ZSH_DISABLE_COMPFIX": "true"},
 		Logger:  logger.New(testLogger{}),
 	})
 	return output
@@ -111,7 +111,7 @@ func findTool(t *testing.T, tool string) string {
 	for _, p := range path {
 		toolPath := filepath.Join(p, tool)
 		f, err := os.Stat(toolPath)
-		if os.IsNotExist(err) || f.Mode().Perm()&0111 == 0 {
+		if os.IsNotExist(err) || f == nil || f.Mode().Perm()&0111 == 0 {
 			continue
 		}
 
@@ -135,7 +135,7 @@ func runCommandInShell(t *testing.T, cmd string) string {
 	split := strings.Split(shell.RunCommandAndGetOutput(t, shell.Command{
 		Command: "zsh",
 		Args:    []string{"--allexport", "--interactive", "-c", cmd},
-		Env:     map[string]string{"DISABLE_AUTO_UPDATE": "true"},
+		Env:     map[string]string{"DISABLE_AUTO_UPDATE": "true", "ZSH_DISABLE_COMPFIX": "true"},
 		Logger:  logger.New(testLogger{}),
 	}), "\a")
 	return split[len(split)-1]

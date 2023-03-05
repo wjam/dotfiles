@@ -35,6 +35,9 @@ export PATH=# [[ includeTemplate "path" | trim | quote ]]
 # [[-       $brews = concat $brews .mac_os_admin.full_brews ]]
 # [[-     end ]]
 # [[-   end ]]
+# [[- else if eq .chezmoi.os "linux" ]]
+# [[-   $brews = concat $brews .linux_os_admin.brews -]]
+# [[-   $taps = concat $taps .linux_os_admin.taps -]]
 # [[- end ]]
 
 brew bundle --no-lock --file=/dev/stdin <<EOF
