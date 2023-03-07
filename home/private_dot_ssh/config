@@ -12,9 +12,14 @@ HashKnownHosts yes
 
 # Disable strict key checking on localhost connections and using /dev/null as the known hosts file
 Host localhost
-	UserKnownHostsFile /dev/null
-	StrictHostKeyChecking no
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
 
 # Allow multiple ssh keys for different GitHub accounts - e.g. ~/.ssh/keys/company.github.com
 Match host *.github.com
-	HostName github.com
+  HostName github.com
+
+Host remarkable
+  Hostname 10.11.99.1
+  User root
+  IdentityFile ~/.ssh/keys/remarkable
