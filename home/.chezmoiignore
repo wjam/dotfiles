@@ -8,4 +8,5 @@ Library
 .config/k9s
 .config/systemd
 .config/tealdeer
+.local/share
 {{ end }}

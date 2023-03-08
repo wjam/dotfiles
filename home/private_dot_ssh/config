@@ -22,4 +22,3 @@ Match host *.github.com
 Host remarkable
   Hostname 10.11.99.1
   User root
-  IdentityFile ~/.ssh/keys/remarkable

@@ -61,6 +61,7 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 
 ## Ubuntu post installation
 * [Configure rclone](https://rclone.org/googlephotos/)
+* Add wezterm to sidebar
 TODO
 
 ## macOS post installation
