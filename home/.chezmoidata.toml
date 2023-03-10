@@ -82,7 +82,7 @@ full_casks = [
 ]
 
 [linux_os_admin]
-brews = [
+full_brews = [
   "wezterm",
 ]
 taps = [
