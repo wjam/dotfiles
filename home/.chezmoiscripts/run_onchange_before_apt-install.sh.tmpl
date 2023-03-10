@@ -20,7 +20,7 @@ set -o pipefail
 # [[- end ]]
 
 # curl -fsL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | base64
-cat <<EOPGP | base64 --decode | sudo tee /etc/apt/keyrings/packages.microsoft.gpg
+cat <<EOPGP | base64 --decode | sudo tee /etc/apt/keyrings/packages.microsoft.gpg > /dev/null
 mQENBFYxWIwBCADAKoZhZlJxGNGWzqV+1OG1xiQeoowKhssGAKvd+buXCGISZJwTLXZqIcIiLP7p
 qdcZWtE9bSc7yBY2MalDp9Liu0KekywQ6VVX1T72NPf5Ev6x6DLV7aVWsCzUAF+eb7DC9fPuFLEd
 xmOEYoPjzrQ7cCnSV4JQxAqhU4T6OjbvRazGl3agOeizPXmRljMtUUttHQZnRhtlzkmwIrUivbfF
