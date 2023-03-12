@@ -3,7 +3,7 @@ local wezterm = require("wezterm")
 return {
   color_scheme = "3024 Night",
   exit_behavior = "Close",
-  initial_cols = 140,
+  initial_cols = 152,
   initial_rows = 34,
   detect_password_input = true,
   enable_scroll_bar = true,
@@ -44,6 +44,7 @@ return {
     {key="LeftArrow", mods="SUPER", action=wezterm.action.SendKey{key='Home'}},
     -- Make Cmd-Right equivalent to End
     {key="RightArrow", mods="SUPER", action=wezterm.action.SendKey{key='End'}},
+    {key='0', mods='CTRL', action=wezterm.action.ResetFontAndWindowSize},
   },
 
 --  window_decorations = "RESIZE",
