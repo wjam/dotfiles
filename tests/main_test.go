@@ -131,7 +131,7 @@ func path(t *testing.T) string {
 
 func runCommandInShell(t *testing.T, cmd string) string {
 	// Need to run with --interactive to pick up the PATH from the _new_ shell, rather than this shell
-	// but that will include iTerm related things, which are separated by '\a'
+	// but that will include OSC sequences, which are separated by '\a'
 	split := strings.Split(shell.RunCommandAndGetOutput(t, shell.Command{
 		Command: "zsh",
 		Args:    []string{"--allexport", "--interactive", "-c", cmd},

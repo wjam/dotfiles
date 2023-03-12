@@ -18,7 +18,7 @@ function powerline_precmd() {
     __DURATION="$(($__ERT - ${__TIMER:-__ERT}))"
   fi
 
-  eval "$(powerline-go -duration $__DURATION -error $__ERRCODE -jobs $__JOBS -shorten-eks-names)"
+  eval "$(powerline-go -duration $__DURATION -error $__ERRCODE -jobs $__JOBS -shorten-eks-names -hostname-only-if-ssh)"
   unset __TIMER
 }
 
