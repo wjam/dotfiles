@@ -119,8 +119,10 @@ AUTO_NOTIFY_IGNORE+=("docker run" "docker exec" "docker logs" "vi" "dive" "k9s" 
 # make `*` slightly easier to see
 ZSH_HIGHLIGHT_STYLES[globbing]=fg=blue,bold
 
-bindkey "\e\e[D" backward-word
-bindkey "\e\e[C" forward-word
+# Tip: Use `cat` to discover the keybindings
+# Remember that 'Cmd' doesn't work inside a terminal
+bindkey "^[[1;3D" backward-word
+bindkey "^[[1;3C" forward-word
 
 # User configuration
 

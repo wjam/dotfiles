@@ -1,12 +1,11 @@
 local wezterm = require("wezterm")
 
 return {
-  color_scheme = "Wombat",
+  color_scheme = "3024 Night",
   exit_behavior = "Close",
   initial_cols = 140,
   initial_rows = 34,
   detect_password_input = true,
-  window_background_opacity = 0.9,
   enable_scroll_bar = true,
   native_macos_fullscreen_mode = true,
   scrollback_lines = 100000,
@@ -40,10 +39,11 @@ return {
   default_gui_startup_args = { 'connect', 'unix' },
 
   keys = {
-    -- Make Option-Left equivalent to Alt-b which many line editors interpret as backward-word
-    {key="LeftArrow", mods="OPT", action=wezterm.action{SendString="\x1bb"}},
-    -- Make Option-Right equivalent to Alt-f; forward-word
-    {key="RightArrow", mods="OPT", action=wezterm.action{SendString="\x1bf"}},
+    -- Forward `Cmd+key` commands to the terminal
+    -- Make Cmd-Left equivalent to Home
+    {key="LeftArrow", mods="SUPER", action=wezterm.action.SendKey{key='Home'}},
+    -- Make Cmd-Right equivalent to End
+    {key="RightArrow", mods="SUPER", action=wezterm.action.SendKey{key='End'}},
   },
 
 --  window_decorations = "RESIZE",
