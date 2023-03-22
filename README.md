@@ -78,7 +78,8 @@ TODO
 * Start JetBrains toolbox
   * generate shell scripts & set to `~/.local/bin`
 * Show sound in menu bar
-* Settings > Keyboard > 'Touch Bar shows': 'F1, F2, etc. Keys'
+* Show bluetooth in menu bar
+* Settings > Keyboard > Keyboard Shortcuts > Function Keys > 'Use F1, F2, etc. keys as standard function keys'
 * KeeWeb
   * Security & Privacy > Privacy > Accessibility
 * Settings > Date & Time > Clock: Show date
