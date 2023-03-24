@@ -13,6 +13,6 @@ set -o pipefail
 #set -o xtrace
 
 # kubectl plugins seem to get run without a real PATH?
-export PATH=# [[ includeTemplate "path" | trim | quote ]]
+export PATH=# [[ includeTemplate "path" . | trim | quote ]]
 
 kubectl logs "$@" | jlog --lax --no-summary

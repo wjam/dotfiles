@@ -13,7 +13,7 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-export PATH=# [[ includeTemplate "path" | trim | quote ]]
+export PATH=# [[ includeTemplate "path" . | trim | quote ]]
 
 function mas_uninstall() {
   installed=$(mas list | grep "$1" || true)

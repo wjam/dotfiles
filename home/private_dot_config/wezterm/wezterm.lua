@@ -44,6 +44,8 @@ return {
     {key="LeftArrow", mods="SUPER", action=wezterm.action.SendKey{key='Home'}},
     -- Make Cmd-Right equivalent to End
     {key="RightArrow", mods="SUPER", action=wezterm.action.SendKey{key='End'}},
+    -- Make Cmd+Enter go to fullscreen
+    {key="Enter", mods="SUPER", action=wezterm.action.ToggleFullScreen},
     {key='0', mods='CTRL', action=wezterm.action.ResetFontAndWindowSize},
   },
 

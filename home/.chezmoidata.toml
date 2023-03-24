@@ -64,6 +64,7 @@ casks = [
   # TODO Temporarily needed until https://github.com/Homebrew/homebrew-core/pull/97394
   # Re-add `"dockutil"` to brews list when merged
   "hpedrorodrigues/tools/dockutil",
+  "obs", # Needed to control webcam
 ]
 full_casks = [
   "google-cloud-sdk",

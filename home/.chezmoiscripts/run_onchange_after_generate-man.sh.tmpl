@@ -20,7 +20,7 @@ set -o pipefail
 # # [[ . ]] hash: # [[ include . | sha256sum ]]
 # [[- end ]]
 
-export PATH=# [[ includeTemplate "path" | trim | quote ]]
+export PATH=# [[ includeTemplate "path" . | trim | quote ]]
 
 cwd="${HOME}/.local/man"
 
