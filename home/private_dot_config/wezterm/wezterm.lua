@@ -27,6 +27,15 @@ function basename(s)
   return string.gsub(s, '(.*[/\\])(.*)', '%2')
 end
 
+function hex_to_char(x)
+  return string.char(tonumber(x, 16))
+end
+
+function unescape(url)
+  return url:gsub("%%(%x%x)", hex_to_char)
+end
+
+
 function remove_file_prefix(s, home)
   if s:find('file://', 1, true) then
     s = string.sub(s, 8, string.len(s))
@@ -56,7 +65,7 @@ wezterm.on(
     end
 
     if program == "" then
-      program = remove_file_prefix(tab.active_pane.current_working_dir, pane.user_vars["WEZTERM_HOME"])
+      program = unescape(remove_file_prefix(tab.active_pane.current_working_dir, pane.user_vars["WEZTERM_HOME"]))
     end
 
     local index = ''
@@ -83,7 +92,7 @@ wezterm.on(
     end
 
     if program == "" then
-      program = remove_file_prefix(tab.active_pane.current_working_dir, tab.active_pane.user_vars["WEZTERM_HOME"])
+      program = unescape(remove_file_prefix(tab.active_pane.current_working_dir, tab.active_pane.user_vars["WEZTERM_HOME"]))
     end
 
     local index = string.format('%d: ', tab.tab_index + 1)
