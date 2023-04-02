@@ -1,28 +1,47 @@
 require "string"
 
+local bluetoothWasOffWhenSleeping = false
+
+function trim(s)
+   return string.match(s, "^%s*(.-)%s*$")
+end
+
 function checkBluetoothResult(rc, stdout, stderr)
     if rc ~= 0 then
         print(string.format("Unexpected result executing `blueutil`: rc=%d stderr=%s stdout=%s", rc, stderr, stdout))
     end
 end
 
-function bluetooth(power)
+function checkIfBluetoothAlreadyOff(rc, stdout, stderr)
+    if rc ~= 0 then
+        print(string.format("Unexpected result executing `blueutil`: rc=%d stderr=%s stdout=%s", rc, stderr, stdout))
+    elseif trim(stdout) == "0" then
+        bluetoothWasOffWhenSleeping = true
+    else
+        toggleBluetooth("off")
+    end
+end
+
+function toggleBluetooth(power)
     print("Setting bluetooth to " .. power)
     local t = hs.task.new("{{ output "brew" "--prefix" | trim }}/bin/blueutil", checkBluetoothResult, {"--power", power})
     t:start()
 end
 
-function f(event)
-    if event == hs.caffeinate.watcher.systemWillSleep then
-        bluetooth("off")
-    elseif event == hs.caffeinate.watcher.screensDidWake then
-        bluetooth("on")
+function handlePowerEvent(event)
+    if event == hs.caffeinate.watcher.screensDidWake then
+      if bluetoothWasOffWhenSleeping then
+        bluetoothWasOffWhenSleeping = false
+        return
+      end
+      toggleBluetooth("on")
+    elseif event == hs.caffeinate.watcher.systemWillSleep then
+      print("Checking if Bluetooth is running")
+      local t = hs.task.new("{{ output "brew" "--prefix" | trim }}/bin/blueutil", checkIfBluetoothAlreadyOff, {"--power"})
+      t:start()
+      return
     end
 end
 
-watcher = hs.caffeinate.watcher.new(f)
+watcher = hs.caffeinate.watcher.new(handlePowerEvent)
 watcher:start()
-
--- Toggle Bluetooth when the laptop goes to sleep
--- to avoid the problem of devices connecting to the laptop when it's supposed to be asleep
--- From https://gist.github.com/ysimonson/fea48ee8a68ed2cbac12473e87134f58
