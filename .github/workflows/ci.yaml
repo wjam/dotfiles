@@ -20,8 +20,5 @@ jobs:
         run: |
           mkdir -p $HOME/.local/share
           ln -s $GITHUB_WORKSPACE $HOME/.local/share/chezmoi
-      - name: Clean up existing binaries if present # needed for mac
-        run: |
-          sudo rm -fr /usr/local/bin/go /usr/local/bin/gofmt
       - name: Test
         run: ./testing.sh --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test
