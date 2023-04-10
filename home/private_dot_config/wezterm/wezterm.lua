@@ -13,17 +13,27 @@ function scheme_for_appearance()
   end
 end
 
--- Equivalent to POSIX basename(3)
--- Given "/foo/bar" returns "bar"
--- Given "c:\\foo\\bar" returns "bar"
+function trim_prefix(s, prefix)
+  if s:find(prefix, 1, true) then
+    s = string.sub(s, string.len(prefix) + 1, string.len(s))
+  end
+  return s
+end
+
 function basename(s)
   if s == nil then
     return ""
   end
+  -- Make `sudo sleep` appear as `sleep`
+  s = trim_prefix(s, 'sudo ')
+
+  -- Make `cat foo.json` appear as `cat`
   i, j = string.find(s, ' ')
   if i ~= nil then
     s = string.sub(s, 1, i)
   end
+
+  -- Make `/usr/bin/cat`, or 'c:\\usr\\bin\\cat', appear as `cat`
   return string.gsub(s, '(.*[/\\])(.*)', '%2')
 end
 
@@ -35,13 +45,10 @@ function unescape(url)
   return url:gsub("%%(%x%x)", hex_to_char)
 end
 
-
 function remove_file_prefix(s, home)
-  if s:find('file://', 1, true) then
-    s = string.sub(s, 8, string.len(s))
-  end
+  s = trim_prefix(s, 'file://')
   if (home ~= nil and s:find(home, 1, true)) then
-    s = "~" .. string.sub(s, string.len(home) + 1, string.len(s))
+    s = "~" .. trim_prefix(s, home)
   end
   return s
 end
@@ -97,10 +104,20 @@ wezterm.on(
 
     local index = string.format('%d: ', tab.tab_index + 1)
 
-    -- TODO check panes[*].has_unseen_output once https://github.com/wez/wezterm/issues/2625 is fixed
-    return {
-      { Text = ' ' .. index .. ssh .. program .. ' ' },
-    }
+    -- Documentation on the format is at https://wezfurlong.org/wezterm/config/lua/wezterm/format.html
+    local title = {}
+
+    local unseen = ""
+    if tab.active_pane.has_unseen_output then
+      title[#title + 1] = { Background = { Color = 'blue' } }
+      unseen = ' *'
+    -- TODO use https://wezfurlong.org/wezterm/config/lua/wezterm.time/now.html to change the background to blue and
+    -- back over time, highlighting the change? https://github.com/kikito/tween.lua?
+    end
+
+    title[#title + 1] = { Text = ' ' .. unseen .. index .. ssh .. program .. ' ' }
+
+    return title
   end
 )
 

@@ -3,7 +3,7 @@ require "string"
 local bluetoothWasOffWhenSleeping = false
 
 function trim(s)
-   return string.match(s, "^%s*(.-)%s*$")
+  return string.match(s, "^%s*(.-)%s*$")
 end
 
 function checkBluetoothResult(rc, stdout, stderr)
