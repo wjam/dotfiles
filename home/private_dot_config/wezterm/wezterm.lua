@@ -21,20 +21,37 @@ function trim_prefix(s, prefix)
 end
 
 function basename(s)
-  if s == nil then
+  -- test case # expected output
+  -- cat # cat
+  -- /usr/bin/cat # cat
+  -- c:\\usr\\bin\\cat # cat
+  -- sudo /usr/bin/cat # cat
+  -- FOO=var cat # cat
+  -- FOO=var BAR=var cat # cat
+  -- sudo FOO=var cat # cat
+  -- sudo FOO=var bash cat # cat
+  -- sudo FOO=var bash # bash (that's the command being run)
+  -- FOO cat # (should output FOO, which is the command going to be run)
+
+  if (s == nil or s == "") then
     return ""
   end
-  -- Make `sudo sleep` appear as `sleep`
-  s = trim_prefix(s, 'sudo ')
 
-  -- Make `cat foo.json` appear as `cat`
-  i, j = string.find(s, ' ')
-  if i ~= nil then
-    s = string.sub(s, 1, i)
+  local name = ""
+  for substring in string.gmatch(s, "%S+") do
+    if not string.find(substring, "=") then
+      if (substring ~= "sudo" and substring ~= "bash" and substring ~= "zsh") then
+        -- The first occurrence of something that isn't an env. var. and isn't an ignored word, so must be
+        -- the command being executed
+        return string.gsub(s, '(.*[/\\])(.*)', '%2')
+      end
+
+      name = substring
+    end
   end
 
-  -- Make `/usr/bin/cat`, or 'c:\\usr\\bin\\cat', appear as `cat`
-  return string.gsub(s, '(.*[/\\])(.*)', '%2')
+  -- in case we're executing something like `sudo bash`
+  return name
 end
 
 function hex_to_char(x)
