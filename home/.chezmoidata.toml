@@ -27,7 +27,6 @@ brews = [
   "helm",
   "pv",
   "rustup-init",
-  "jrockway/tap/jlog",
   "tealdeer",
 ]
 full_brews = [
@@ -38,7 +37,6 @@ full_brews = [
   "pgcli",
 ]
 taps = [
-  "jrockway/tap",
 ]
 
 [mac_os]

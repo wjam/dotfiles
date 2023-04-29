@@ -1,0 +1,37 @@
+
+# Template functions:
+# toRFC3339Nano - Parse timestamp (string, int, json.Number) and format it using RFC3339Nano format
+# toUTC - Parse timestamp (string, int, json.Number) and return a `time.Time`
+# tryParseJSON - Attempt to parse string as JSON, return nil on failure
+# parseJSON - Parse a string as JSON, printing the error on failure
+# levelColor - correct colour for debug, info, warn, error, etc. (forced to lowercase)
+template: |
+  {{- .PodName -}}/{{- .ContainerName -}}
+  {{- " " -}}
+  {{- with $msg := .Message | tryParseJSON -}}
+    [
+      {{- if $msg.ts -}}
+        {{- colorGreen ((toUTC $msg.ts).Format "01-02T15:04:05.000Z0700") -}}
+      {{- else -}}
+        {{- colorGreen ((toUTC (index $msg "@timestamp")).Format "01-02T15:04:05.000Z0700") -}}
+      {{- end -}}
+    ]
+    {{- " " -}}
+    {{ levelColor $msg.level }} ({{ colorCyan $msg.caller }})
+    {{- " " -}}
+    {{- if $msg.msg -}}
+      {{- $msg.msg -}}
+    {{- else -}}
+      {{- $msg.message -}}
+    {{- end -}}
+    {{- if $msg.stack_trace -}}
+      {{- "\n" -}} {{ $msg.stack_trace }}
+    {{- end -}}
+  {{- else -}}
+    {{- .Message -}}
+  {{- end -}}
+  {{- "\n" -}}
+
+# only-log-lines ?
+
+# {{ printf "%.25s" .Content }} to limit the size of the caller?
