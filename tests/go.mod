@@ -6,6 +6,7 @@ require (
 	github.com/gruntwork-io/terratest v0.41.12
 	github.com/samber/lo v1.37.0
 	github.com/stretchr/testify v1.8.2
+	github.com/yuin/gopher-lua v1.1.0
 )
 
 require (

@@ -1,4 +1,5 @@
-local wezterm = require("wezterm")
+local wezterm = require 'wezterm'
+local helpers = require 'helpers'
 
 function scheme_for_appearance()
   -- The multiplexer may not be connected to a GUI, so attempting to resolve this module from the mux server will return nil.
@@ -11,63 +12,6 @@ function scheme_for_appearance()
       return "Builtin Light"
     end
   end
-end
-
-function trim_prefix(s, prefix)
-  if s:find(prefix, 1, true) then
-    s = string.sub(s, string.len(prefix) + 1, string.len(s))
-  end
-  return s
-end
-
-function basename(s)
-  -- test case # expected output
-  -- cat # cat
-  -- /usr/bin/cat # cat
-  -- c:\\usr\\bin\\cat # cat
-  -- sudo /usr/bin/cat # cat
-  -- FOO=var cat # cat
-  -- FOO=var BAR=var cat # cat
-  -- sudo FOO=var cat # cat
-  -- sudo FOO=var bash cat # cat
-  -- sudo FOO=var bash # bash (that's the command being run)
-  -- FOO cat # (should output FOO, which is the command going to be run)
-
-  if (s == nil or s == "") then
-    return ""
-  end
-
-  local name = ""
-  for substring in string.gmatch(s, "%S+") do
-    if not string.find(substring, "=") then
-      if (substring ~= "sudo" and substring ~= "bash" and substring ~= "zsh") then
-        -- The first occurrence of something that isn't an env. var. and isn't an ignored word, so must be
-        -- the command being executed
-        return string.gsub(s, '(.*[/\\])(.*)', '%2')
-      end
-
-      name = substring
-    end
-  end
-
-  -- in case we're executing something like `sudo bash`
-  return name
-end
-
-function hex_to_char(x)
-  return string.char(tonumber(x, 16))
-end
-
-function unescape(url)
-  return url:gsub("%%(%x%x)", hex_to_char)
-end
-
-function remove_file_prefix(s, home)
-  s = trim_prefix(s, 'file://')
-  if (home ~= nil and s:find(home, 1, true)) then
-    s = "~" .. trim_prefix(s, home)
-  end
-  return s
 end
 
 -- Format window title like `[1/2]: ~/dev` or `[2/2]: vi ~/.config/wezterm/wezterm.lua`
@@ -89,7 +33,7 @@ wezterm.on(
     end
 
     if program == "" then
-      program = unescape(remove_file_prefix(tab.active_pane.current_working_dir, pane.user_vars["WEZTERM_HOME"]))
+      program = helpers.unescape(helpers.remove_file_prefix(tab.active_pane.current_working_dir, pane.user_vars["WEZTERM_HOME"]))
     end
 
     local index = ''
@@ -105,7 +49,7 @@ wezterm.on(
 wezterm.on(
   'format-tab-title',
   function(tab, tabs, panes, config, hover, max_width)
-    local program = basename(tab.active_pane.user_vars["WEZTERM_PROG"])
+    local program = helpers.basename(tab.active_pane.user_vars["WEZTERM_PROG"])
     local ssh = ""
     if tab.active_pane.user_vars["WEZTERM_SSH"] == "true" then
       local suffix = ":"
@@ -116,7 +60,7 @@ wezterm.on(
     end
 
     if program == "" then
-      program = unescape(remove_file_prefix(tab.active_pane.current_working_dir, tab.active_pane.user_vars["WEZTERM_HOME"]))
+      program = helpers.unescape(helpers.remove_file_prefix(tab.active_pane.current_working_dir, tab.active_pane.user_vars["WEZTERM_HOME"]))
     end
 
     local index = string.format('%d: ', tab.tab_index + 1)
