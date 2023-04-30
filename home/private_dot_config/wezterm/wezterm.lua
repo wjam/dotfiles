@@ -33,7 +33,7 @@ wezterm.on(
     end
 
     if program == "" then
-      program = helpers.unescape(helpers.remove_file_prefix(tab.active_pane.current_working_dir, pane.user_vars["WEZTERM_HOME"]))
+      program = helpers.remove_file_prefix(tab.active_pane.current_working_dir, pane.user_vars["WEZTERM_HOME"])
     end
 
     local index = ''
@@ -60,7 +60,7 @@ wezterm.on(
     end
 
     if program == "" then
-      program = helpers.unescape(helpers.remove_file_prefix(tab.active_pane.current_working_dir, tab.active_pane.user_vars["WEZTERM_HOME"]))
+      program = helpers.remove_file_prefix(tab.active_pane.current_working_dir, tab.active_pane.user_vars["WEZTERM_HOME"])
     end
 
     local index = string.format('%d: ', tab.tab_index + 1)

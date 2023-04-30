@@ -10,60 +10,26 @@ import (
 )
 
 func TestWeztermRemoveFilePrefix(t *testing.T) {
-	l, removeFilePrefix := loadWeztermHelpersLuaFunction(t, "remove_file_prefix")
+	removeFilePrefix := loadWeztermHelpersLuaFunction(t, "remove_file_prefix")
 
 	tests := []struct {
 		input    string
 		expected string
 	}{
 		{"file:///home/foo/bar", "~/bar"},
+		{"file:///home/foo/bar%20boo", "~/bar boo"},
 		{"file:///usr/local/bin", "/usr/local/bin"},
 	}
 
 	for _, test := range tests {
 		t.Run(test.input, func(t *testing.T) {
-			require.NoError(t, l.CallByParam(lua.P{
-				Fn:      removeFilePrefix,
-				NRet:    1,
-				Protect: true,
-			}, lua.LString(test.input), lua.LString("/home/foo")))
-
-			ret := l.Get(-1)
-			l.Pop(1)
-
-			assert.Equal(t, test.expected, ret.String())
-		})
-	}
-}
-
-func TestWeztermUnescape(t *testing.T) {
-	l, unescape := loadWeztermHelpersLuaFunction(t, "unescape")
-
-	tests := []struct {
-		input    string
-		expected string
-	}{
-		{"~/bar%20baz", "~/bar baz"},
-	}
-
-	for _, test := range tests {
-		t.Run(test.input, func(t *testing.T) {
-			require.NoError(t, l.CallByParam(lua.P{
-				Fn:      unescape,
-				NRet:    1,
-				Protect: true,
-			}, lua.LString(test.input), lua.LString("/home/foo")))
-
-			ret := l.Get(-1)
-			l.Pop(1)
-
-			assert.Equal(t, test.expected, ret.String())
+			assert.Equal(t, test.expected, removeFilePrefix(test.input, "/home/foo"))
 		})
 	}
 }
 
 func TestWeztermBasename(t *testing.T) {
-	l, basename := loadWeztermHelpersLuaFunction(t, "basename")
+	basename := loadWeztermHelpersLuaFunction(t, "basename")
 
 	tests := []struct {
 		input    string
@@ -77,7 +43,7 @@ func TestWeztermBasename(t *testing.T) {
 		{`FOO=var BAR=var cat`, "cat"},
 		{`sudo FOO=var cat`, "cat"},
 		{`sudo FOO=var bash cat`, "cat"},
-		{`sudo FOO=var bash`, "bash"}, // that's the command being run
+		{`sudo FOO=var bash`, "bash"}, // bash is the command being run
 		{`FOO cat`, "FOO"},            // should output FOO, which is the command going to be run
 		{`vi .config/stern/config.yaml`, "vi"},
 		{``, ""},
@@ -85,24 +51,33 @@ func TestWeztermBasename(t *testing.T) {
 
 	for _, test := range tests {
 		t.Run(test.input, func(t *testing.T) {
-			require.NoError(t, l.CallByParam(lua.P{
-				Fn:      basename,
-				NRet:    1,
-				Protect: true,
-			}, lua.LString(test.input)))
-
-			ret := l.Get(-1)
-			l.Pop(1)
-
-			assert.Equal(t, test.expected, ret.String())
+			assert.Equal(t, test.expected, basename(test.input))
 		})
 	}
 }
 
-func loadWeztermHelpersLuaFunction(t *testing.T, name string) (*lua.LState, lua.LValue) {
+func loadWeztermHelpersLuaFunction(t *testing.T, name string) func(...string) string {
 	l := lua.NewState()
 	t.Cleanup(l.Close)
 	require.NoError(t, l.DoFile(filepath.Join("..", "home", "private_dot_config", "wezterm", "helpers.lua")))
 
-	return l, l.Get(-1).(*lua.LTable).RawGet(lua.LString(name))
+	f := l.Get(-1).(*lua.LTable).RawGet(lua.LString(name))
+
+	return func(args ...string) string {
+		var lvArgs []lua.LValue
+		for _, arg := range args {
+			lvArgs = append(lvArgs, lua.LString(arg))
+		}
+
+		require.NoError(t, l.CallByParam(lua.P{
+			Fn:      f,
+			NRet:    1,
+			Protect: true,
+		}, lvArgs...))
+
+		ret := l.Get(-1)
+		l.Pop(1)
+
+		return ret.String()
+	}
 }

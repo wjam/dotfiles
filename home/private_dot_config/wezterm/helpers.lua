@@ -11,6 +11,10 @@ function hex_to_char(x)
   return string.char(tonumber(x, 16))
 end
 
+function unescape(url)
+  return url:gsub("%%(%x%x)", hex_to_char)
+end
+
 function module.basename(s)
   if (s == nil or s == "") then
     return ""
@@ -33,12 +37,9 @@ function module.basename(s)
   return name
 end
 
-function module.unescape(url)
-  return url:gsub("%%(%x%x)", hex_to_char)
-end
-
 function module.remove_file_prefix(s, home)
   s = trim_prefix(s, 'file://')
+  s = unescape(s)
   if (home ~= nil and s:find(home, 1, true)) then
     s = "~" .. trim_prefix(s, home)
   end
