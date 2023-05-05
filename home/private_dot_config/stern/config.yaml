@@ -17,7 +17,7 @@ template: |
       {{- end -}}
     ]
     {{- " " -}}
-    {{ levelColor $msg.level }} ({{ colorCyan $msg.caller }})
+    {{ levelColor $msg.level }} ({{ colorCyan $msg.logger_name }})
     {{- " " -}}
     {{- if $msg.msg -}}
       {{- $msg.msg -}}
