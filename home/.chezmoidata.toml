@@ -58,7 +58,6 @@ casks = [
   "jetbrains-toolbox",
   "wez/wezterm/wezterm",
   "keeweb",
-  "slack",
   # TODO Temporarily needed until https://github.com/Homebrew/homebrew-core/pull/97394
   # Re-add `"dockutil"` to brews list when merged
   "hpedrorodrigues/tools/dockutil",
@@ -70,6 +69,7 @@ full_casks = [
   "libreoffice",
   "gimp",
   "inkscape",
+  "slack",
 ]
 
 [mac_os_admin]
