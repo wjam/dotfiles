@@ -5,6 +5,7 @@
   full = {{ promptBoolOnce . "full" "Install everything? y or n:" }} # false if we're having to limit things because it's CI
 
 [diff]
+  exclude = ["externals"]
 
 [[textconv]]
   pattern = "**/*.plist"

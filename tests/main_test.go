@@ -78,8 +78,9 @@ func TestChezmoiHasNoDiff(t *testing.T) {
 func TestChezmoiDiffWorks(t *testing.T) {
 	chezmoiPath := runCommand(t, "chezmoi", "source-path")
 
-	f, err := os.CreateTemp(chezmoiPath, fmt.Sprintf("create_%s-*.txt", t.Name()))
+	f, err := os.CreateTemp(chezmoiPath, fmt.Sprintf("%s-*.txt", t.Name()))
 	require.NoError(t, err)
+	require.NoError(t, os.WriteFile(f.Name(), []byte("test"), 0644))
 	t.Cleanup(func() {
 		assert.NoError(t, os.Remove(f.Name()))
 	})
