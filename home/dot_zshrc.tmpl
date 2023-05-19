@@ -107,9 +107,6 @@ plugins=(
 {{ $fpaths = append $fpaths (joinPath $brewPrefix "/opt/curl/share/zsh/site-functions") -}}
 {{ $fpaths = append $fpaths (joinPath $brewPrefix "/share/zsh/site-functions") -}}
 {{ $fpaths = append $fpaths "$HOME/.local/fpath" -}}
-{{- if eq .chezmoi.os "darwin" -}}
-{{   $fpaths = append $fpaths "$HOME/Applications/Docker.app/Contents/Resources/etc" -}}
-{{- end -}}
 
 FPATH="{{ $fpaths | join ":" }}:${FPATH}"
 source $ZSH/oh-my-zsh.sh

@@ -13,3 +13,11 @@ insert_final_newline = true
 [*.go]
 indent_style = tab
 indent_size = 4
+
+# colima will re-add spaces making chezmoi display a diff
+[home/dot_colima/default/colima.yaml.tmpl]
+trim_trailing_whitespace = false
+
+# entire contents of file is compared
+[home/private_dot_config/powerline-go/create_appearance.txt]
+insert_final_newline = false

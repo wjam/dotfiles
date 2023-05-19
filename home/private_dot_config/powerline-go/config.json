@@ -5,5 +5,7 @@
   "modules-right": [ "exit", "duration", "time" ],
   "max-width": 100,
   "mode": "patched",
-  "cwd-mode": "fancy"
+  "cwd-mode": "fancy",
+  "hostname-only-if-ssh": true,
+  "shorten-eks-names": true
 }

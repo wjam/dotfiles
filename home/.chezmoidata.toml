@@ -4,7 +4,7 @@
 [all_os]
 brews = [
   "go",
-  "fzf",
+  "fzf", # Used by the ZSH history plugin as well executable_jq-interactive
   "dive",
   "jq",
   "git",
@@ -12,29 +12,30 @@ brews = [
   "tree",
   "curl",
   "direnv",
-  "pandoc",
+  "pandoc", # Transform markdown to man pages and other formats
   "ipcalc",
   "powerline-go",
   "terraform",
   "terragrunt",
   "packer",
   "kubernetes-cli",
-  "kubectx",
-  "stern",
+  "kubectx", # Easily switch k8s contexts
+  "stern", # Displays k8s pod logs better
   "k9s",
   "vault",
   "chezmoi",
   "helm",
-  "pv",
-  "rustup-init",
-  "tealdeer",
+  "pv", # Can be used to write scripts for a demo that don't touch the internet (e.g. `cat output.txt | pv --quiet --line-mode --rate-limit 5`)
+  "rustup-init", # Manage rust
+  "tealdeer", # Give examples of how to use commands
 ]
 full_brews = [
   "awscli",
   "azure-cli",
   "openjdk@17",
-  "maven",
-  "pgcli",
+  "pgcli", # PostgreSQL CLI
+  "colima", # Utility to manage local Docker & Kubernetes VMs
+  "docker", # Command line only
 ]
 taps = [
 ]
@@ -57,7 +58,6 @@ casks = [
   "visual-studio-code",
   "jetbrains-toolbox",
   "wez/wezterm/wezterm",
-  "keeweb",
   # TODO Temporarily needed until https://github.com/Homebrew/homebrew-core/pull/97394
   # Re-add `"dockutil"` to brews list when merged
   "hpedrorodrigues/tools/dockutil",
@@ -77,7 +77,6 @@ full_brews = [
   "mas", # mas needs admin permissions depending on what it installs
 ]
 full_casks = [
-  "docker",
 ]
 
 [linux_os_admin]
@@ -101,5 +100,4 @@ debs = [
   "vim-gui-common",
 ]
 full_debs = [
-  "docker.io",
 ]

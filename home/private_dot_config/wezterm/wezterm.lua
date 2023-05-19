@@ -1,6 +1,8 @@
 local wezterm = require 'wezterm'
 local helpers = require 'helpers'
 
+local powerlineGoAppearanceFile = wezterm.home_dir .. "/.config/powerline-go/appearance.txt"
+
 function scheme_for_appearance()
   -- The multiplexer may not be connected to a GUI, so attempting to resolve this module from the mux server will return nil.
   local gui = wezterm.gui
@@ -13,6 +15,33 @@ function scheme_for_appearance()
     end
   end
 end
+
+wezterm.time.call_after(
+  60,
+  function()
+    -- The multiplexer may not be connected to a GUI, so attempting to resolve this module from the mux server will return nil.
+    local gui = wezterm.gui
+    if gui then
+      local appearance = gui.get_appearance()
+
+      local f = io.open(powerlineGoAppearanceFile, "r")
+      local existing = f:read("*a")
+      f:close()
+
+      local current = "light"
+      if appearance:find "Dark" then
+        current = "dark"
+      end
+
+      if current ~= existing then
+        local f = io.open(powerlineGoAppearanceFile, "w+")
+        f:write(current)
+        f:flush()
+        f:close()
+      end
+    end
+  end
+)
 
 -- Format window title like `[1/2]: ~/dev` or `[2/2]: vi ~/.config/wezterm/wezterm.lua`
 wezterm.on(

@@ -18,7 +18,13 @@ function powerline_precmd() {
     __DURATION="$(($__ERT - ${__TIMER:-__ERT}))"
   fi
 
-  eval "$(powerline-go -duration $__DURATION -error $__ERRCODE -jobs $__JOBS -shorten-eks-names -hostname-only-if-ssh)"
+  local __THEME="default"
+  local __APPEARANCE="$(cat ~/.config/powerline-go/appearance.txt)"
+  if [ "light" = "${__APPEARANCE}" ]; then
+    __THEME="low-contrast"
+  fi
+
+  eval "$(powerline-go -theme $__THEME -duration $__DURATION -error $__ERRCODE -jobs $__JOBS)"
   unset __TIMER
 }
 

@@ -22,6 +22,17 @@
   exact = true
   stripComponents = 1
   refreshPeriod = "168h"
+[".docker/cli-plugins/docker-buildx"]
+  type = "file"
+  url = "https://github.com/docker/buildx/releases/download/v0.10.4/buildx-v0.10.4.darwin-{{ .chezmoi.arch }}"
+  executable = true
+[".vim"]
+  type = "archive"
+  url = "https://github.com/editorconfig/editorconfig-vim/archive/master.zip"
+  exact = true
+  stripComponents = 1
+  refreshPeriod = "168h"
+  include = ["editorconfig-vim-master/autoload/**", "editorconfig-vim-master/doc/**", "editorconfig-vim-master/ftdetect/**", "editorconfig-vim-master/plugin/**"]
 [".local/bin/aws_finder"]
   type = "file"
   url = "https://github.com/wjam/aws_finder/releases/download/v0.6.3/aws_finder-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
