@@ -28,6 +28,7 @@ brews = [
   "pv", # Can be used to write scripts for a demo that don't touch the internet (e.g. `cat output.txt | pv --quiet --line-mode --rate-limit 5`)
   "rustup-init", # Manage rust
   "tealdeer", # Give examples of how to use commands
+  "docker", # Command line only
 ]
 full_brews = [
   "awscli",
@@ -35,7 +36,6 @@ full_brews = [
   "openjdk@17",
   "pgcli", # PostgreSQL CLI
   "colima", # Utility to manage local Docker & Kubernetes VMs
-  "docker", # Command line only
 ]
 taps = [
 ]
@@ -54,7 +54,6 @@ casks = [
   "hammerspoon",
   "stats",
   "firefox",
-  "google-chrome",
   "visual-studio-code",
   "jetbrains-toolbox",
   "wez/wezterm/wezterm",
@@ -77,6 +76,7 @@ full_brews = [
   "mas", # mas needs admin permissions depending on what it installs
 ]
 full_casks = [
+  "google-chrome",
 ]
 
 [linux_os_admin]
