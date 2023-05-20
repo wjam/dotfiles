@@ -138,7 +138,7 @@ func findTool(t *testing.T, tool string) string {
 		return toolPath
 	}
 
-	require.Fail(t, "unable to find %s", tool)
+	require.Fail(t, "unable to find tool '%s'", tool)
 	return ""
 }
 
