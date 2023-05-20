@@ -24,7 +24,11 @@
   refreshPeriod = "168h"
 [".docker/cli-plugins/docker-buildx"]
   type = "file"
-  url = "https://github.com/docker/buildx/releases/download/v0.10.4/buildx-v0.10.4.darwin-{{ .chezmoi.arch }}"
+  url = "https://github.com/docker/buildx/releases/download/v0.10.4/buildx-v0.10.4.{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
+  executable = true
+[".docker/cli-plugins/docker-compose"]
+  type = 'file'
+  url = 'https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-{{ .chezmoi.os }}-{{ if eq .chezmoi.arch "amd64" }}x86_64{{ else }}{{ .chezmoi.arch }}{{ end }}'
   executable = true
 [".vim"]
   type = "archive"

@@ -96,6 +96,25 @@ func TestSSHConfigSupportsMultiGitHubAccounts(t *testing.T) {
 	assert.Contains(t, config, "identityfile ~/.ssh/keys/%n")
 }
 
+func TestDockerPluginsSupported(t *testing.T) {
+	tests := []struct {
+		plugin string
+	}{
+		{"buildx"},
+		{"compose"},
+	}
+
+	for _, test := range tests {
+		t.Run(test.plugin, func(t *testing.T) {
+			// If the plugin isn't available, then the command will output `docker --help`
+			// which won't mention the plugin
+			output := runCommand(t, "docker", test.plugin, "--help")
+			assert.Contains(t, output, test.plugin)
+		})
+	}
+
+}
+
 func runCommand(t *testing.T, cmd string, args ...string) string {
 	output := shell.RunCommandAndGetOutput(t, shell.Command{
 		Command: findTool(t, cmd),
