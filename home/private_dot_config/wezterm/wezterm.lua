@@ -111,6 +111,22 @@ wezterm.on(
   end
 )
 
+local keys = {
+  -- Forward `Cmd+key` commands to the terminal
+  -- Make Cmd-Left equivalent to Home
+  {key="LeftArrow", mods="SUPER", action=wezterm.action.SendKey{key='Home'}},
+  -- Make Cmd-Right equivalent to End
+  {key="RightArrow", mods="SUPER", action=wezterm.action.SendKey{key='End'}},
+  -- Make Cmd+Enter go to fullscreen
+  {key="Enter", mods="SUPER", action=wezterm.action.ToggleFullScreen},
+  {key='0', mods='CTRL', action=wezterm.action.ResetFontAndWindowSize},
+}
+
+if (wezterm.target_triple == 'x86_64-apple-darwin' or wezterm.target_triple == 'aarch64-apple-darwin') then
+  table.insert(keys, {key='3', mods='OPT', action=wezterm.action.SendKey{key='#'}})
+end
+
+
 return {
   color_scheme = scheme_for_appearance(),
   exit_behavior = "Close",
@@ -149,16 +165,7 @@ return {
   },
   default_gui_startup_args = { 'connect', 'unix' },
 
-  keys = {
-    -- Forward `Cmd+key` commands to the terminal
-    -- Make Cmd-Left equivalent to Home
-    {key="LeftArrow", mods="SUPER", action=wezterm.action.SendKey{key='Home'}},
-    -- Make Cmd-Right equivalent to End
-    {key="RightArrow", mods="SUPER", action=wezterm.action.SendKey{key='End'}},
-    -- Make Cmd+Enter go to fullscreen
-    {key="Enter", mods="SUPER", action=wezterm.action.ToggleFullScreen},
-    {key='0', mods='CTRL', action=wezterm.action.ResetFontAndWindowSize},
-  },
+  keys = keys,
 
---  window_decorations = "RESIZE",
+--  window_decorations = "INTEGRATED_BUTTONS|RESIZE",
 }
