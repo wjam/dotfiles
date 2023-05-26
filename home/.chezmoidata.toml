@@ -29,6 +29,7 @@ brews = [
   "rustup-init", # Manage rust
   "tealdeer", # Give examples of how to use commands
   "docker", # Command line only
+  "bat", # cat with syntax highlighting
 ]
 full_brews = [
   "awscli",
