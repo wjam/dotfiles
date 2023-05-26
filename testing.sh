@@ -23,6 +23,8 @@ if ! command -v brew > /dev/null; then
   fi
 fi
 
+brew update
+
 # Install chezmoi
 if ! command -v chezmoi > /dev/null; then
   brew install chezmoi
