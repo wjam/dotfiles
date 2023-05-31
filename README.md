@@ -39,6 +39,14 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 ## Workarounds
 * Unable to compile Go programs on Linux using Go installed using Homebrew (`cgo: C compiler "gcc-5" not found: exec: "gcc-5": executable file not found in $PATH`) - see `home/private_dot_config/go/env` (https://stackoverflow.com/questions/59227456/go-1-13-gcc-5-not-in-path)
 * Repeatedly ask to install clang on macOS when running Homebrew - run `sudo xcode-select --switch /Library/Developer/CommandLineTools`
+* Unable to access reMarkable via USB on a Mac:
+  1. Unplug reMarkable
+  2. `ifconfig > without.txt`
+  3. Plug in reMarkable
+  4. `diff without <(ifconfig)` - e.g. `> en6: flags=8822<BROADCAST,SMART,SIMPLEX,MULTICAST> mtu 1500`
+  5. `sudo ifconfig en6 10.11.99.2`
+  6. If the mac address always stays the same (matches SHA-256 `e3d9ad308787a51594be1fbf589bf41479f45df173784e1e7c0657f7b3383edb`), then:
+     * `for f in $(ifconfig -l); do if [ "$(ifconfig $f | grep ether | cut -d' ' -f2)" = "$MAC_ADDRESS" ]; then; sudo ifconfig $f 10.11.99.2; fi; done`
 
 # Installing
 

@@ -1,0 +1,53 @@
+#!/usr/bin/env bash
+
+# Download all PDFs from a reMarkable 2
+
+# Exit on error. Append || true if you expect an error.
+set -o errexit
+# Exit on error inside any functions or subshells.
+set -o errtrace
+# Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
+set -o nounset
+# Catch the error in case mysqldump fails (but gzip succeeds) in `mysqldump |gzip`
+set -o pipefail
+# Turn on traces, useful while debugging but commented out by default
+#set -o xtrace
+
+function download() {
+  # TODO work out whether .sizeInBytes can be used to check whether the file has been locally modified
+  # I think the number is the size of on-device format?
+  local path=${1}
+  local dir="${2}"
+  mkdir -p "$dir"
+  while IFS= read -r line; do
+    local id
+    id=$(echo "$line" | jq --raw-output '.id')
+    local name
+    name=$(echo "$line" | jq --raw-output '.name')
+    local noMillis
+    # See https://github.com/jqlang/jq/issues/1409
+    noMillis=$(echo "$line" | jq --raw-output '.mod | sub("(?<time>.*)\\.[\\d]{1,6}(?<tz>.*)"; "\(.time)\(.tz)")')
+    local file="${dir}/${name}.pdf"
+
+    if [[ -e "$file" ]] && [[ "$noMillis" = "$(date -u -r "$file" "+%Y-%m-%dT%H:%M:%S")Z" ]]; then
+      # Same modified time, so probably the same
+      continue
+    fi
+
+    curl --silent --fail --output "${file}" "http://10.11.99.1/download/${id}/placeholder"
+    touch -d "$noMillis" "$file"
+  done < <(curl --silent --fail "http://10.11.99.1/documents/${path}" | jq --compact-output '.[] | select(.Type == "DocumentType") | {id: .ID, name: .VissibleName, mod: .ModifiedClient}')
+}
+
+function list() {
+  local path=${1}
+  local dir=${2}
+  download "$path" "$dir"
+  while IFS= read -r line; do
+    list "$path/$(echo "$line" | jq --raw-output '.ID')" "$dir/$(echo "$line" | jq --raw-output '.VissibleName')"
+  done < <(curl --silent --fail "http://10.11.99.1/documents/${path}" | jq --compact-output '.[] | select(.Type == "CollectionType") | {ID, VissibleName}')
+}
+
+echo Downloading documents
+
+list "" "."
