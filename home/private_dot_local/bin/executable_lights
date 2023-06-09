@@ -16,7 +16,7 @@ set -o pipefail
 # The other endpoint is /elgato/accessory-info
 endpoint="http://elgato:9123/elgato/lights"
 
-current=$(curl --silent --fail $endpoint | jq --raw-output '.lights[0].on')
+current=$(curl --silent --show-error --fail $endpoint | jq --raw-output '.lights[0].on')
 
 if [[ "$current" == "0" ]]; then
   status=1
@@ -25,4 +25,4 @@ else
 fi
 
 jq --arg i $status --null-input '{numberOfLights: 1, lights:[{on: $i | tonumber}]}' | \
-  curl --silent --fail --header "Content-Type: application/json" --request PUT --data-binary @- --output /dev/null $endpoint
+  curl --silent --show-error --fail --header "Content-Type: application/json" --request PUT --data-binary @- --output /dev/null $endpoint

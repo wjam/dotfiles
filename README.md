@@ -111,4 +111,3 @@ docker run --rm -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -
 * Find out why meeting interruption stuff isn't working when streamdeck is connected
 * Find something cask-like for Ubuntu
 * Find a way to disable sudo access in CI to test no admin access (apt will fail as `code` is assumed to be present at vscode-extensions script (install via snap?))
-* Find out why google-sdk cask autocomplete doesn't work - possibly missing `python` (https://github.com/Homebrew/homebrew-cask/issues/143596)?

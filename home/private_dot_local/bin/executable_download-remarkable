@@ -19,7 +19,7 @@ function download() {
   local path=${1}
   local dir="${2}"
   mkdir -p "$dir"
-  while IFS= read -r line; do
+  curl --silent --show-error --fail "http://10.11.99.1/documents/${path}" | jq --compact-output '.[] | select(.Type == "DocumentType") | {id: .ID, name: .VissibleName, mod: .ModifiedClient}' | while IFS= read -r line; do
     local id
     id=$(echo "$line" | jq --raw-output '.id')
     local name
@@ -34,18 +34,18 @@ function download() {
       continue
     fi
 
-    curl --silent --fail --output "${file}" "http://10.11.99.1/download/${id}/placeholder"
+    curl --silent --show-error --fail --output "${file}" "http://10.11.99.1/download/${id}/placeholder"
     touch -d "$noMillis" "$file"
-  done < <(curl --silent --fail "http://10.11.99.1/documents/${path}" | jq --compact-output '.[] | select(.Type == "DocumentType") | {id: .ID, name: .VissibleName, mod: .ModifiedClient}')
+  done
 }
 
 function list() {
   local path=${1}
   local dir=${2}
   download "$path" "$dir"
-  while IFS= read -r line; do
+  curl --silent --show-error --fail "http://10.11.99.1/documents/${path}" | jq --compact-output '.[] | select(.Type == "CollectionType") | {ID, VissibleName}' | while IFS= read -r line; do
     list "$path/$(echo "$line" | jq --raw-output '.ID')" "$dir/$(echo "$line" | jq --raw-output '.VissibleName')"
-  done < <(curl --silent --fail "http://10.11.99.1/documents/${path}" | jq --compact-output '.[] | select(.Type == "CollectionType") | {ID, VissibleName}')
+  done
 }
 
 echo Downloading documents

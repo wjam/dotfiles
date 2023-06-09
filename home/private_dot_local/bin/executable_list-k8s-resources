@@ -16,11 +16,11 @@ set -o pipefail
 # do core resources first, which are at a separate api location
 kubectl get --raw /api/v1 | jq -r '.resources[] | "core \(.name): \(.verbs | join(" "))"'
 
-while IFS= read -r api; do
-  while IFS= read -r version; do
+kubectl get --raw /apis | jq --compact-output --raw-output '.groups[].name' | sort | while IFS= read -r api; do
+  kubectl get --raw "/apis/$api"  | jq --compact-output --raw-output '.versions[].version' | while IFS= read -r version; do
     apis=$(kubectl get --raw "/apis/$api/$version" 2>&1 || true)
     if [ "$apis" != "Error from server (NotFound): the server could not find the requested resource" ]; then
       echo "$apis" | jq --raw-output --arg api "$api" --arg version "$version" '.resources[] | "\($api) \($version) \(.name): \(.verbs | join(" "))"'
     fi
-  done < <(kubectl get --raw "/apis/$api"  | jq --compact-output --raw-output '.versions[].version')
-done < <(kubectl get --raw /apis | jq --compact-output --raw-output '.groups[].name' | sort)
+  done
+done

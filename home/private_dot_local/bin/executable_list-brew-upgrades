@@ -17,10 +17,10 @@ echo Updating Homebrew
 brew update
 
 echo Formulae
-while IFS= read -r line; do
+brew outdated --json | jq --compact-output '.formulae[]  | select(.pinned == false) | {name, current_version, installed_versions}' | while IFS= read -r line; do
   test "$(brew info --formulae --json=v2 "$(echo "$line" | jq --raw-output '.name')" | jq '.formulae[].installed[].installed_on_request')" = "true" && \
       (echo "$line" | jq --raw-output '"\(.name) \(.installed_versions[0]) -> \(.current_version)"')
-done < <(brew outdated --json | jq --compact-output '.formulae[]  | select(.pinned == false) | {name, current_version, installed_versions}')
+done
 
 echo Casks
 brew outdated --json | jq --raw-output '.casks[] | "\(.name) \(.installed_versions) -> \(.current_version)"'
