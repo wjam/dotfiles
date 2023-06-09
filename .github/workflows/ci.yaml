@@ -20,5 +20,11 @@ jobs:
         run: |
           mkdir -p $HOME/.local/share
           ln -s $GITHUB_WORKSPACE $HOME/.local/share/chezmoi
+      - name: Clean up GitHub
+        run: |
+          command -v brew && brew uninstall go || true
+          rm /usr/local/bin/go || true
+          rm /usr/local/bin/gofmt || true
+        if: runner.os == 'macOS'
       - name: Test
         run: ./testing.sh --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test
