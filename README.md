@@ -48,6 +48,12 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
   6. If the mac address always stays the same (matches SHA-256 `e3d9ad308787a51594be1fbf589bf41479f45df173784e1e7c0657f7b3383edb`), then:
      * `for f in $(ifconfig -l); do if [ "$(ifconfig $f | grep ether | cut -d' ' -f2)" = "$MAC_ADDRESS" ]; then; sudo ifconfig $f 10.11.99.2; fi; done`
 
+## ShellCheck notes
+* Use `foo | while read` to loop through a list of items
+  * https://www.shellcheck.net/wiki/SC2013
+  * https://www.shellcheck.net/wiki/SC2044
+  * `while read do; done < <(foo)` seems to have issues when `foo` fails, so best avoided
+
 # Installing
 
 ## Initial per-O/S steps
