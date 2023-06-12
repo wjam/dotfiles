@@ -18,8 +18,9 @@ brew update
 
 echo Formulae
 brew outdated --json | jq --compact-output '.formulae[]  | select(.pinned == false) | {name, current_version, installed_versions}' | while IFS= read -r line; do
-  test "$(brew info --formulae --json=v2 "$(echo "$line" | jq --raw-output '.name')" | jq '.formulae[].installed[].installed_on_request')" = "true" && \
-      (echo "$line" | jq --raw-output '"\(.name) \(.installed_versions[0]) -> \(.current_version)"')
+  if [[ "$(brew info --formulae --json=v2 "$(echo "$line" | jq --raw-output '.name')" | jq '.formulae[].installed[].installed_on_request')" == "true" ]]; then
+    echo "$line" | jq --raw-output '"\(.name) \(.installed_versions[0]) -> \(.current_version)"'
+  fi
 done
 
 echo Casks
