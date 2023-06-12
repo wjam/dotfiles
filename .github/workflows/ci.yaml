@@ -22,9 +22,11 @@ jobs:
           ln -s $GITHUB_WORKSPACE $HOME/.local/share/chezmoi
       - name: Clean up GitHub
         run: |
-          command -v brew && brew uninstall go || true
+          command -v brew && brew uninstall go
           rm /usr/local/bin/go || true
           rm /usr/local/bin/gofmt || true
+          command -v brew && brew uninstall aws-sam-cli python@3.11 pipx
+          rm /usr/local/bin/2to3 || true
         if: runner.os == 'macOS'
       - name: Test
         run: ./testing.sh --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test
