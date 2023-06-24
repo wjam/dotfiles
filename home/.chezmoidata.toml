@@ -1,6 +1,6 @@
 # Contents of this file drives installation of software
-# .chezmoiscripts/run_onchange_before_brew-install.sh.tmpl
-# .chezmoiscripts/run_onchange_before_apt-install.sh.tmpl
+# .chezmoiscripts/run_onchange_before_zzz_brew-install.sh.tmpl
+# .chezmoiscripts/linux/run_onchange_before_apt-install.sh.tmpl
 [all_os]
 brews = [
   "go",
