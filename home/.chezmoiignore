@@ -1,8 +1,10 @@
 {{ if ne .chezmoi.os "darwin" }}
+.chezmoiscripts/darwin/**
 .hammerspoon
 Library
 {{ end }}
 {{ if ne .chezmoi.os "linux" }}
+.chezmoiscripts/linux/**
 .config/go/env
 .config/k9s
 .config/systemd

@@ -25,7 +25,7 @@ jobs:
           command -v brew && brew uninstall go
           rm /usr/local/bin/go || true
           rm /usr/local/bin/gofmt || true
-          command -v brew && brew uninstall aws-sam-cli python@3.11 pipx
+          command -v brew && brew uninstall --ignore-dependencies python@3.11
           rm /usr/local/bin/2to3 || true
         if: runner.os == 'macOS'
       - name: Test
