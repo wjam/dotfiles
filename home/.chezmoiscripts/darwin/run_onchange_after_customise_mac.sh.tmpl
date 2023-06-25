@@ -57,6 +57,9 @@ function configure_dock() {
   dockutil --add "$HOME/Applications/Slack.app/" --section apps --no-restart
   dockutil --add "$HOME/Applications/Visual Studio Code.app/" --section apps --no-restart
   dockutil --add "$HOME/Applications/Firefox.app/" --section apps --no-restart
+# [[- if and (.admin) (.full) ]]
+  dockutil --add "/Applications/Bitwarden.app" --section apps --no-restart
+# [[- end ]]
   dockutil --add "$HOME/Downloads/" --section others --view list --display stack --restart # restart last to pickup changes
 }
 
@@ -66,7 +69,7 @@ function configure_keyboard() {
 }
 
 # [[ if and (.admin) (.full) -]]
-mas version # verify that mas is actually installed - next call has `|| true` so won't catch missing mas
+mas version > /dev/null # verify that mas is actually installed - next call has `|| true` so won't catch missing mas
 uninstall_unwanted_default_apps
 # [[- end ]]
 configure_finder

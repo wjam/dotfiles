@@ -80,6 +80,9 @@ full_casks = [
   "google-chrome",
 ]
 
+[mac_os_admin.full_mas]
+1352778147 = "Bitwarden"
+
 [linux_os_admin]
 full_brews = [
   "wezterm",
