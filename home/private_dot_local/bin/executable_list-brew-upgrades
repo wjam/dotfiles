@@ -25,3 +25,6 @@ done
 
 echo Casks
 brew outdated --json | jq --raw-output '.casks[] | "\(.name) \(.installed_versions) -> \(.current_version)"'
+
+echo Pinned formulas
+brew list --pinned

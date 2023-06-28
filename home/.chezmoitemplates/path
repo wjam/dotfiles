@@ -3,6 +3,7 @@
 {{- $paths := list
     (joinPath .chezmoi.homeDir ".cargo" "bin")
     (joinPath $brewPrefix "opt" "curl" "bin")
+    (joinPath $brewPrefix "opt" "mysql-client" "bin")
     (joinPath $brewPrefix "opt" "openjdk@17" "bin")
     (joinPath $brewPrefix "sbin")
     (joinPath $brewPrefix "bin")
