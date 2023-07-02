@@ -34,6 +34,7 @@ function download() {
       continue
     fi
 
+    echo "Downloading ${name}"
     curl --silent --show-error --fail --output "${file}" "http://10.11.99.1/download/${id}/placeholder"
     touch -d "$noMillis" "$file"
   done
