@@ -3,6 +3,11 @@
   admin = {{ promptBoolOnce . "admin" "Have admin access? y or n:" }} # true if have 'admin' access to the machine
   email = {{ promptStringOnce . "email" "Email address for Git:" | quote }} # Email address for Git
   full = {{ promptBoolOnce . "full" "Install everything? y or n:" }} # false if we're having to limit things because it's CI
+{{ if eq .chezmoi.os "darwin" }}
+  app_store = {{ promptBoolOnce . "app_store" "Access to app store? y or n:" }} # false if we're having to limit things because it's CI
+{{ else }}
+  app_store = false
+{{ end }}
 
 [diff]
   exclude = ["externals"]
