@@ -29,4 +29,4 @@ jobs:
           rm /usr/local/bin/2to3 || true
         if: runner.os == 'macOS'
       - name: Test
-        run: ./testing.sh --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test
+        run: ./testing.sh --promptBool "Access to app store? y or n:"=n --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test

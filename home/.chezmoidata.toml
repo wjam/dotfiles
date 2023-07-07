@@ -72,6 +72,9 @@ full_casks = [
   "slack",
 ]
 
+[mac_os_app_store.mas]
+1352778147 = "Bitwarden"
+
 [mac_os_admin]
 full_brews = [
   "mas", # mas needs admin permissions depending on what it installs
@@ -79,9 +82,6 @@ full_brews = [
 full_casks = [
   "google-chrome",
 ]
-
-[mac_os_admin.full_mas]
-1352778147 = "Bitwarden"
 
 [linux_os_admin]
 full_brews = [
