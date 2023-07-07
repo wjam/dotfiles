@@ -172,6 +172,8 @@ alias goto="cd -P"
 # Replace cat with bat for syntax highlighting
 alias cat='bat --paging=never'
 
+alias imgcat='wezterm imgcat'
+
 {{- if (stat (joinPath $brewPrefix "/share/google-cloud-sdk/completion.zsh.inc")) }}
 # gcloud completion script lacks '#compdef gcloud' at the top, so have to load it manually
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
