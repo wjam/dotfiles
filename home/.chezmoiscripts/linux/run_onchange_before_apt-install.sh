@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# chezmoi:template:left-delimiter="# [[" right-delimiter=]]
 
 # Exit on error. Append || true if you expect an error.
 set -o errexit
@@ -11,12 +10,6 @@ set -o nounset
 set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
-
-# [[- $debs := .linux_os_admin.debs ]]
-
-# [[- if .full ]]
-  # [[- $debs = concat $debs .linux_os_admin.full_debs -]]
-# [[- end ]]
 
 # curl -fsL https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor | base64
 cat <<EOPGP | base64 --decode | sudo tee /etc/apt/keyrings/packages.microsoft.gpg > /dev/null
@@ -40,7 +33,17 @@ EOAPT
 
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive xargs sudo apt-get install --assume-yes <<EOF
-# [[ range ($debs | sortAlpha | uniq) -]]
-# [[ . ]]
-# [[ end -]]
+apt-transport-https
+build-essential
+code
+curl
+git
+gnome-tweaks
+rclone
+vim-gui-common
+vim-runtime
+wl-clipboard
+zsh
 EOF
+
+# apt-transport-https - needed to install vscode - https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions

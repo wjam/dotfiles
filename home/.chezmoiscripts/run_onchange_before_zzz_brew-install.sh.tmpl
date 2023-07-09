@@ -14,51 +14,42 @@ set -o pipefail
 
 export PATH=# [[ includeTemplate "path" . | trim | quote ]]
 
-# [[- $brews := .all_os.brews ]]
-# [[- $casks := list ]]
-# [[- $taps := .all_os.taps ]]
-# [[- $mases := dict ]]
-
-# [[- if .full -]]
-# [[-   $brews = concat $brews .all_os.full_brews -]]
-# [[- end -]]
-
-# [[- if eq .chezmoi.os "darwin" -]]
-# [[-   $casks = concat $casks .mac_os.casks -]]
-# [[-   $brews = concat $brews .mac_os.brews -]]
-# [[-   $taps = concat $taps .mac_os.taps -]]
-
-# [[-   if .full ]]
-# [[-     $casks = concat $casks .mac_os.full_casks ]]
-# [[-     if .admin ]]
-# [[-       $casks = concat $casks .mac_os_admin.full_casks ]]
-# [[-       $brews = concat $brews .mac_os_admin.full_brews ]]
-# [[-     end ]]
-# [[-   end ]]
-# [[- else if eq .chezmoi.os "linux" ]]
-# [[-   $taps = concat $taps .linux_os_admin.taps -]]
-# [[-   if .full ]]
-# [[-     $brews = concat $brews .linux_os_admin.full_brews ]]
-# [[-   end ]]
-# [[- end ]]
-
 brew bundle --no-lock --file=/dev/stdin <<EOF
-# [[ range ($taps | sortAlpha | uniq) -]]
-tap "# [[ . ]]"
-# [[ end -]]
+brew "bat" # cat with syntax highlighting
+brew "chezmoi"
+brew "curl"
+brew "direnv"
+brew "dive"
+brew "docker" # Command line only
+brew "fzf" # Used by the ZSH history plugin as well executable_jq-interactive
+brew "git"
+brew "go"
+brew "helm"
+brew "htop"
+brew "ipcalc"
+brew "jq"
+brew "kubectx" # Easily switch k8s contexts
+brew "kubernetes-cli"
+brew "k9s"
+brew "packer"
+brew "pandoc" # Transform markdown to man pages and other formats
+brew "powerline-go"
+brew "pv" # Can be used to write scripts for a demo that don't touch the internet (e.g. 'cat output.txt | pv --quiet --line-mode --rate-limit 5')
+brew "rustup-init" # Manage rust
+brew "stern" # Displays k8s pod logs better
+brew "tealdeer" # Give examples of how to use commands
+brew "terraform"
+brew "terragrunt"
+brew "tree"
+brew "vault"
 
-# [[ range ($brews | sortAlpha | uniq) -]]
-brew "# [[ . ]]"
-# [[ end -]]
-
-cask_args appdir: '~/Applications'
-# [[ range ($casks | sortAlpha | uniq) -]]
-cask "# [[ . ]]"
-# [[ end -]]
-
-# [[ range $k, $v := $mases -]]
-mas "# [[ $v ]]", id: # [[ $k ]]
-# [[ end -]]
+# [[ if .full -]]
+brew "awscli"
+brew "azure-cli"
+brew "colima" # Utility to manage local Docker & Kubernetes VMs
+brew "openjdk@17"
+brew "pgcli" # PostgreSQL CLI
+# [[- end ]]
 
 vscode "HashiCorp.terraform" # Terraform
 vscode "yzhang.markdown-all-in-one" # Markdown goodies
