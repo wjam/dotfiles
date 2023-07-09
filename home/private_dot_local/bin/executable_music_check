@@ -69,18 +69,18 @@ done
 find . -type f -name '*.flac' | while IFS= read -r file; do
   dir="$(dirname "$file")"
 
-# Add cover art to all music without it
-#  if [[ "$(metaflac --list  --block-type='PICTURE' "$file")" == "" ]]; then
-#    cover="${dir}/cover.png"
-#    if [[ ! -f "$cover" ]]; then
-#      cover="${dir}/cover.jpg"
-#    fi
-#    if [[ ! -f "$cover" ]]; then
-#      echo "$dir is missing a cover file and art"
-#      exit 1
-#    fi
-#    metaflac --import-picture-from="$cover" "$file"
-#  fi
+  # Add cover art to all music without it
+  if [[ "$(metaflac --list  --block-type='PICTURE' "$file")" == "" ]]; then
+    cover="${dir}/cover.png"
+    if [[ ! -f "$cover" ]]; then
+      cover="${dir}/cover.jpg"
+    fi
+    if [[ ! -f "$cover" ]]; then
+      echo "$dir is missing a cover file and art"
+      exit 1
+    fi
+    metaflac --import-picture-from="$cover" "$file"
+  fi
 
 # Set DISCNUMBER to 1 if it's missing
 #  if [[ "$(metaflac --show-tag DISCNUMBER "$file")" == "" ]]; then

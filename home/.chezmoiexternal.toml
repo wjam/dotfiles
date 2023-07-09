@@ -20,15 +20,15 @@
   refreshPeriod = "168h"
 [".docker/cli-plugins/docker-buildx"]
   type = "file"
-  url = "https://github.com/docker/buildx/releases/download/v0.10.4/buildx-v0.10.4.{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
+  url = "https://github.com/docker/buildx/releases/download/v{{ .docker_buildx_version }}/buildx-v{{ .docker_buildx_version }}.{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
   executable = true
 [".docker/cli-plugins/docker-compose"]
   type = 'file'
-  url = 'https://github.com/docker/compose/releases/download/v2.18.1/docker-compose-{{ .chezmoi.os }}-{{ if eq .chezmoi.arch "amd64" }}x86_64{{ else if eq .chezmoi.arch "arm64" }}aarch64{{ else }}{{ .chezmoi.arch }}{{ end }}'
+  url = 'https://github.com/docker/compose/releases/download/v{{ .docker_compose_version }}/docker-compose-{{ .chezmoi.os }}-{{ if eq .chezmoi.arch "amd64" }}x86_64{{ else if eq .chezmoi.arch "arm64" }}aarch64{{ else }}{{ .chezmoi.arch }}{{ end }}'
   executable = true
 [".local/bin/aws_finder"]
   type = "file"
-  url = "https://github.com/wjam/aws_finder/releases/download/v0.6.3/aws_finder-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
+  url = "https://github.com/wjam/aws_finder/releases/download/v{{ .aws_finder_version }}/aws_finder-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
   executable = true
 [".vim/pack/editorconfig/start"]
   type = "git-repo"
