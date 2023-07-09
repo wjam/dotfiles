@@ -9,10 +9,6 @@
 [core]
 	autocrlf = input
 	attributesfile = ~/.config/git/gitattributes
-{{- if .full -}}{{/*Probably won't have a SSH cert if doing CI*/}}
-[url "git@github.com:"]
-	insteadOf = https://github.com/
-{{- end }}
 [init]
 	defaultBranch = main
 [commit]

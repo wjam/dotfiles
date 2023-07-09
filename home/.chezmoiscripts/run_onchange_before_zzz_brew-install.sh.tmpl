@@ -28,10 +28,6 @@ export PATH=# [[ includeTemplate "path" . | trim | quote ]]
 # [[-   $brews = concat $brews .mac_os.brews -]]
 # [[-   $taps = concat $taps .mac_os.taps -]]
 
-# [[-   if .app_store -]]
-# [[-     $mases = merge $mases .mac_os_app_store.mas ]]
-# [[-   end -]]
-
 # [[-   if .full ]]
 # [[-     $casks = concat $casks .mac_os.full_casks ]]
 # [[-     if .admin ]]
