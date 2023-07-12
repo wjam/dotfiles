@@ -20,9 +20,9 @@ function update() {
   local infix="$2"
 
   currentVersion="$(echo "$data" | jq --raw-output ".$value")"
-  latestVersion="$(curl --show-error --silent --fail --location "https://api.github.com/repos/$infix/releases/latest" | jq -r '.tag_name')"
+  latestVersion="$(curl --show-error --silent --fail --location "https://api.github.com/repos/$infix/releases/latest" | jq -r '.tag_name | sub("^v"; "")')"
 
-  if [[ "v$currentVersion" != "$latestVersion" ]]; then
+  if [[ "$currentVersion" != "$latestVersion" ]]; then
     data="$(echo "$data" | jq --arg v "$latestVersion" --raw-output ".$value = \$v")"
     echo "$infix $currentVersion $latestVersion"
   fi
