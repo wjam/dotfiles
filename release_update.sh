@@ -29,7 +29,5 @@ function update() {
 }
 
 update aws_finder_version wjam/aws_finder
-update docker_buildx_version docker/buildx
-update docker_compose_version docker/compose
 
 echo "$data" > "$BASEDIR"/home/.chezmoidata.json
