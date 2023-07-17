@@ -1,1 +1,1 @@
-{{ joinPath (output "brew" "--prefix" | trim) "bin" "docker-compose" }}
+{{ joinPath .brew.prefix "bin" "docker-compose" }}

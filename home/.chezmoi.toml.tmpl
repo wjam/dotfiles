@@ -11,6 +11,9 @@
 {{-   $memory_gb = div (div ((output "sh" "-c" "grep MemTotal /proc/meminfo | awk '{print $2}'") | trim | atoi) 1024) 1024 }}
 {{- end }}
 
+[data.brew]
+  prefix = "{{ output "brew" "--prefix" | trim }}"
+
 [data.cpu]
 {{/* a machine with more than 16GB RAM is seen as a 'real' machine */}}
   big_machine = {{ gt $memory_gb 16 }}

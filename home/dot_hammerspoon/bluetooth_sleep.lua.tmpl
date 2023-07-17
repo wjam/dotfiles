@@ -24,7 +24,7 @@ end
 
 function toggleBluetooth(power)
     print("Setting bluetooth to " .. power)
-    local t = hs.task.new("{{ output "brew" "--prefix" | trim }}/bin/blueutil", checkBluetoothResult, {"--power", power})
+    local t = hs.task.new("{{ .brew.prefix }}/bin/blueutil", checkBluetoothResult, {"--power", power})
     t:start()
 end
 
@@ -37,7 +37,7 @@ function handlePowerEvent(event)
       toggleBluetooth("on")
     elseif event == hs.caffeinate.watcher.systemWillSleep then
       print("Checking if Bluetooth is running")
-      local t = hs.task.new("{{ output "brew" "--prefix" | trim }}/bin/blueutil", checkIfBluetoothAlreadyOff, {"--power"})
+      local t = hs.task.new("{{ .brew.prefix }}/bin/blueutil", checkIfBluetoothAlreadyOff, {"--power"})
       t:start()
       return
     end

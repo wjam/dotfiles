@@ -157,14 +157,6 @@ return {
   font_size = 13.0,
   line_height = 1.2,
 
-  -- Save tab history when closing
-  unix_domains = {
-    {
-      name = 'unix',
-    },
-  },
-  default_gui_startup_args = { 'connect', 'unix' },
-
   keys = keys,
 
 --  window_decorations = "INTEGRATED_BUTTONS|RESIZE",
