@@ -57,9 +57,6 @@ function configure_dock() {
   dockutil --add "$HOME/Applications/Slack.app/" --section apps --no-restart
   dockutil --add "$HOME/Applications/Visual Studio Code.app/" --section apps --no-restart
   dockutil --add "$HOME/Applications/Firefox.app/" --section apps --no-restart
-# [[- if and (.admin) (.full) ]]
-  dockutil --add "/Applications/Bitwarden.app" --section apps --no-restart
-# [[- end ]]
   dockutil --add "$HOME/Downloads/" --section others --view list --display stack --restart # restart last to pickup changes
 }
 
