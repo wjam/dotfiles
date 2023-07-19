@@ -12,6 +12,6 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-# .zshrc hash: # [[ include "dot_zshrc.tmpl" | sha256sum ]]
+# .zshrc hash: # [[ includeTemplate "dot_zshrc.tmpl" . | sha256sum ]]
 
 rm -f "${HOME}"/.zcompdump
