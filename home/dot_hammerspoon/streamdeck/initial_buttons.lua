@@ -10,8 +10,8 @@ initialButtonState = {
     ['buttons'] = {
         lockButton,
         firefox,
-        obs,
         zoom,
+        nonceButton(),
         nonceButton(),
         muteMicrophone,
         startVideo,
