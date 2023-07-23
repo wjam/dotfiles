@@ -1,1 +1,4 @@
-{{ output (joinPath .brew.prefix "bin" "wezterm") "shell-completion" "--shell" "zsh" | trim }}
+{{- $path := joinPath .brew.prefix "bin" "wezterm" -}}
+{{- if stat $path }}
+{{- output (joinPath .brew.prefix "bin" "wezterm") "shell-completion" "--shell" "zsh" | trim }}
+{{- end }}
