@@ -24,7 +24,7 @@ brew outdated --json | jq --compact-output '.formulae[]  | select(.pinned == fal
 done
 
 echo Casks
-brew outdated --json | jq --raw-output '.casks[] | "\(.name) \(.installed_versions) -> \(.current_version)"'
+brew outdated --json | jq --raw-output '.casks[] | "\(.name) \(.installed_versions[0]) -> \(.current_version)"'
 
 echo Pinned formulas
 brew list --pinned
