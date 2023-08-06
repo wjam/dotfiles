@@ -24,9 +24,11 @@
   executable = true
 [".vim/pack/editorconfig/start"]
   type = "git-repo"
+  exact = true
   url = "https://github.com/editorconfig/editorconfig-vim.git"
   refreshPeriod = "168h"
 [".vim/pack/polyglot/start/vim-polyglot"]
   type = "git-repo"
+  exact = true
   url = "https://github.com/sheerun/vim-polyglot.git"
   refreshPeriod = "168h"

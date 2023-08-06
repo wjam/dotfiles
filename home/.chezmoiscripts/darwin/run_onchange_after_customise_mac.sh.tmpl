@@ -65,6 +65,11 @@ function configure_keyboard() {
   defaults write NSGlobalDomain NSAutomaticPeriodSubstitutionEnabled -bool false
 }
 
+function configure_menu_bar() {
+  # Hide battery (Stats shows it)
+  defaults -currentHost write com.apple.controlcenter.plist Battery -int 24
+}
+
 # [[ if and (.admin) (.full) -]]
 mas version > /dev/null # verify that mas is actually installed - next call has `|| true` so won't catch missing mas
 uninstall_unwanted_default_apps
@@ -72,3 +77,4 @@ uninstall_unwanted_default_apps
 configure_finder
 configure_dock
 configure_keyboard
+configure_menu_bar
