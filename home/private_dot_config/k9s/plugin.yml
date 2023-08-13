@@ -17,3 +17,28 @@ plugin:
       - $NAMESPACE
       - --context
       - $CONTEXT
+  #--- Create debug container for selected pod in current namespace
+  # See https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/#ephemeral-container
+  debug:
+    shortCut: Shift-D
+    description: Add debug container
+    scopes:
+      - containers
+    command: bash
+    background: false
+    confirm: true
+    args:
+      - -c
+      - "kubectl debug -it -n=$NAMESPACE $POD --target=$NAME --image=nicolaka/netshoot:v0.11 --share-processes -- bash"
+  # View user-supplied values when the helm chart was created
+  helm-values:
+    shortCut: v
+    confirm: false
+    description: Values
+    scopes:
+      - helm
+    command: bash
+    background: false
+    args:
+      - -c
+      - "helm get values $COL-NAME -n $NAMESPACE --kube-context $CONTEXT | less"
