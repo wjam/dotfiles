@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+# chezmoi:template:left-delimiter="# [[" right-delimiter=]]
+
+# Exit on error. Append || true if you expect an error.
+set -o errexit
+# Exit on error inside any functions or subshells.
+set -o errtrace
+# Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
+set -o nounset
+# Catch the error in case mysqldump fails (but gzip succeeds) in `mysqldump |gzip`
+set -o pipefail
+# Turn on traces, useful while debugging but commented out by default
+#set -o xtrace
+
+function set_pref() {
+  # `awscli` installs glib which includes its own version of `gsettings` which doesn't read from the standard location
+  /usr/bin/gsettings set "$1" "$2" "$3"
+}
+
+# /usr/share/applications
+# /var/lib/snapd/desktop/applications/
+# ~/.local/share/applications
+# defaults removed: libreoffice-writer.desktop, snap-store_ubuntu-software.desktop, yelp.desktop
+# firefox_firefox & slack_slack need installing via snap first
+set_pref org.gnome.shell favorite-apps "[ \
+      'org.gnome.Nautilus.desktop', \
+      'wezterm.desktop', \
+      'slack_slack.desktop', \
+      'code.desktop', \
+      'firefox_firefox.desktop', \
+      'thunderbird.desktop' \
+# [[ if lookPath "steam" ]]
+      , 'steam.desktop' \
+# [[ end ]]
+      ]"
