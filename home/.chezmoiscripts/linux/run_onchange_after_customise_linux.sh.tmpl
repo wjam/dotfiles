@@ -24,12 +24,12 @@ function set_pref() {
 # firefox_firefox & slack_slack need installing via snap first
 set_pref org.gnome.shell favorite-apps "[ \
       'org.gnome.Nautilus.desktop', \
-      'firefox_firefox.desktop', \
-      'thunderbird.desktop', \
+      'wezterm.desktop', \
       'slack_slack.desktop', \
       'code.desktop', \
+      'firefox_firefox.desktop', \
+      'thunderbird.desktop' \
 # [[ if lookPath "steam" ]]
-      'steam.desktop', \
+      , 'steam.desktop' \
 # [[ end ]]
-      'wezterm.desktop'
       ]"
