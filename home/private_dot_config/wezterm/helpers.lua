@@ -46,4 +46,24 @@ function module.remove_file_prefix(s, home)
   return s
 end
 
+function module.set_appearance(gui, appearanceFile)
+  local appearance = gui.get_appearance()
+
+  local f = io.open(appearanceFile, "r")
+  local existing = f:read("*a")
+  f:close()
+
+  local current = "light"
+  if appearance:find "Dark" then
+    current = "dark"
+  end
+
+  if current ~= existing then
+    local f = io.open(appearanceFile, "w+")
+    f:write(current)
+    f:flush()
+    f:close()
+  end
+end
+
 return module

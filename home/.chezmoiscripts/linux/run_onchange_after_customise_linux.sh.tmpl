@@ -17,19 +17,27 @@ function set_pref() {
   /usr/bin/gsettings set "$1" "$2" "$3"
 }
 
+function join_by {
+  local d=${1-} f=${2-}
+  if shift 2; then
+    printf %s "$f" "${@/#/$d}"
+  fi
+}
+
+apps=(
+  "org.gnome.Nautilus.desktop"
+  "wezterm.desktop"
+  "slack_slack.desktop"
+  "code.desktop"
+  "firefox_firefox.desktop"
+  "thunderbird.desktop"
+)
+
+command -v steam > /dev/null && apps+=("steam.desktop")
+
 # /usr/share/applications
 # /var/lib/snapd/desktop/applications/
 # ~/.local/share/applications
 # defaults removed: libreoffice-writer.desktop, snap-store_ubuntu-software.desktop, yelp.desktop
 # firefox_firefox & slack_slack need installing via snap first
-set_pref org.gnome.shell favorite-apps "[ \
-      'org.gnome.Nautilus.desktop', \
-      'wezterm.desktop', \
-      'slack_slack.desktop', \
-      'code.desktop', \
-      'firefox_firefox.desktop', \
-      'thunderbird.desktop' \
-# [[ if lookPath "steam" ]]
-      , 'steam.desktop' \
-# [[ end ]]
-      ]"
+set_pref org.gnome.shell favorite-apps "[ '$(join_by "','" "${apps[@]}")' ]"
