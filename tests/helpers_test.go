@@ -3,6 +3,7 @@ package main
 import (
 	"os"
 	"path/filepath"
+	"strconv"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -10,55 +11,8 @@ import (
 	lua "github.com/yuin/gopher-lua"
 )
 
-func TestWeztermRemoveFilePrefix(t *testing.T) {
-	removeFilePrefix := loadWeztermHelpersLuaFunction(t, "remove_file_prefix")
-
-	tests := []struct {
-		input    string
-		expected string
-	}{
-		{"file:///home/foo/bar", "~/bar"},
-		{"file:///home/foo/bar%20boo", "~/bar boo"},
-		{"file:///usr/local/bin", "/usr/local/bin"},
-	}
-
-	for _, test := range tests {
-		t.Run(test.input, func(t *testing.T) {
-			assert.Equal(t, test.expected, removeFilePrefix(test.input, "/home/foo"))
-		})
-	}
-}
-
-func TestWeztermBasename(t *testing.T) {
-	basename := loadWeztermHelpersLuaFunction(t, "basename")
-
-	tests := []struct {
-		input    string
-		expected string
-	}{
-		{`cat`, "cat"},
-		{`/usr/bin/cat`, "cat"},
-		{`c:\\usr\\bin\\cat`, "cat"},
-		{`sudo /usr/bin/cat`, "cat"},
-		{`FOO=var cat`, "cat"},
-		{`FOO=var BAR=var cat`, "cat"},
-		{`sudo FOO=var cat`, "cat"},
-		{`sudo FOO=var bash cat`, "cat"},
-		{`sudo FOO=var bash`, "bash"}, // bash is the command being run
-		{`FOO cat`, "FOO"},            // should output FOO, which is the command going to be run
-		{`vi .config/stern/config.yaml`, "vi"},
-		{``, ""},
-	}
-
-	for _, test := range tests {
-		t.Run(test.input, func(t *testing.T) {
-			assert.Equal(t, test.expected, basename(test.input))
-		})
-	}
-}
-
 func TestWeztermSetAppearance(t *testing.T) {
-	v := loadWeztermHelpersLuaFunction(t, "set_appearance")
+	v := loadWeztermHelpersLuaFunction[any](t, "set_appearance")
 
 	tests := []struct {
 		name       string
@@ -114,27 +68,360 @@ func TestWeztermSetAppearance(t *testing.T) {
 			assert.Equal(t, test.expected, string(actual))
 		})
 	}
+}
+
+func TestWeztermSetAppearance_GuiNotReadyYet(t *testing.T) {
+	v := loadWeztermHelpersLuaFunction[any](t, "set_appearance")
+
+	f := filepath.Join(t.TempDir(), "file.txt")
+
+	v(nil, f)
+
+	assert.NoFileExists(t, f)
+}
+
+func TestFormatWindowTitle(t *testing.T) {
+	v := loadWeztermHelpersLuaFunction[string](t, "format_window_title")
+
+	tests := []struct {
+		name  string
+		index int
+		count int
+		prog  any
+		ssh   bool
+		user  string
+		host  string
+		home  string
+		cwd   string
+
+		expected string
+	}{
+		{
+			name:     "output-program-not-on-ssh",
+			index:    0,
+			count:    2,
+			prog:     "/usr/bin/vi foo.txt",
+			ssh:      false,
+			user:     "me",
+			host:     "example.test",
+			home:     "/home/me",
+			cwd:      "file:///home/me/foo",
+			expected: "[1/2] /usr/bin/vi foo.txt",
+		},
+		{
+			name:     "output-program-on-ssh",
+			index:    0,
+			count:    2,
+			prog:     "/usr/bin/vi foo.txt",
+			ssh:      true,
+			user:     "me",
+			host:     "example.test",
+			home:     "/home/me",
+			cwd:      "file:///home/me/foo",
+			expected: "[1/2] me@example.test /usr/bin/vi foo.txt",
+		},
+		{
+			name:     "output-dir-not-on-ssh",
+			index:    0,
+			count:    1,
+			prog:     nil,
+			ssh:      false,
+			user:     "me",
+			host:     "example.test",
+			home:     "/home/me",
+			cwd:      "file:///home/me/foo",
+			expected: "~/foo",
+		},
+		{
+			name:     "output-dir-outside-home-not-on-ssh",
+			index:    0,
+			count:    1,
+			prog:     nil,
+			ssh:      false,
+			user:     "me",
+			host:     "example.test",
+			home:     "/home/me",
+			cwd:      "file:///usr/local/bin",
+			expected: "/usr/local/bin",
+		},
+		{
+			name:     "output-dir-on-ssh",
+			index:    0,
+			count:    2,
+			prog:     nil,
+			ssh:      true,
+			user:     "me",
+			host:     "example.test",
+			home:     "/home/me",
+			cwd:      "file:///home/me/foo",
+			expected: "[1/2] me@example.test:~/foo",
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			tab := map[string]any{
+				"tab_index": test.index,
+				"active_pane": map[string]any{
+					"current_working_dir": test.cwd,
+				},
+			}
+			pane := map[string]any{
+				"user_vars": map[string]any{
+					"WEZTERM_PROG": test.prog,
+					"WEZTERM_SSH":  strconv.FormatBool(test.ssh),
+					"WEZTERM_USER": test.user,
+					"WEZTERM_HOST": test.host,
+					"WEZTERM_HOME": test.home,
+				},
+			}
+			var tabs []any
+			for i := 0; i < test.count; i++ {
+				tabs = append(tabs, i)
+			}
+			actual := v(tab, pane, tabs, "panes", "config")
+
+			assert.Equal(t, test.expected, actual)
+		})
+	}
+}
+
+func TestFormatTabTitle(t *testing.T) {
+	v := loadWeztermHelpersLuaFunction[[]any](t, "format_tab_title")
+
+	tests := []struct {
+		name   string
+		index  int
+		prog   any
+		unseen bool
+		ssh    bool
+		user   string
+		host   string
+		home   string
+		cwd    string
+
+		expected []any
+	}{
+		{
+			name:   "program-without-ssh",
+			index:  1,
+			prog:   "sleep",
+			unseen: true,
+			ssh:    false,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///home/me/foo",
+			expected: []any{
+				map[string]any{"Background": map[string]any{"Color": "blue"}},
+				map[string]any{"Text": "  *2: sleep "},
+			},
+		},
+		{
+			name:   "full-program-path-truncated-to-binary",
+			index:  1,
+			prog:   "/usr/bin/sleep",
+			unseen: false,
+			ssh:    false,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///home/me/foo",
+			expected: []any{
+				map[string]any{"Text": " 2: sleep "},
+			},
+		},
+		{
+			name:   "sudo-truncated-from-binary",
+			index:  1,
+			prog:   "sudo /usr/bin/cat",
+			unseen: false,
+			ssh:    false,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///home/me/foo",
+			expected: []any{
+				map[string]any{"Text": " 2: cat "},
+			},
+		},
+		{
+			name:   "env-var-truncated-from-binary",
+			index:  1,
+			prog:   "FOO=var cat",
+			unseen: false,
+			ssh:    false,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///home/me/foo",
+			expected: []any{
+				map[string]any{"Text": " 2: cat "},
+			},
+		},
+		{
+			name:   "multiple-env-var-truncated-from-binary",
+			index:  1,
+			prog:   "FOO=var BAR=var cat",
+			unseen: false,
+			ssh:    false,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///home/me/foo",
+			expected: []any{
+				map[string]any{"Text": " 2: cat "},
+			},
+		},
+		{
+			name:   "sudo-and-env-var-truncated-from-binary",
+			index:  1,
+			prog:   "sudo FOO=var cat",
+			unseen: false,
+			ssh:    false,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///home/me/foo",
+			expected: []any{
+				map[string]any{"Text": " 2: cat "},
+			},
+		},
+		{
+			name:   "sudo-env-var-and-bash-truncated-from-binary",
+			index:  1,
+			prog:   "sudo FOO=var bash cat",
+			unseen: false,
+			ssh:    false,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///home/me/foo",
+			expected: []any{
+				map[string]any{"Text": " 2: cat "},
+			},
+		},
+		{
+			name:   "bash-not-truncated-when-command-run",
+			index:  1,
+			prog:   "sudo FOO=var bash",
+			unseen: false,
+			ssh:    false,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///home/me/foo",
+			expected: []any{
+				map[string]any{"Text": " 2: bash "},
+			},
+		},
+		{
+			name:   "upper-case-is-not-env-var",
+			index:  1,
+			prog:   "FOO cat",
+			unseen: false,
+			ssh:    false,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///home/me/foo",
+			expected: []any{
+				map[string]any{"Text": " 2: FOO "},
+			},
+		},
+		{
+			name:   "truncate-args",
+			index:  1,
+			prog:   "vi .config/stern/config.yaml",
+			unseen: false,
+			ssh:    false,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///home/me/foo",
+			expected: []any{
+				map[string]any{"Text": " 2: vi "},
+			},
+		},
+		{
+			name:   "program-with-ssh",
+			index:  1,
+			prog:   "/usr/bin/vi foo.txt",
+			unseen: false,
+			ssh:    true,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///home/me/foo",
+			expected: []any{
+				map[string]any{"Text": " 2: me@example.test vi "},
+			},
+		},
+		{
+			name:   "no-program-without-ssh",
+			index:  1,
+			prog:   nil,
+			unseen: false,
+			ssh:    false,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///home/me/foo%20bar",
+			expected: []any{
+				map[string]any{"Text": " 2: ~/foo bar "},
+			},
+		},
+		{
+			name:   "no-program-with-ssh",
+			index:  1,
+			prog:   "",
+			unseen: false,
+			ssh:    true,
+			user:   "me",
+			host:   "example.test",
+			home:   "/home/me",
+			cwd:    "file:///usr/local/bin",
+			expected: []any{
+				map[string]any{"Text": " 2: me@example.test:/usr/local/bin "},
+			},
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			tab := map[string]any{
+				"tab_index": test.index,
+				"active_pane": map[string]any{
+					"current_working_dir": test.cwd,
+					"has_unseen_output":   test.unseen,
+					"user_vars": map[string]any{
+						"WEZTERM_PROG": test.prog,
+						"WEZTERM_SSH":  strconv.FormatBool(test.ssh),
+						"WEZTERM_USER": test.user,
+						"WEZTERM_HOST": test.host,
+						"WEZTERM_HOME": test.home,
+					},
+				},
+			}
+
+			actual := v(tab, "tabs", "panes", "config", "hover", "max_width")
+			assert.Equal(t, test.expected, actual)
+		})
+	}
 
 }
 
-func loadWeztermHelpersLuaFunction(t *testing.T, name string) func(...any) string {
+func loadWeztermHelpersLuaFunction[V any](t *testing.T, name string) func(...any) V {
 	l := lua.NewState()
 	t.Cleanup(l.Close)
 	require.NoError(t, l.DoFile(filepath.Join("..", "home", "private_dot_config", "wezterm", "helpers.lua")))
 
 	f := l.Get(-1).(*lua.LTable).RawGet(lua.LString(name))
 
-	return func(args ...any) string {
+	return func(args ...any) V {
 		var lvArgs []lua.LValue
 		for _, arg := range args {
-			switch v := arg.(type) {
-			case string:
-				lvArgs = append(lvArgs, lua.LString(v))
-			case identifiedFunc:
-				t := l.NewTable()
-				l.SetField(t, v.name, l.NewFunction(v.f))
-				lvArgs = append(lvArgs, t)
-			}
+			lvArgs = append(lvArgs, convertToLua(t, l, arg))
 		}
 
 		require.NoError(t, l.CallByParam(lua.P{
@@ -146,7 +433,74 @@ func loadWeztermHelpersLuaFunction(t *testing.T, name string) func(...any) strin
 		ret := l.Get(-1)
 		l.Pop(1)
 
-		return ret.String()
+		v := convertFromLua(t, ret)
+
+		if v == nil {
+			var empty V
+			return empty
+		}
+
+		return v.(V)
+	}
+}
+
+func convertToLua(t *testing.T, l *lua.LState, arg any) lua.LValue {
+	if arg == nil {
+		return lua.LNil
+	}
+	switch v := arg.(type) {
+	case string:
+		return lua.LString(v)
+	case int:
+		return lua.LNumber(v)
+	case bool:
+		return lua.LBool(v)
+	case identifiedFunc:
+		t := l.NewTable()
+		l.SetField(t, v.name, l.NewFunction(v.f))
+		return t
+	case map[string]any:
+		table := l.NewTable()
+		for key, value := range v {
+			l.SetField(table, key, convertToLua(t, l, value))
+		}
+		return table
+	case []any:
+		table := l.NewTable()
+		for _, value := range v {
+			table.Append(convertToLua(t, l, value))
+		}
+		return table
+	default:
+		t.Fatalf("unsupported type %T", v)
+		return nil
+	}
+}
+
+func convertFromLua(t *testing.T, luaV lua.LValue) any {
+	switch v := luaV.(type) {
+	case lua.LString:
+		return v.String()
+	case *lua.LTable:
+		if length := v.Len(); length != 0 {
+			// it's an array
+			var ret []any
+			for i := 0; i < length; i++ {
+				ret = append(ret, convertFromLua(t, v.RawGetInt(i+1)))
+			}
+			return ret
+		}
+
+		ret := map[string]any{}
+		v.ForEach(func(key lua.LValue, value lua.LValue) {
+			ret[key.String()] = convertFromLua(t, value)
+		})
+		return ret
+	case *lua.LNilType:
+		return nil
+	default:
+		t.Fatalf("unknown type %T", v)
+		return nil
 	}
 }
 

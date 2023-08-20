@@ -15,7 +15,7 @@ function unescape(url)
   return url:gsub("%%(%x%x)", hex_to_char)
 end
 
-function module.basename(s)
+function basename(s)
   if (s == nil or s == "") then
     return ""
   end
@@ -37,7 +37,7 @@ function module.basename(s)
   return name
 end
 
-function module.remove_file_prefix(s, home)
+function remove_file_prefix(s, home)
   s = trim_prefix(s, 'file://')
   s = unescape(s)
   if (home ~= nil and s:find(home, 1, true)) then
@@ -47,23 +47,86 @@ function module.remove_file_prefix(s, home)
 end
 
 function module.set_appearance(gui, appearanceFile)
-  local appearance = gui.get_appearance()
+  -- The multiplexer may not be connected to a GUI, so attempting to resolve this module from the mux server will return nil.
+  if gui then
+    local appearance = gui.get_appearance()
 
-  local f = io.open(appearanceFile, "r")
-  local existing = f:read("*a")
-  f:close()
-
-  local current = "light"
-  if appearance:find "Dark" then
-    current = "dark"
-  end
-
-  if current ~= existing then
-    local f = io.open(appearanceFile, "w+")
-    f:write(current)
-    f:flush()
+    local f = io.open(appearanceFile, "r")
+    local existing = f:read("*a")
     f:close()
+
+    local current = "light"
+    if appearance:find "Dark" then
+      current = "dark"
+    end
+
+    if current ~= existing then
+      local f = io.open(appearanceFile, "w+")
+      f:write(current)
+      f:flush()
+      f:close()
+    end
   end
 end
+
+function module.format_window_title(tab, pane, tabs, panes, config)
+  local program = pane.user_vars["WEZTERM_PROG"]
+  if program == nil then
+    program = ""
+  end
+
+  local ssh = ""
+  if pane.user_vars["WEZTERM_SSH"] == "true" then
+    local suffix = ":"
+    if program ~= "" then
+      suffix = " "
+    end
+    ssh = string.format('%s@%s%s', pane.user_vars["WEZTERM_USER"], pane.user_vars["WEZTERM_HOST"], suffix)
+  end
+
+  if program == "" then
+    program = remove_file_prefix(tab.active_pane.current_working_dir, pane.user_vars["WEZTERM_HOME"])
+  end
+
+  local index = ''
+  if #tabs > 1 then
+    index = string.format('[%d/%d] ', tab.tab_index + 1, #tabs)
+  end
+
+  return  index .. ssh .. program
+end
+
+function module.format_tab_title(tab, tabs, panes, config, hover, max_width)
+    local program = basename(tab.active_pane.user_vars["WEZTERM_PROG"])
+    local ssh = ""
+    if tab.active_pane.user_vars["WEZTERM_SSH"] == "true" then
+      local suffix = ":"
+      if program ~= "" then
+        suffix = " "
+      end
+      ssh = string.format('%s@%s%s', tab.active_pane.user_vars["WEZTERM_USER"], tab.active_pane.user_vars["WEZTERM_HOST"], suffix)
+    end
+
+    if program == "" then
+      program = remove_file_prefix(tab.active_pane.current_working_dir, tab.active_pane.user_vars["WEZTERM_HOME"])
+    end
+
+    local index = string.format('%d: ', tab.tab_index + 1)
+
+    -- Documentation on the format is at https://wezfurlong.org/wezterm/config/lua/wezterm/format.html
+    local title = {}
+
+    local unseen = ""
+    if tab.active_pane.has_unseen_output then
+      title[#title + 1] = { Background = { Color = 'blue' } }
+      unseen = ' *'
+    -- TODO use https://wezfurlong.org/wezterm/config/lua/wezterm.time/now.html to change the background to blue and
+    -- back over time, highlighting the change? https://github.com/kikito/tween.lua?
+    end
+
+    title[#title + 1] = { Text = ' ' .. unseen .. index .. ssh .. program .. ' ' }
+
+    return title
+  end
 
 return module

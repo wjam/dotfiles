@@ -17,83 +17,17 @@ function scheme_for_appearance()
 end
 
 function updatePowerlineGoAppearance()
-  -- The multiplexer may not be connected to a GUI, so attempting to resolve this module from the mux server will return nil.
-  local gui = wezterm.gui
-  if gui then
-    helpers.set_appearance(gui, powerlineGoAppearanceFile)
-  end
+  helpers.set_appearance(wezterm.gui, powerlineGoAppearanceFile)
   wezterm.time.call_after(60, updatePowerlineGoAppearance)
 end
 
 wezterm.time.call_after(60, updatePowerlineGoAppearance)
 
 -- Format window title like `[1/2]: ~/dev` or `[2/2]: vi ~/.config/wezterm/wezterm.lua`
-wezterm.on(
-  'format-window-title',
-  function(tab, pane, tabs, panes, config)
-    local program = pane.user_vars["WEZTERM_PROG"]
-    if program == nil then
-      program = ""
-    end
-
-    local ssh = ""
-    if pane.user_vars["WEZTERM_SSH"] == "true" then
-      local suffix = ":"
-      if program == "" then
-        suffix = " "
-      end
-      ssh = string.format('%s@%s%s', pane.user_vars["WEZTERM_USER"], pane.user_vars["WEZTERM_HOST"], suffix)
-    end
-
-    if program == "" then
-      program = helpers.remove_file_prefix(tab.active_pane.current_working_dir, pane.user_vars["WEZTERM_HOME"])
-    end
-
-    local index = ''
-    if #tabs > 1 then
-      index = string.format('[%d/%d] ', tab.tab_index + 1, #tabs)
-    end
-
-    return  index .. ssh .. program
-  end
-)
+wezterm.on('format-window-title', helpers.format_window_title)
 
 -- Format tab titles like `1: ~/dev` or `2: vi`
-wezterm.on(
-  'format-tab-title',
-  function(tab, tabs, panes, config, hover, max_width)
-    local program = helpers.basename(tab.active_pane.user_vars["WEZTERM_PROG"])
-    local ssh = ""
-    if tab.active_pane.user_vars["WEZTERM_SSH"] == "true" then
-      local suffix = ":"
-      if program == "" then
-        suffix = " "
-      end
-      ssh = string.format('%s@%s%s', tab.active_pane.user_vars["WEZTERM_USER"], tab.active_pane.user_vars["WEZTERM_HOST"], suffix)
-    end
-
-    if program == "" then
-      program = helpers.remove_file_prefix(tab.active_pane.current_working_dir, tab.active_pane.user_vars["WEZTERM_HOME"])
-    end
-
-    local index = string.format('%d: ', tab.tab_index + 1)
-
-    -- Documentation on the format is at https://wezfurlong.org/wezterm/config/lua/wezterm/format.html
-    local title = {}
-
-    local unseen = ""
-    if tab.active_pane.has_unseen_output then
-      title[#title + 1] = { Background = { Color = 'blue' } }
-      unseen = ' *'
-    -- TODO use https://wezfurlong.org/wezterm/config/lua/wezterm.time/now.html to change the background to blue and
-    -- back over time, highlighting the change? https://github.com/kikito/tween.lua?
-    end
-
-    title[#title + 1] = { Text = ' ' .. unseen .. index .. ssh .. program .. ' ' }
-
-    return title
-  end
-)
+wezterm.on('format-tab-title', helpers.format_tab_title)
 
 local keys = {
   -- Forward `Cmd+key` commands to the terminal
