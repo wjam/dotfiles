@@ -11,5 +11,8 @@
   "editor.renderWhitespace": "all",
   "files.autoSave": "afterDelay",
   "files.autoGuessEncoding": true,
-  "spellright.language": ["en_GB"]
+  "spellright.language": [
+    "en_GB"
+  ],
+  "window.autoDetectColorScheme": true
 }

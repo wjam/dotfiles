@@ -131,4 +131,3 @@ docker run --rm -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -
 * Find out whether `update-desktop-database ~/.local/share/applications` is needed once .desktop files are added?
 * Borgmatic?
 * [Hetzner](https://docs.hetzner.com/robot/storage-box/access/access-ssh-rsync-borg/)
-* Manage VSCode theme when switching from dark to light
