@@ -112,7 +112,6 @@ func TestDockerPluginsSupported(t *testing.T) {
 			assert.Contains(t, output, test.plugin)
 		})
 	}
-
 }
 
 func runCommand(t *testing.T, cmd string, args ...string) string {

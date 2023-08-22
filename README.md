@@ -77,7 +77,6 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 
 ## Ubuntu post installation
 * [Configure rclone](https://rclone.org/googlephotos/)
-* Add wezterm to sidebar
 TODO
 
 ## macOS post installation
@@ -130,3 +129,6 @@ docker run --rm -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -
     * AppImage - not supported for all apps like vscode
 * Find a way to disable sudo access in CI to test no admin access (apt will fail as `code` is assumed to be present at vscode-extensions script (install via snap?))
 * Find out whether `update-desktop-database ~/.local/share/applications` is needed once .desktop files are added?
+* Borgmatic?
+* [Hetzner](https://docs.hetzner.com/robot/storage-box/access/access-ssh-rsync-borg/)
+* Manage VSCode theme when switching from dark to light

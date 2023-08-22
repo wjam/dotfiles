@@ -1,0 +1,13 @@
+{
+  "workbench.colorTheme": "Default Light Modern",
+  "workbench.startupEditor": "none",
+  "git.autofetch": true,
+  "workbench.editor.untitled.hint": "hidden",
+  "editor.suggest.showMethods": true,
+  "editor.suggest.preview": true,
+  "editor.acceptSuggestionOnEnter": "on",
+  "editor.snippetSuggestions": "top",
+  "git.confirmSync": false,
+  "editor.renderWhitespace": "all",
+  "spellright.language": ["en_GB"]
+}
