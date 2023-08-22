@@ -9,5 +9,7 @@
   "editor.snippetSuggestions": "top",
   "git.confirmSync": false,
   "editor.renderWhitespace": "all",
+  "files.autoSave": "afterDelay",
+  "files.autoGuessEncoding": true,
   "spellright.language": ["en_GB"]
 }
