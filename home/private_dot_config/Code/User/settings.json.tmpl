@@ -12,7 +12,11 @@
   "files.autoSave": "afterDelay",
   "files.autoGuessEncoding": true,
   "spellright.language": [
+{{- if eq .chezmoi.os "darwin" }}
+    "en"
+{{- else }}
     "en_GB"
+{{- end }}
   ],
   "window.autoDetectColorScheme": true
 }
