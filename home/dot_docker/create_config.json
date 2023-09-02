@@ -1,0 +1,6 @@
+{
+  "auth": {
+    "ghcr.io": {}
+  },
+  "currentContext": "lima-docker"
+}

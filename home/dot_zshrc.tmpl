@@ -150,14 +150,13 @@ bindkey "^[[1;3C" forward-word
 alias ll='ls -alF'
 
 {{- if and (eq .chezmoi.os "linux") (.full) }}
-{{    $layout := (output "sh" "-c" "loginctl show-session $(loginctl show-user $(whoami) --property=Sessions --value) --property=Type --value") | trim }}
-{{-   if eq $layout "wayland" -}}
+{{-   if eq (env "XDG_SESSION_TYPE") "wayland" }}
 alias pbpaste="wl-paste"
 alias pbcopy="wl-copy"
-{{-   else -}}
+{{-   else }}
 alias pbpaste="xclip -out -sel clipboard"
 alias pbcopy="xclip -in -sel clipboard"
-{{-   end -}}
+{{-   end }}
 {{- end }}
 
 {{- if (eq .chezmoi.os "darwin") }}

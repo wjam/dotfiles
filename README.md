@@ -91,7 +91,6 @@ TODO
   * enable accessibility
 * Start Stats and select start at login
 * Start JetBrains toolbox
-  * generate shell scripts & set to `~/.local/bin`
 * Show sound in menu bar
 * Show bluetooth in menu bar
 * Settings > Keyboard > Keyboard Shortcuts > Function Keys > 'Use F1, F2, etc. keys as standard function keys'
