@@ -16,6 +16,7 @@ export PATH=# [[ includeTemplate "path" . | trim | quote ]]
 
 brew bundle --no-lock --file=/dev/stdin <<EOF
 brew "bat" # cat with syntax highlighting
+brew "btop"
 brew "chezmoi"
 brew "curl"
 brew "direnv"
@@ -28,7 +29,6 @@ brew "fzf" # Used by the ZSH history plugin as well executable_jq-interactive
 brew "git"
 brew "go"
 brew "helm"
-brew "htop"
 brew "ipcalc"
 brew "jq"
 brew "kubectx" # Easily switch k8s contexts

@@ -44,7 +44,7 @@ func TestToolsInstalled(t *testing.T) {
 		"dive",
 		"jq",
 		"git",
-		"htop",
+		"btop",
 		"tree",
 		"curl",
 		"direnv",
