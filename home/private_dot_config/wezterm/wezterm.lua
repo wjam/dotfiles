@@ -9,9 +9,9 @@ function scheme_for_appearance()
   if gui then
     local appearance = gui.get_appearance()
     if appearance:find "Dark" then
-      return "Builtin Dark"
+      return "BlulocoDark"
     else
-      return "Builtin Light"
+      return "BlulocoLight"
     end
   end
 end
