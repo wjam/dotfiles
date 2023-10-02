@@ -14,11 +14,11 @@ jobs:
   test:
 
     #   https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
-    #   https://github.com/actions/runner-images/blob/main/images/macos/macos-12-Readme.md
+    #   https://github.com/actions/runner-images/blob/main/images/macos/macos-13-Readme.md
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ["ubuntu-22.04", "macos-12"]
+        os: ["ubuntu-22.04", "macos-13"]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
