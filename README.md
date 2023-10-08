@@ -99,13 +99,14 @@ TODO
 * Settings > Date & Time > Clock: Show date
 * Neuter Spotlight (stop it crawling & using results from files being changed on disk)
   * Settings > Spotlight:
-    * Search Results:
-      * Applications
-      * Calculator
-      * Conversion
-      * System Preferences
     * Privacy:
       * Add dev folder, e.g. `/Users/wjam/dev`
+* Set up Firefox
+  * `Language: English (GB)`
+  * `British English Dictionary (Marco Pinto)`
+  * `uBlock Origin`
+  * `Auto Tab Discard`
+  * `Firefox Multi-Account Containers`
 
 # Testing
 Run the Go tests inside a Docker container with Homebrew, etc. installed:
