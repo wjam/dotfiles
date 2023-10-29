@@ -11,8 +11,8 @@ import (
 	lua "github.com/yuin/gopher-lua"
 )
 
-func TestWeztermSetAppearance(t *testing.T) {
-	v := loadWeztermHelpersLuaFunction[any](t, "set_appearance")
+func TestWeztermSetPowerlineAppearance(t *testing.T) {
+	v := loadWeztermHelpersLuaFunction[any](t, "set_powerline_appearance")
 
 	tests := []struct {
 		name       string
@@ -70,8 +70,59 @@ func TestWeztermSetAppearance(t *testing.T) {
 	}
 }
 
-func TestWeztermSetAppearance_GuiNotReadyYet(t *testing.T) {
-	v := loadWeztermHelpersLuaFunction[any](t, "set_appearance")
+func TestWeztermSetBtopApperance(t *testing.T) {
+	v := loadWeztermHelpersLuaFunction[any](t, "set_btop_appearance")
+
+	tests := []struct {
+		name       string
+		initial    string
+		appearance string
+		expected   string
+	}{
+		{
+			name:       "update-when-now-dark",
+			initial:    "light.theme",
+			appearance: "Something Something Dark side",
+			expected:   "dark.theme",
+		},
+		{
+			name:       "update-when-now-light",
+			initial:    "dark.theme",
+			appearance: "The feather",
+			expected:   "light.theme",
+		},
+		{
+			name:       "do-not-update-when-already-light",
+			initial:    "light.theme",
+			appearance: "A light thing",
+			expected:   "light.theme",
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			dir := t.TempDir()
+			current := filepath.Join(dir, "current.theme")
+			light := "light.theme"
+			dark := "dark.theme"
+
+			require.NoError(t, os.Symlink(test.initial, current))
+
+			v(identifiedFunc{
+				name: "get_appearance",
+				f:    luaFuncRetString(test.appearance),
+			}, current, light, dark)
+
+			actual, err := os.Readlink(current)
+			require.NoError(t, err)
+
+			assert.Equal(t, test.expected, string(actual))
+		})
+	}
+}
+
+func TestWeztermSetPowerlineAppearance_GuiNotReadyYet(t *testing.T) {
+	v := loadWeztermHelpersLuaFunction[any](t, "set_powerline_appearance")
 
 	f := filepath.Join(t.TempDir(), "file.txt")
 
