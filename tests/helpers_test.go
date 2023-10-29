@@ -122,7 +122,7 @@ func TestWeztermSetBtopApperance(t *testing.T) {
 }
 
 func TestWeztermSetPowerlineAppearance_GuiNotReadyYet(t *testing.T) {
-	v := loadWeztermHelpersLuaFunction[any](t, "set_appearance")
+	v := loadWeztermHelpersLuaFunction[any](t, "set_powerline_appearance")
 
 	f := filepath.Join(t.TempDir(), "file.txt")
 
