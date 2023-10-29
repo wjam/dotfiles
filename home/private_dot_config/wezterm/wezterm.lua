@@ -2,6 +2,11 @@ local wezterm = require 'wezterm'
 local helpers = require 'helpers'
 
 local powerlineGoAppearanceFile = wezterm.home_dir .. "/.config/powerline-go/appearance.txt"
+local btopThemeFile = wezterm.home_dir .. "/.config/btop/themes/current.theme"
+
+-- TODO contents of these should be oulled from Git (https://github.com/aristocratos/btop/tree/main/themes)
+local btopLightTheme = wezterm.home_dir .. "/.config/btop/themes/solarized_light.theme"
+local btopDarkTheme = wezterm.home_dir .. "/.config/btop/themes/solarized_dark.theme"
 
 function scheme_for_appearance()
   -- The multiplexer may not be connected to a GUI, so attempting to resolve this module from the mux server will return nil.
@@ -17,11 +22,16 @@ function scheme_for_appearance()
 end
 
 function updatePowerlineGoAppearance()
-  helpers.set_appearance(wezterm.gui, powerlineGoAppearanceFile)
+  helpers.set_powerline_appearance(wezterm.gui, powerlineGoAppearanceFile)
   wezterm.time.call_after(60, updatePowerlineGoAppearance)
 end
-
 wezterm.time.call_after(60, updatePowerlineGoAppearance)
+
+function updateBtopTheme()
+  helpers.set_btop_appearance(wezterm.gui, btopThemeFile, btopLightTheme, btopDarkTheme)
+  wezterm.time.call_after(60, updateBtopTheme)
+end
+wezterm.time.call_after(60, updateBtopTheme)
 
 -- Format window title like `[1/2]: ~/dev` or `[2/2]: vi ~/.config/wezterm/wezterm.lua`
 wezterm.on('format-window-title', helpers.format_window_title)

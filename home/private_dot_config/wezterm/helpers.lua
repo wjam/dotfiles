@@ -46,7 +46,15 @@ function remove_file_prefix(s, home)
   return s
 end
 
-function module.set_appearance(gui, appearanceFile)
+function execute(cmd)
+  local handle = io.popen(cmd)
+  local output = handle:read('*a')
+  handle:close()
+
+  return output:gsub('[\n\r]', ' ')
+end
+
+function module.set_powerline_appearance(gui, appearanceFile)
   -- The multiplexer may not be connected to a GUI, so attempting to resolve this module from the mux server will return nil.
   if gui then
     local appearance = gui.get_appearance()
@@ -65,6 +73,24 @@ function module.set_appearance(gui, appearanceFile)
       f:write(current)
       f:flush()
       f:close()
+    end
+  end
+end
+
+function module.set_btop_appearance(gui, lnk, light, dark)
+  -- The multiplexer may not be connected to a GUI, so attempting to resolve this module from the mux server will return nil.
+  if gui then
+    local appearance = gui.get_appearance()
+
+    existing = execute('readlink -f ' .. lnk)
+
+    current = light
+    if appearance:find "Dark" then
+      current = dark
+    end
+
+    if current ~= existing then
+      execute('ln -sf ' .. current .. ' ' .. lnk)
     end
   end
 end
