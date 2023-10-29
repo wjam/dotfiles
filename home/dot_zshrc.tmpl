@@ -9,7 +9,7 @@ export ZSH="$HOME/.oh-my-zsh"
 
 export WEZTERM_USER="{{ output "id" "-un" | trim }}"
 
-export BAT_THEME="GitHub"
+export BAT_THEME="Solarized (light)"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -169,6 +169,10 @@ alias goto="cd -P"
 
 # Replace cat with bat for syntax highlighting
 alias cat='bat --paging=never'
+
+# Use btop rather than top/htop
+alias top=btop
+alias htop=btop
 
 alias imgcat='wezterm imgcat'
 
