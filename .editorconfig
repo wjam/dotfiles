@@ -18,5 +18,6 @@ indent_size = 4
 [home/private_dot_config/powerline-go/create_appearance.txt]
 insert_final_newline = false
 
-[home/dot_docker/contexts/meta/3384fc6800de4f1211539c4930cbe1f5a8229c0eaa8d4241fe1bd7180b0da0e6/meta.json.tmpl]
-insert_final_newline = false
+# colima will re-add spaces making chezmoi display a diff
+[home/dot_colima/default/colima.yaml.tmpl]
+trim_trailing_whitespace = false
