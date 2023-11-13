@@ -39,6 +39,7 @@ code
 curl
 git
 gnome-tweaks
+libfuse2
 rclone
 vim-gui-common
 vim-runtime
