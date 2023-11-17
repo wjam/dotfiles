@@ -75,6 +75,13 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 4. `chezmoi init wjam`
 5. `chezmoi apply`
 
+## Common post installation
+1. Set up GitHub SSH key
+   1. ssh-keygen -t ed25519 -C "<email>" -f ~/.ssh/keys/github.com
+   2. git remote set-url origin git@github.com:wjam/dotfiles.git
+   3. git fetch
+      * Fingerprint for GitHub can be found at https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints
+
 ## Ubuntu post installation
 * [Configure rclone](https://rclone.org/googlephotos/)
 TODO
