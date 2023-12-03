@@ -112,7 +112,7 @@ plugins=(
 FPATH="{{ $fpaths | join ":" }}:${FPATH}"
 source $ZSH/oh-my-zsh.sh
 
-AUTO_NOTIFY_IGNORE+=("docker run" "docker exec" "docker logs" "vi" "dive" "k9s" "stern" "terraform console" "chezmoi diff")
+AUTO_NOTIFY_IGNORE+=("docker run" "docker exec" "docker logs" "vi" "dive" "k9s" "stern" "terraform console" "chezmoi diff" "top" "htop" "btop")
 
 # make `*` slightly easier to see
 ZSH_HIGHLIGHT_STYLES[globbing]=fg=blue,bold
