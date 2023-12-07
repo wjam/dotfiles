@@ -14,52 +14,40 @@ set -o pipefail
 
 export PATH=# [[ includeTemplate "path" . | trim | quote ]]
 
+# [[ $os := get .packages .chezmoi.os -]]
+
+# [[- $taps := concat .packages.common.all.taps $os.all.taps -]]
+# [[- $brews := concat .packages.common.all.brews $os.all.brews -]]
+# [[- $casks := concat .packages.common.all.casks $os.all.casks -]]
+# [[- $vscode := concat .packages.common.all.vscode $os.all.vscode -]]
+# [[- if .full -]]
+# [[-   $taps = concat $taps .packages.common.full.taps $os.full.taps -]]
+# [[-   $brews = concat $brews .packages.common.full.brews $os.full.brews -]]
+# [[-   $casks = concat $casks .packages.common.full.casks $os.full.casks -]]
+# [[-   $vscode = concat $vscode .packages.common.full.vscode $os.full.vscode -]]
+# [[-   if .admin -]]
+# [[-     $taps = concat $taps .packages.common.admin.taps $os.admin.taps -]]
+# [[-     $brews = concat $brews .packages.common.admin.brews $os.admin.brews -]]
+# [[-     $casks = concat $casks .packages.common.admin.casks $os.admin.casks -]]
+# [[-     $vscode = concat $vscode .packages.common.admin.vscode $os.admin.vscode -]]
+# [[-   end ]]
+# [[- end -]]
+
 brew bundle --no-lock --file=/dev/stdin <<EOF
-brew "bat" # cat with syntax highlighting
-brew "btop"
-brew "chezmoi"
-brew "curl"
-brew "direnv"
-brew "dive"
-brew "docker" # Command line only
-brew "docker-buildx"
-brew "docker-compose"
-brew "eza"
-brew "fzf" # Used by the ZSH history plugin as well executable_jq-interactive
-brew "git"
-brew "go"
-brew "helm"
-brew "ipcalc"
-brew "jq"
-brew "kubectx" # Easily switch k8s contexts
-brew "kubernetes-cli"
-brew "k9s"
-brew "packer"
-brew "pandoc" # Transform markdown to man pages and other formats
-brew "powerline-go"
-brew "pv" # Can be used to write scripts for a demo that don't touch the internet (e.g. 'cat output.txt | pv --quiet --line-mode --rate-limit 5')
-brew "rustup-init" # Manage rust
-brew "stern" # Displays k8s pod logs better
-brew "tealdeer" # Give examples of how to use commands
-brew "terragrunt"
-brew "tree"
+# [[ range ($taps | sortAlpha) -]]
+tap # [[ . | quote ]]
+# [[ end -]]
 
-# [[ if .full -]]
-brew "awscli"
-brew "azure-cli"
-brew "colima" # Utility to manage local Docker & Kubernetes VMs
-brew "openjdk@17"
-brew "pgcli" # PostgreSQL CLI
-# [[- end ]]
+# [[ range ($brews | sortAlpha) -]]
+brew # [[ . | quote ]]
+# [[ end -]]
 
-vscode "HashiCorp.terraform" # Terraform
-vscode "yzhang.markdown-all-in-one" # Markdown goodies
-vscode "mushan.vscode-paste-image" # Image pasting for Markdown
-vscode "ban.spellright" # Spell checking for text and Markdown
-vscode "bierner.markdown-footnotes" # Support footnotes in Markdown
-vscode "bierner.markdown-mermaid" # Support mermaid diagrams in Markdown
-vscode "bpruitt-goddard.mermaid-markdown-syntax-highlighting" # Mermaid syntax highlighting
-vscode "EditorConfig.EditorConfig" # EditorConfig support
-vscode "ms-vscode.hexeditor" # hex editor
-vscode "tomoki1207.pdf" # PDF viewer
+cask_args appdir: '~/Applications'
+# [[ range ($casks | sortAlpha) -]]
+cask # [[ . | quote ]]
+# [[ end -]]
+
+# [[ range ($vscode | sortAlpha) -]]
+vscode # [[ . | quote ]]
+# [[ end -]]
 EOF

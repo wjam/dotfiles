@@ -1,0 +1,119 @@
+# full is usually unset when running under CI to avoid installing stuff that takes a while
+# admin implies full and indicates full access to the laptop
+packages:
+  linux:
+    all:
+      taps:
+        - "wez/wezterm-linuxbrew"
+      brews:
+        - "wezterm"
+      casks: []
+      vscode: []
+    full:
+      taps: []
+      brews: []
+      casks: []
+      vscode: []
+    admin:
+      taps: []
+      brews: []
+      casks: []
+      vscode: []
+  darwin:
+    all:
+      taps:
+        - "wez/wezterm"
+      brews:
+        - "bash-completion"
+        - "blueutil" # used by Hammerspoon scripts
+        - "readline" # .inputrc
+        - "watch"
+      casks:
+        # TODO Temporarily needed until https://github.com/kcrawford/dockutil/issues/158 done
+        #   and https://github.com/Homebrew/homebrew-core/blob/master/Formula/d/dockutil.rb updated.
+        #   Re-add "dockutil" to brews list when merged
+        - "hpedrorodrigues/tools/dockutil"
+        - "firefox"
+        - "hammerspoon"
+        - "jetbrains-toolbox"
+        - "stats"
+        - "visual-studio-code"
+        - "wez/wezterm/wezterm"
+      vscode: []
+    full:
+      taps: []
+      brews: []
+      casks:
+        - "drawio"
+        - "gimp"
+        - "google-cloud-sdk"
+        - "libreoffice"
+        - "inkscape"
+        - "slack"
+      vscode: []
+    admin:
+      taps: []
+      brews:
+        - "mas" # needs admin permissions depending on what it does. Also installs items from App Store via Homebrew (mas "", id: 0)
+      casks:
+        - "google-chrome"
+      vscode: []
+  common:
+    all:
+      taps: []
+      brews:
+        - "bat" # cat with syntax highlighting
+        - "btop"
+        - "chezmoi"
+        - "curl"
+        - "direnv"
+        - "dive"
+        - "docker" # Command line only
+        - "docker-buildx"
+        - "docker-compose"
+        - "eza"
+        - "fzf" # Used by the ZSH history plugin as well executable_jq-interactive
+        - "git"
+        - "go"
+        - "helm"
+        - "ipcalc"
+        - "jq"
+        - "kubectx" # Easily switch k8s contexts
+        - "kubernetes-cli"
+        - "k9s"
+        - "packer"
+        - "pandoc" # Transform markdown to man pages and other formats
+        - "powerline-go"
+        - "pv" # Can be used to write scripts for a demo that don't touch the internet (e.g. 'cat output.txt | pv --quiet --line-mode --rate-limit 5')
+        - "rustup-init" # Manage rust
+        - "stern" # Displays k8s pod logs better
+        - "tealdeer" # Give examples of how to use commands
+        - "terragrunt"
+        - "tree"
+      casks: []
+      vscode:
+        - "HashiCorp.terraform" # Terraform
+        - "yzhang.markdown-all-in-one" # Markdown goodies
+        - "mushan.vscode-paste-image" # Image pasting for Markdown
+        - "ban.spellright" # Spell checking for text and Markdown
+        - "bierner.markdown-footnotes" # Support footnotes in Markdown
+        - "bierner.markdown-mermaid" # Support mermaid diagrams in Markdown
+        - "bpruitt-goddard.mermaid-markdown-syntax-highlighting" # Mermaid syntax highlighting
+        - "EditorConfig.EditorConfig" # EditorConfig support
+        - "ms-vscode.hexeditor" # hex editor
+        - "tomoki1207.pdf" # PDF viewer
+    full:
+      taps: []
+      brews:
+        - "awscli"
+        - "azure-cli"
+        - "colima" # Utility to manage local Docker & Kubernetes VMs
+        - "openjdk@17"
+        - "pgcli" # PostgreSQL CLI
+      casks: []
+      vscode: []
+    admin:
+      taps: []
+      brews: []
+      casks: []
+      vscode: []
