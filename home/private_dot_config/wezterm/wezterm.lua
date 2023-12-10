@@ -87,5 +87,19 @@ return {
 
   keys = keys,
 
+  mouse_bindings = {
+    -- quadruple click to select & copy the entire output of a command
+    {
+      event = { Down = { streak = 4, button = 'Left' } },
+      action = wezterm.action.SelectTextAtMouseCursor 'SemanticZone',
+      mods = 'NONE',
+    },
+    {
+      event = { Up = { streak = 4, button = 'Left' } },
+      action = wezterm.action.CompleteSelection 'ClipboardAndPrimarySelection',
+      mods = 'NONE',
+    },
+  },
+
 --  window_decorations = "INTEGRATED_BUTTONS|RESIZE",
 }
