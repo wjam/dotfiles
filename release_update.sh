@@ -13,7 +13,7 @@ set -o pipefail
 
 BASEDIR=$(dirname "$0")
 
-data=$(cat "$BASEDIR"/home/.chezmoidata.json)
+data=$(cat "$BASEDIR"/home/.chezmoidata/dependencies_outside_of_homebrew.json)
 
 function update() {
   local value="$1"
@@ -30,4 +30,4 @@ function update() {
 
 update aws_finder_version wjam/aws_finder
 
-echo "$data" > "$BASEDIR"/home/.chezmoidata.json
+echo "$data" > "$BASEDIR"/home/.chezmoidata/dependencies_outside_of_homebrew.json
