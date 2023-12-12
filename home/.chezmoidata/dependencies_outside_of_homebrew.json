@@ -1,3 +1,5 @@
 {
-  "aws_finder_version": "0.6.3"
+  "aws_finder_version": "0.6.3",
+  "bambu_studio_version": "01.08.01.57",
+  "freecad_version": "0.21.1"
 }

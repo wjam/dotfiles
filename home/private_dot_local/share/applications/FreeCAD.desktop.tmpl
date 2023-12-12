@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=FreeCAD
+Comment=Feature based Parametric Modeler
+Keywords=shell;prompt;command;commandline;cmd;
+Icon=org.freecadweb.FreeCAD
+StartupWMClass=FreeCAD
+Exec=env LD_PRELOAD=/usr/lib/x86_64-linux-gnu/libstdc++.so.6 {{ joinPath .chezmoi.homeDir ".local" "bin" "FreeCAD.AppImage" }} - --single-instance %F
+Type=Application
+Categories=Graphics;Science;Education;Engineering;
+Terminal=false

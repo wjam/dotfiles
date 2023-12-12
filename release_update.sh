@@ -29,5 +29,7 @@ function update() {
 }
 
 update aws_finder_version wjam/aws_finder
+update bambu_studio_version bambulab/BambuStudio
+update freecad_version FreeCAD/FreeCAD
 
 echo "$data" > "$BASEDIR"/home/.chezmoidata/dependencies_outside_of_homebrew.json

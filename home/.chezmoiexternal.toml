@@ -1,3 +1,5 @@
+# chezmoi:template:left-delimiter="# [[" right-delimiter=]]
+
 [".oh-my-zsh"]
   type = "git-repo"
   url = "https://github.com/ohmyzsh/ohmyzsh.git"
@@ -20,7 +22,7 @@
   refreshPeriod = "168h"
 [".local/bin/aws_finder"]
   type = "file"
-  url = "https://github.com/wjam/aws_finder/releases/download/v{{ .aws_finder_version }}/aws_finder-{{ .chezmoi.os }}-{{ .chezmoi.arch }}"
+  url = "https://github.com/wjam/aws_finder/releases/download/v# [[ .aws_finder_version ]]/aws_finder-# [[ .chezmoi.os ]]-# [[ .chezmoi.arch ]]"
   executable = true
 [".vim/pack/editorconfig/start"]
   type = "git-repo"
@@ -32,3 +34,15 @@
   exact = true
   url = "https://github.com/sheerun/vim-polyglot.git"
   refreshPeriod = "168h"
+# [[- if eq .chezmoi.os "linux" ]]
+[".local/bin/FreeCAD.AppImage"]
+  type = "file"
+  url = "https://github.com/FreeCAD/FreeCAD/releases/download/# [[ .freecad_version ]]/FreeCAD_# [[ .freecad_version ]]-Linux-x86_64.AppImage"
+  executable = true
+[".local/bin/BambuStudio.AppImage"]
+  type = "file"
+# Unsure how stable this URL is between versions
+# This may be required - {{ gitHubReleases "bambulab/BambuStudio" | toJson | fromJson | jq ".[] | select(.tag_name == \"v01.08.01.57\") | .assets[] | select((.name | contains(\"linux_ubuntu\")) and (.name | endswith(\".AppImage\"))) | .browser_download_url" | first }}
+  url = "https://github.com/bambulab/BambuStudio/releases/download/v# [[ .bambu_studio_version ]]/BambuStudio_linux_ubuntu_v# [[ .bambu_studio_version ]].AppImage"
+  executable = true
+# [[- end ]]
