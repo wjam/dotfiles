@@ -32,9 +32,10 @@ jobs:
           rm /usr/local/bin/go || true
           rm /usr/local/bin/gofmt || true
           command -v brew && brew list python@3.11 && brew uninstall --ignore-dependencies python@3.11
-          rm /usr/local/bin/2to3{,-3.11} || true
-          rm /usr/local/bin/{idle,pydoc}{3,3.11} || true
-          rm /usr/local/bin/{python3,python3.11}{,-config} || true
+          command -v brew && brew list python@3.12 && brew uninstall --ignore-dependencies python@3.12
+          rm /usr/local/bin/2to3{,-3.11,-3.12} || true
+          rm /usr/local/bin/{idle,pydoc}{3,3.11,3.12} || true
+          rm /usr/local/bin/{python3,python3.11,python3.12}{,-config} || true
         if: runner.os == 'macOS'
       - name: Test
         run: ./testing.sh --promptBool "Access to app store? y or n:"=n --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test
