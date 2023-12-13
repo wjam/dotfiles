@@ -13,7 +13,7 @@ on:
 jobs:
   test:
 
-    #   https://github.com/actions/runner-images/blob/main/images/linux/Ubuntu2204-Readme.md
+    #   https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2204-Readme.md
     #   https://github.com/actions/runner-images/blob/main/images/macos/macos-13-Readme.md
     runs-on: ${{ matrix.os }}
     strategy:
@@ -27,15 +27,7 @@ jobs:
           mkdir -p $HOME/.local/share
           ln -s $GITHUB_WORKSPACE $HOME/.local/share/chezmoi
       - name: Clean up GitHub
-        run: |
-          command -v brew && brew list go && brew uninstall go
-          rm /usr/local/bin/go || true
-          rm /usr/local/bin/gofmt || true
-          command -v brew && brew list python@3.11 && brew uninstall --ignore-dependencies python@3.11
-          command -v brew && brew list python@3.12 && brew uninstall --ignore-dependencies python@3.12
-          rm /usr/local/bin/2to3{,-3.11,-3.12} || true
-          rm /usr/local/bin/{idle,pydoc}{3,3.11,3.12} || true
-          rm /usr/local/bin/{python3,python3.11,python3.12}{,-config} || true
+        run: .github/clean-up-mac.sh
         if: runner.os == 'macOS'
       - name: Test
         run: ./testing.sh --promptBool "Access to app store? y or n:"=n --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test
