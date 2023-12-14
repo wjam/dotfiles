@@ -147,7 +147,7 @@ bindkey "^[[1;3C" forward-word
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias ll='eza --all --long --icons'
+alias ll='eza --all --long --icons=auto'
 
 {{- if and (eq .chezmoi.os "linux") (.full) }}
 {{-   if eq (env "XDG_SESSION_TYPE") "wayland" }}
