@@ -40,6 +40,7 @@ curl
 git
 gnome-tweaks
 libfuse2
+libwebkit2gtk-4.0-37
 rclone
 vim-gui-common
 vim-runtime
@@ -47,4 +48,5 @@ wl-clipboard
 zsh
 EOF
 
+# libwebkit2gtk-4.0-37 needed for Bambu Studio - https://github.com/bambulab/BambuStudio/issues/2429
 # apt-transport-https - needed to install vscode - https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions

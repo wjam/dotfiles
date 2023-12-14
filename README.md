@@ -35,6 +35,7 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
 * Why has Homebrew installed a dependency - `brew uses --recursive --installed formulae-name`
 * Remove dependencies automatically installed but no longer needed - `brew autoremove`
 * Slowly display a file - `cat filename | pv --quiet --line-mode --rate-limit 5`
+* Mark a package as automatically installed again - `sudo apt-mark auto $PKG_NAME`
 
 ## Workarounds
 * Unable to compile Go programs on Linux using Go installed using Homebrew (`cgo: C compiler "gcc-5" not found: exec: "gcc-5": executable file not found in $PATH`) - see `home/private_dot_config/go/env` (https://stackoverflow.com/questions/59227456/go-1-13-gcc-5-not-in-path)
