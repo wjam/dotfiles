@@ -4,7 +4,7 @@ local helpers = require 'helpers'
 local powerlineGoAppearanceFile = wezterm.home_dir .. "/.config/powerline-go/appearance.txt"
 local btopThemeFile = wezterm.home_dir .. "/.config/btop/themes/current.theme"
 
--- TODO contents of these should be oulled from Git (https://github.com/aristocratos/btop/tree/main/themes)
+-- TODO contents of these should be pulled from Git (https://github.com/aristocratos/btop/tree/main/themes)
 local btopLightTheme = wezterm.home_dir .. "/.config/btop/themes/solarized_light.theme"
 local btopDarkTheme = wezterm.home_dir .. "/.config/btop/themes/solarized_dark.theme"
 
@@ -54,6 +54,11 @@ if (wezterm.target_triple == 'x86_64-apple-darwin' or wezterm.target_triple == '
   table.insert(keys, {key='3', mods='OPT', action=wezterm.action.SendKey{key='#'}})
 end
 
+if (wezterm.target_triple == 'x86_64-unknown-linux-gnu') then
+  -- If you press CTRL+V - forgetting the correct combination - then CTRL+SHIFT+V,
+  -- Linux terminals will include control codes
+  table.insert(keys, {key='v', mods='CTRL', action=wezterm.action.Nop})
+end
 
 return {
   color_scheme = scheme_for_appearance(),
