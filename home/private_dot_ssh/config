@@ -16,7 +16,7 @@ Host localhost
   StrictHostKeyChecking no
 
 # Allow multiple ssh keys for different GitHub accounts - e.g. ~/.ssh/keys/company.github.com
-Match host *.github.com
+Host *.github.com
   HostName github.com
 
 Host remarkable
