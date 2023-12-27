@@ -42,7 +42,9 @@ tap # [[ . | quote ]]
 brew # [[ . | quote ]]
 # [[ end -]]
 
+# [[ if ne (len $casks) 0 -]]
 cask_args appdir: '~/Applications'
+# [[ end -]]
 # [[ range ($casks | sortAlpha) -]]
 cask # [[ . | quote ]]
 # [[ end -]]
