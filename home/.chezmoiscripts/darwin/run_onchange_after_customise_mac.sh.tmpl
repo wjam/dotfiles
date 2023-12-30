@@ -10,7 +10,7 @@ set -o nounset
 # Catch the error in case mysqldump fails (but gzip succeeds) in `mysqldump |gzip`
 set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
-#set -o xtrace
+set -o xtrace
 
 export PATH=# [[ includeTemplate "path" . | trim | quote ]]
 
@@ -49,6 +49,9 @@ function configure_dock() {
   defaults write com.apple.dock "tilesize" -int 45
   # Get Dock to reload its configuration
   killall Dock
+
+  which dockutil
+  ls -l "$(which dockutil)"
 
   dockutil --remove all --no-restart
   dockutil --add "/System/Applications/App Store.app/" --section apps --no-restart
