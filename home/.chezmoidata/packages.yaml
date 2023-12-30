@@ -26,13 +26,10 @@ packages:
       brews:
         - "bash-completion"
         - "blueutil" # used by Hammerspoon scripts
+        - "dockutil"
         - "readline" # .inputrc
         - "watch"
       casks:
-        # TODO Temporarily needed until https://github.com/kcrawford/dockutil/issues/158 done
-        #   and https://github.com/Homebrew/homebrew-core/blob/master/Formula/d/dockutil.rb updated.
-        #   Re-add "dockutil" to brews list when merged
-        - "hpedrorodrigues/tools/dockutil"
         - "firefox"
         - "hammerspoon"
         - "jetbrains-toolbox"
