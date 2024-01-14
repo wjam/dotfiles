@@ -86,20 +86,15 @@ ZSH_CACHE_DIR="$HOME/.cache/oh-my-zsh"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   direnv # direnv hook
-  docker # completion
   docker-compose # completion
   golang # completion
-  helm # completion
-  kubectl # completion & `k` alias
   mvn # Maven completion
   rust # completion
-  safe-paste # prevent pasting \n from running shell commands
   terraform # completion
   zsh-interactive-cd # interactive list of directories on `cd`
   zsh-autosuggestions # auto-suggest commands based on history
   zsh-syntax-highlighting # syntax highlighting for the typed command
 {{- if .full }}
-  systemd # completion
   auto-notify # Send a notification when long running programs end
 {{- end }}
 )
@@ -148,6 +143,8 @@ bindkey "^[[1;3C" forward-word
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias ll='eza --all --long --icons=auto'
+
+alias k='kubectl'
 
 {{- if and (eq .chezmoi.os "linux") (.full) }}
 {{-   if eq (env "XDG_SESSION_TYPE") "wayland" }}
