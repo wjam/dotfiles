@@ -1,3 +1,4 @@
+{{- $zsh := joinPath .chezmoi.homeDir ".oh-my-zsh"  -}}
 zmodload zsh/datetime
 
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
@@ -5,7 +6,7 @@ export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 export PATH={{ includeTemplate "path" . | trim | quote }}
 
 # Path to your oh-my-zsh installation.
-export ZSH="{{ .chezmoi.homeDir }}/.oh-my-zsh"
+export ZSH="{{ $zsh }}"
 
 export WEZTERM_USER="{{ output "id" "-un" | trim }}"
 
@@ -103,7 +104,7 @@ plugins=(
 {{ $fpaths = append $fpaths (joinPath .chezmoi.homeDir ".local" "fpath") -}}
 
 FPATH="{{ $fpaths | join ":" }}:${FPATH}"
-source $ZSH/oh-my-zsh.sh
+source {{ joinPath $zsh "oh-my-zsh.sh" }}
 
 AUTO_NOTIFY_IGNORE+=("docker run" "docker exec" "docker logs" "vi" "dive" "k9s" "stern" "terraform console" "chezmoi diff" "top" "htop" "btop")
 
@@ -176,9 +177,3 @@ alias imgcat='wezterm imgcat'
 # gcloud completion script lacks '#compdef gcloud' at the top, so have to load it manually
 source "{{ $gcpSDK }}"
 {{- end }}
-
-# Support loading bash completions, kept to a minimum to avoid performance problems
-autoload bashcompinit
-bashcompinit
-
-complete -C 'vault' vault
