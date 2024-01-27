@@ -69,6 +69,7 @@ packages:
         - "docker-buildx"
         - "docker-compose"
         - "eza"
+        - "fastfetch"
         - "fzf" # Used by the ZSH history plugin as well executable_jq-interactive
         - "git"
         - "go"

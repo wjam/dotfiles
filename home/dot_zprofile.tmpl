@@ -1,0 +1,3 @@
+if [[ "$-" == *i* ]]; then
+  {{ joinPath .brew.prefix "bin" "fastfetch" }} --config {{ joinPath .chezmoi.homeDir ".config" "fastfetch" "custom.jsonc" }}
+fi
