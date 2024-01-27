@@ -4,16 +4,10 @@
     "title",
     "separator",
     "os",
-    {
-      "type": "host",
-      "format": "{/2}{-}{/}{2}{?3} {3}{?}"
-    },
+    "host",
     "kernel",
     "uptime",
-    {
-      "type": "battery",
-      "format": "{/4}{-}{/}{4}%{?5} [{5}]{?}"
-    },
+    "battery",
     "break",
     "packages",
     "shell",
@@ -21,10 +15,7 @@
     "terminal",
     "break",
     "cpu",
-    {
-      "type": "gpu",
-      "key": "GPU"
-    },
+    "gpu",
     "memory",
     "break",
     "disk"
