@@ -3,7 +3,7 @@ module github.com/wjam/dotfiles/tests
 go 1.21.1
 
 require (
-	github.com/gruntwork-io/terratest v0.46.8
+	github.com/gruntwork-io/terratest v0.46.11
 	github.com/samber/lo v1.39.0
 	github.com/stretchr/testify v1.8.4
 	github.com/yuin/gopher-lua v1.1.1
