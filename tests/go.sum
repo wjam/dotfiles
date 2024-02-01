@@ -1,7 +1,7 @@
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
-github.com/gruntwork-io/terratest v0.46.8 h1:rgK7z6Dy/eMGFaclKR0WVG9Z54tR+Ehl7S09+8Y25j0=
-github.com/gruntwork-io/terratest v0.46.8/go.mod h1:6MxfmOFQQEpQZjpuWRwuAK8qm836hYgAOCzSIZIWTmg=
+github.com/gruntwork-io/terratest v0.46.11 h1:1Z9G18I2FNuH87Ro0YtjW4NH9ky4GDpfzE7+ivkPeB8=
+github.com/gruntwork-io/terratest v0.46.11/go.mod h1:DVZG/s7eP1u3KOQJJfE6n7FDriMWpDvnj85XIlZMEM8=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/samber/lo v1.39.0 h1:4gTz1wUhNYLhFSKl6O+8peW0v2F4BCY034GRpU9WnuA=
