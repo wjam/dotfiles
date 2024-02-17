@@ -1,5 +1,11 @@
 # shellcheck shell=bash
 
+# Copy of https://github.com/wez/wezterm/blob/main/assets/shell-integration/wezterm.sh with minor changes
+# * Add WEZTERM_SHELL_INTEGRATION_INSTALLED to tell if this script was called
+# * Use hardcoded WEZTERM_USER value rather than shelling out
+# * Remove override of WEZTERM_HOST
+# * Remove setting of WEZTERM_IN_TMUX
+
 export WEZTERM_SHELL_INTEGRATION_INSTALLED="Yes"
 
 # This file hooks up shell integration for wezterm.
@@ -499,17 +505,11 @@ function __wezterm_semantic_preexec() {
 __wezterm_user_vars_precmd() {
   __wezterm_set_user_var "WEZTERM_PROG" ""
   __wezterm_set_user_var "WEZTERM_USER" "${WEZTERM_USER}"
-  __wezterm_set_user_var "WEZTERM_HOME" "${HOME:-}"
 
   if hash hostname 2>/dev/null ; then
     __wezterm_set_user_var "WEZTERM_HOST" "$(hostname)"
   elif hash hostnamectl 2>/dev/null ; then
     __wezterm_set_user_var "WEZTERM_HOST" "$(hostnamectl hostname)"
-  fi
-  if [[ "${SSH_CLIENT:-}" == "" ]]; then
-    __wezterm_set_user_var "WEZTERM_SSH" "false"
-  else
-    __wezterm_set_user_var "WEZTERM_SSH" "true"
   fi
 }
 

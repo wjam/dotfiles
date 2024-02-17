@@ -4,8 +4,22 @@
 
 zmodload zsh/datetime
 
+# Emit a user var for WezTerm to pick up - https://wezfurlong.org/wezterm/config/lua/pane/get_user_vars.html
+function userVar() {
+  printf "\033]1337;SetUserVar=%s=%s\007" "$1" `echo -n "$2" | base64`
+}
+
 function preexec() {
   __TIMER=$EPOCHREALTIME
+}
+
+function wezterm_uservars_precmd() {
+  userVar "WEZTERM_HOME" "${HOME:-}"
+  if [[ "${SSH_CLIENT:-}" == "" ]]; then
+    userVar "WEZTERM_SSH" "false"
+  else
+    userVar "WEZTERM_SSH" "true"
+  fi
 }
 
 function powerline_precmd() {
@@ -34,6 +48,7 @@ function install_powerline_precmd() {
       return
     fi
   done
+  precmd_functions+=(wezterm_uservars_precmd)
   precmd_functions+=(powerline_precmd)
 }
 
