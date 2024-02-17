@@ -1,20 +1,5 @@
 local module = {}
 
-function trim_prefix(s, prefix)
-  if s:find(prefix, 1, true) then
-    s = string.sub(s, string.len(prefix) + 1, string.len(s))
-  end
-  return s
-end
-
-function hex_to_char(x)
-  return string.char(tonumber(x, 16))
-end
-
-function unescape(url)
-  return url:gsub("%%(%x%x)", hex_to_char)
-end
-
 function basename(s)
   if (s == nil or s == "") then
     return ""
@@ -37,11 +22,15 @@ function basename(s)
   return name
 end
 
-function remove_file_prefix(s, home)
-  s = trim_prefix(s, 'file://')
-  s = unescape(s)
+-- Turn the current working directory, which is a https://wezfurlong.org/wezterm/config/lua/wezterm.url/Url.html, into
+-- a string and replace $HOME with ~
+function tidy_cwd(s, home)
+  s = s.file_path
   if (home ~= nil and s:find(home, 1, true)) then
-    s = "~" .. trim_prefix(s, home)
+    s = "~" .. s:sub(home:len() + 1, s:len())
+  end
+  if s:sub(-1) == "/" then
+    s = s:sub(1, -2)
   end
   return s
 end
@@ -110,8 +99,8 @@ function module.format_window_title(tab, pane, tabs, panes, config)
     ssh = string.format('%s@%s%s', pane.user_vars["WEZTERM_USER"], pane.user_vars["WEZTERM_HOST"], suffix)
   end
 
-  if program == "" then
-    program = remove_file_prefix(tab.active_pane.current_working_dir, pane.user_vars["WEZTERM_HOME"])
+  if (program == "" and tab.active_pane.current_working_dir ~= nil) then
+    program = tidy_cwd(tab.active_pane.current_working_dir, pane.user_vars["WEZTERM_HOME"])
   end
 
   local index = ''
@@ -133,8 +122,8 @@ function module.format_tab_title(tab, tabs, panes, config, hover, max_width)
       ssh = string.format('%s@%s%s', tab.active_pane.user_vars["WEZTERM_USER"], tab.active_pane.user_vars["WEZTERM_HOST"], suffix)
     end
 
-    if program == "" then
-      program = remove_file_prefix(tab.active_pane.current_working_dir, tab.active_pane.user_vars["WEZTERM_HOME"])
+    if (program == "" and tab.active_pane.current_working_dir ~= nil) then
+      program = tidy_cwd(tab.active_pane.current_working_dir, tab.active_pane.user_vars["WEZTERM_HOME"])
     end
 
     local index = string.format('%d: ', tab.tab_index + 1)
