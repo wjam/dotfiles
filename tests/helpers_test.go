@@ -156,7 +156,7 @@ func TestFormatWindowTitle(t *testing.T) {
 			user:     "me",
 			host:     "example.test",
 			home:     "/home/me",
-			cwd:      "file:///home/me/foo",
+			cwd:      "/home/me/foo/",
 			expected: "[1/2] /usr/bin/vi foo.txt",
 		},
 		{
@@ -168,7 +168,7 @@ func TestFormatWindowTitle(t *testing.T) {
 			user:     "me",
 			host:     "example.test",
 			home:     "/home/me",
-			cwd:      "file:///home/me/foo",
+			cwd:      "/home/me/foo/",
 			expected: "[1/2] me@example.test /usr/bin/vi foo.txt",
 		},
 		{
@@ -180,7 +180,7 @@ func TestFormatWindowTitle(t *testing.T) {
 			user:     "me",
 			host:     "example.test",
 			home:     "/home/me",
-			cwd:      "file:///home/me/foo",
+			cwd:      "/home/me/foo",
 			expected: "~/foo",
 		},
 		{
@@ -192,7 +192,7 @@ func TestFormatWindowTitle(t *testing.T) {
 			user:     "me",
 			host:     "example.test",
 			home:     "/home/me",
-			cwd:      "file:///usr/local/bin",
+			cwd:      "/usr/local/bin/",
 			expected: "/usr/local/bin",
 		},
 		{
@@ -204,7 +204,7 @@ func TestFormatWindowTitle(t *testing.T) {
 			user:     "me",
 			host:     "example.test",
 			home:     "/home/me",
-			cwd:      "file:///home/me/foo",
+			cwd:      "/home/me/foo/",
 			expected: "[1/2] me@example.test:~/foo",
 		},
 	}
@@ -214,7 +214,10 @@ func TestFormatWindowTitle(t *testing.T) {
 			tab := map[string]any{
 				"tab_index": test.index,
 				"active_pane": map[string]any{
-					"current_working_dir": test.cwd,
+					"current_working_dir": map[string]any{
+						"scheme":    "file",
+						"file_path": test.cwd,
+					},
 				},
 			}
 			pane := map[string]any{
@@ -262,7 +265,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///home/me/foo",
+			cwd:    "/home/me/foo/",
 			expected: []any{
 				map[string]any{"Background": map[string]any{"Color": "blue"}},
 				map[string]any{"Text": "  *2: sleep "},
@@ -277,7 +280,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///home/me/foo",
+			cwd:    "/home/me/foo/",
 			expected: []any{
 				map[string]any{"Text": " 2: sleep "},
 			},
@@ -291,7 +294,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///home/me/foo",
+			cwd:    "/home/me/foo/",
 			expected: []any{
 				map[string]any{"Text": " 2: cat "},
 			},
@@ -305,7 +308,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///home/me/foo",
+			cwd:    "/home/me/foo/",
 			expected: []any{
 				map[string]any{"Text": " 2: cat "},
 			},
@@ -319,7 +322,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///home/me/foo",
+			cwd:    "/home/me/foo/",
 			expected: []any{
 				map[string]any{"Text": " 2: cat "},
 			},
@@ -333,7 +336,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///home/me/foo",
+			cwd:    "/home/me/foo/",
 			expected: []any{
 				map[string]any{"Text": " 2: cat "},
 			},
@@ -347,7 +350,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///home/me/foo",
+			cwd:    "/home/me/foo/",
 			expected: []any{
 				map[string]any{"Text": " 2: cat "},
 			},
@@ -361,7 +364,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///home/me/foo",
+			cwd:    "/home/me/foo/",
 			expected: []any{
 				map[string]any{"Text": " 2: bash "},
 			},
@@ -375,7 +378,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///home/me/foo",
+			cwd:    "/home/me/foo/",
 			expected: []any{
 				map[string]any{"Text": " 2: FOO "},
 			},
@@ -389,7 +392,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///home/me/foo",
+			cwd:    "/home/me/foo/",
 			expected: []any{
 				map[string]any{"Text": " 2: vi "},
 			},
@@ -403,7 +406,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///home/me/foo",
+			cwd:    "/home/me/foo/",
 			expected: []any{
 				map[string]any{"Text": " 2: me@example.test vi "},
 			},
@@ -417,7 +420,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///home/me/foo%20bar",
+			cwd:    "/home/me/foo bar/",
 			expected: []any{
 				map[string]any{"Text": " 2: ~/foo bar "},
 			},
@@ -431,7 +434,7 @@ func TestFormatTabTitle(t *testing.T) {
 			user:   "me",
 			host:   "example.test",
 			home:   "/home/me",
-			cwd:    "file:///usr/local/bin",
+			cwd:    "/usr/local/bin/",
 			expected: []any{
 				map[string]any{"Text": " 2: me@example.test:/usr/local/bin "},
 			},
@@ -443,8 +446,11 @@ func TestFormatTabTitle(t *testing.T) {
 			tab := map[string]any{
 				"tab_index": test.index,
 				"active_pane": map[string]any{
-					"current_working_dir": test.cwd,
-					"has_unseen_output":   test.unseen,
+					"current_working_dir": map[string]any{
+						"scheme":    "file",
+						"file_path": test.cwd,
+					},
+					"has_unseen_output": test.unseen,
 					"user_vars": map[string]any{
 						"WEZTERM_PROG": test.prog,
 						"WEZTERM_SSH":  strconv.FormatBool(test.ssh),
