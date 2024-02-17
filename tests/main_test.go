@@ -22,7 +22,7 @@ func TestZSHTheme(t *testing.T) {
 	envs := runCommandInShell(t, "env")
 
 	// shell integration is there, so the powerline-go is probably running?
-	assert.Contains(t, envs, "WEZTERM_SHELL_INTEGRATION_INSTALLED=Yes")
+	assert.Contains(t, envs, "__wezterm_semantic_precmd_executing")
 }
 
 func TestShellDefaultIsZSH(t *testing.T) {
