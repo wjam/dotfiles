@@ -1,6 +1,9 @@
 {{- $zsh := joinPath .chezmoi.homeDir ".oh-my-zsh"  -}}
 zmodload zsh/datetime
 
+# dive doesn't support Docker contexts - https://github.com/wagoodman/dive/issues/397
+export DOCKER_HOST="unix://{{ joinPath .chezmoi.homeDir ".colima" "docker.sock" }}"
+
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
 export PATH={{ includeTemplate "path" . | trim | quote }}
