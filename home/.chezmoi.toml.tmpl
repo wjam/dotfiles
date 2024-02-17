@@ -6,19 +6,8 @@ pager = ""
   email = {{ promptStringOnce . "email" "Email address for Git:" | quote }} # Email address for Git
   full = {{ promptBoolOnce . "full" "Install everything? y or n:" }} # false if we're having to limit things because it's CI
 
-{{- $memory_gb := 0 }}
-{{- if eq .chezmoi.os "darwin" }}
-{{-   $memory_gb = div (div (div ((output "sysctl" "-n" "hw.memsize") | trim | atoi) 1024) 1024) 1024 }}
-{{- else }}
-{{-   $memory_gb = div (div ((output "sh" "-c" "grep MemTotal /proc/meminfo | awk '{print $2}'") | trim | atoi) 1024) 1024 }}
-{{- end }}
-
 [data.brew]
   prefix = "{{ output "brew" "--prefix" | trim }}"
-
-[data.cpu]
-{{/* a machine with more than 16GB RAM is seen as a 'real' machine */}}
-  big_machine = {{ gt $memory_gb 16 }}
 
 [diff]
   exclude = ["externals"]
