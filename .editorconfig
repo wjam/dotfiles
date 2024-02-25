@@ -21,7 +21,3 @@ insert_final_newline = false
 # colima will re-add spaces making chezmoi display a diff
 [home/dot_colima/default/colima.yaml.tmpl]
 trim_trailing_whitespace = false
-
-# btop doesn't put a newline at the end if it alters the config
-[home/private_dot_config/btop/btop.conf]
-insert_final_newline = false

@@ -1,0 +1,50 @@
+# chezmoi:template:left-delimiter="# [[" right-delimiter=]]
+
+".oh-my-zsh":
+  type: "git-repo"
+  url: "https://github.com/ohmyzsh/ohmyzsh.git"
+  exact: true
+  refreshPeriod: "168h"
+".oh-my-zsh_custom/plugins/zsh-syntax-highlighting":
+  type: "git-repo"
+  exact: true
+  url: "https://github.com/zsh-users/zsh-syntax-highlighting.git"
+  refreshPeriod: "168h"
+".oh-my-zsh_custom/plugins/zsh-autosuggestions":
+  type: "git-repo"
+  exact: true
+  url: "https://github.com/zsh-users/zsh-autosuggestions.git"
+  refreshPeriod: "168h"
+".oh-my-zsh_custom/plugins/auto-notify":
+  type: "git-repo"
+  exact: true
+  url: "https://github.com/MichaelAquilina/zsh-auto-notify.git"
+  refreshPeriod: "168h"
+".local/bin/aws_finder":
+  type: "file"
+  url: "https://github.com/wjam/aws_finder/releases/download/v0.6.3/aws_finder-# [[ .chezmoi.os ]]-# [[ .chezmoi.arch ]]"
+  executable: true
+".vim/pack/editorconfig/start":
+  type: "git-repo"
+  exact: true
+  url: "https://github.com/editorconfig/editorconfig-vim.git"
+  refreshPeriod: "168h"
+".vim/pack/polyglot/start/vim-polyglot":
+  type: "git-repo"
+  exact: true
+  url: "https://github.com/sheerun/vim-polyglot.git"
+  refreshPeriod: "168h"
+# [[- if eq .chezmoi.os "linux" ]]
+".local/bin/FreeCAD.AppImage":
+  type: "file"
+  url: "https://github.com/FreeCAD/FreeCAD/releases/download/0.21.2/FreeCAD-0.21.2-Linux-x86_64.AppImage"
+  executable: true
+".local/bin/BambuStudio.AppImage":
+  type: "file"
+  url: "https://github.com/bambulab/BambuStudio/releases/download/v01.08.04.51/BambuStudio_linux_ubuntu_v01.08.04.51_20240117.AppImage"
+  executable: true
+".local/bin/OpenSCAD.AppImage":
+  type: "file"
+  url: "https://github.com/openscad/openscad/releases/download/openscad-2021.01/OpenSCAD-2021.01-x86_64.AppImage"
+  executable: true
+# [[- end ]]

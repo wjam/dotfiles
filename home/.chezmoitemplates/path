@@ -3,7 +3,6 @@
     (joinPath .chezmoi.homeDir ".cargo" "bin")
     (joinPath .brew.prefix "opt" "curl" "bin")
     (joinPath .brew.prefix "opt" "mysql-client" "bin")
-    (joinPath .brew.prefix "opt" "openjdk@17" "bin")
     (joinPath .brew.prefix "sbin")
     (joinPath .brew.prefix "bin")
 -}}
