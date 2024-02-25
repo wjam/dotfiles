@@ -106,7 +106,6 @@ packages:
         - "awscli"
         - "azure-cli"
         - "colima" # Utility to manage local Docker & Kubernetes VMs
-        - "openjdk@17"
         - "pgcli" # PostgreSQL CLI
       casks: []
       vscode: []
