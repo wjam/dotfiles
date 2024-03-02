@@ -48,7 +48,8 @@ local keys = {
   -- Make Cmd+Enter go to fullscreen
   {key="Enter", mods="SUPER", action=wezterm.action.ToggleFullScreen},
   {key='0', mods='CTRL', action=wezterm.action.ResetFontAndWindowSize},
-  {key='"', mods='SHIFT|CTRL', action=wezterm.action.ActivateTab(1)},
+  {key='"', mods='SHIFT|CTRL', action=wezterm.action.ActivateTab(1)}, -- Needed for Linux machines w/ UK keyboard
+  {key='£', mods='SHIFT|CTRL', action=wezterm.action.ActivateTab(2)}, -- Needed for macOS machines w/ UK keyboard
 }
 
 if (wezterm.target_triple == 'x86_64-apple-darwin' or wezterm.target_triple == 'aarch64-apple-darwin') then
