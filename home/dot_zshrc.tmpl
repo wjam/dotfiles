@@ -46,6 +46,9 @@ HIST_STAMPS="yyyy-mm-dd"
 ZSH_CUSTOM="{{ joinPath .chezmoi.homeDir ".oh-my-zsh_custom" }}"
 ZSH_CACHE_DIR="{{ joinPath .chezmoi.homeDir ".cache" ".oh-my-zsh" }}"
 
+# Use zoxide for `cd`
+ZOXIDE_CMD_OVERRIDE="cd"
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -56,6 +59,7 @@ plugins=(
   golang # completion - go doesn't produce autocompletion file
   rust # completion - rustc doesn't produce autocompletion file
   terraform # completion - Terraform produces a horrible autocompletion file
+  zoxide # a better `cd` command
   zsh-interactive-cd # interactive list of directories on `cd`
   zsh-autosuggestions # auto-suggest commands based on history
   zsh-syntax-highlighting # syntax highlighting for the typed command

@@ -88,6 +88,7 @@ packages:
         - "tealdeer" # Give examples of how to use commands
         - "terragrunt"
         - "tree"
+        - "zoxide" # better cd command
       casks: []
       vscode:
         - "HashiCorp.terraform" # Terraform

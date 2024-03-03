@@ -15,9 +15,16 @@ Host localhost
   UserKnownHostsFile /dev/null
   StrictHostKeyChecking no
 
+# Use SSH over HTTPS port to defeat any ISP
+# https://docs.github.com/en/authentication/troubleshooting-ssh/using-ssh-over-the-https-port
+Host github.com
+  Hostname ssh.github.com
+  Port 443
+
 # Allow multiple ssh keys for different GitHub accounts - e.g. ~/.ssh/keys/company.github.com
 Host *.github.com
-  HostName github.com
+  Hostname ssh.github.com
+  Port 443
 
 Host remarkable
   Hostname 10.11.99.1
