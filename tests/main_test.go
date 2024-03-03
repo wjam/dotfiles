@@ -90,7 +90,7 @@ func TestChezmoiDiffWorks(t *testing.T) {
 func TestSSHConfigSupportsMultiGitHubAccounts(t *testing.T) {
 	config := runCommand(t, "ssh", "-G", "git@company.github.com")
 
-	assert.Contains(t, config, "hostname github.com")
+	assert.Contains(t, config, "hostname ssh.github.com")
 	assert.Contains(t, config, "identityfile ~/.ssh/keys/%n")
 }
 
