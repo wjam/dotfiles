@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# chezmoi:template:left-delimiter="# [[" right-delimiter=]]
 
 # Exit on error. Append || true if you expect an error.
 set -o errexit
@@ -33,20 +34,23 @@ EOAPT
 
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive xargs sudo apt-get install --assume-yes <<EOF
-apt-transport-https
 build-essential
-code
 curl
 git
+vim
+zsh
+EOF
+
+# [[- if .gui ]]
+DEBIAN_FRONTEND=noninteractive xargs sudo apt-get install --assume-yes <<EOF
+apt-transport-https
+code
 gnome-tweaks
 libfuse2
 libwebkit2gtk-4.0-37
-rclone
-vim-gui-common
-vim-runtime
 wl-clipboard
-zsh
 EOF
+# [[- end ]]
 
 # libwebkit2gtk-4.0-37 needed for Bambu Studio - https://github.com/bambulab/BambuStudio/issues/2429
 # apt-transport-https - needed to install vscode - https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions

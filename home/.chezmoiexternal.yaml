@@ -34,7 +34,7 @@
   exact: true
   url: "https://github.com/sheerun/vim-polyglot.git"
   refreshPeriod: "168h"
-# [[- if eq .chezmoi.os "linux" ]]
+# [[- if and (eq .chezmoi.os "linux") .gui ]]
 ".local/bin/FreeCAD.AppImage":
   type: "file"
   url: "https://github.com/FreeCAD/FreeCAD/releases/download/0.21.2/FreeCAD-0.21.2-Linux-x86_64.AppImage"

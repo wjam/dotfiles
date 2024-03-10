@@ -5,6 +5,7 @@ pager = ""
   admin = {{ promptBoolOnce . "admin" "Have admin access? y or n:" }} # true if have 'admin' access to the machine
   email = {{ promptStringOnce . "email" "Email address for Git:" | quote }} # Email address for Git
   full = {{ promptBoolOnce . "full" "Install everything? y or n:" }} # false if we're having to limit things because it's CI
+  gui = {{ or (eq .chezmoi.os "darwin") (ne (env "DISPLAY") "") }}
 
 [data.brew]
   prefix = "{{ output "brew" "--prefix" | trim }}"

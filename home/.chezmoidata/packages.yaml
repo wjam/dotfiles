@@ -14,6 +14,16 @@ packages:
       brews: []
       casks: []
       vscode: []
+    gui:
+      taps: []
+      brews: []
+      casks: []
+      vscode: []
+    full_gui:
+      taps: []
+      brews: []
+      casks: []
+      vscode: []
     admin:
       taps: []
       brews: []
@@ -36,6 +46,16 @@ packages:
         - "stats"
         - "visual-studio-code"
         - "wez/wezterm/wezterm"
+      vscode: []
+    gui:
+      taps: []
+      brews: []
+      casks: []
+      vscode: []
+    full_gui:
+      taps: []
+      brews: []
+      casks: []
       vscode: []
     full:
       taps: []
@@ -90,6 +110,11 @@ packages:
         - "tree"
         - "zoxide" # better cd command
       casks: []
+      vscode: []
+    gui:
+      taps: []
+      brews: []
+      casks: []
       vscode:
         - "HashiCorp.terraform" # Terraform
         - "yzhang.markdown-all-in-one" # Markdown goodies
@@ -106,8 +131,13 @@ packages:
       brews:
         - "awscli"
         - "azure-cli"
-        - "colima" # Utility to manage local Docker & Kubernetes VMs
         - "pgcli" # PostgreSQL CLI
+      casks: []
+      vscode: []
+    full_gui:
+      taps: []
+      brews:
+        - "colima" # Utility to manage local Docker & Kubernetes VMs
       casks: []
       vscode: []
     admin:

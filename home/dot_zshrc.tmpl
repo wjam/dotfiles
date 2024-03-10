@@ -2,7 +2,9 @@
 zmodload zsh/datetime
 
 # dive doesn't support Docker contexts - https://github.com/wagoodman/dive/issues/397
+{{- if .gui }}
 export DOCKER_HOST="unix://{{ joinPath .chezmoi.homeDir ".colima" "docker.sock" }}"
+{{- end }}
 
 export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
 
@@ -92,7 +94,7 @@ alias ll='eza --all --long --icons=auto'
 
 alias k='kubectl'
 
-{{- if and (eq .chezmoi.os "linux") (.full) }}
+{{- if and (eq .chezmoi.os "linux") (.full) (.gui) }}
 {{-   if eq (env "XDG_SESSION_TYPE") "wayland" }}
 alias pbpaste="wl-paste"
 alias pbcopy="wl-copy"

@@ -12,7 +12,7 @@ Library
 .config/tealdeer
 .local/share
 {{ end }}
-{{ if or (ne .chezmoi.os "linux") (not .full) }}
+{{ if or (ne .chezmoi.os "linux") (not .full) (not .gui) }}
 .local/share/applications
 .local/share/icons
 {{ end }}
