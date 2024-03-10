@@ -65,7 +65,7 @@ plugins=(
   zsh-interactive-cd # interactive list of directories on `cd`
   zsh-autosuggestions # auto-suggest commands based on history
   zsh-syntax-highlighting # syntax highlighting for the typed command
-{{- if .full }}
+{{- if and .full .gui }}
   auto-notify # Send a notification when long running programs end
 {{- end }}
 )
