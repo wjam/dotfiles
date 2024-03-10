@@ -3,10 +3,8 @@
 packages:
   linux:
     all:
-      taps:
-        - "wez/wezterm-linuxbrew"
-      brews:
-        - "wezterm"
+      taps: []
+      brews: []
       casks: []
       vscode: []
     full:
@@ -15,8 +13,10 @@ packages:
       casks: []
       vscode: []
     gui:
-      taps: []
-      brews: []
+      taps:
+        - "wez/wezterm-linuxbrew"
+      brews:
+        - "wezterm"
       casks: []
       vscode: []
     full_gui:
