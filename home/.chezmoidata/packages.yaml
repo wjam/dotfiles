@@ -77,7 +77,8 @@ packages:
       vscode: []
   common:
     all:
-      taps: []
+      taps:
+        - "ynqa/tap"
       brews:
         - "bat" # cat with syntax highlighting
         - "btop"
@@ -90,12 +91,13 @@ packages:
         - "docker-compose"
         - "eza"
         - "fastfetch"
-        - "fzf" # Used by the ZSH history plugin as well executable_jq-interactive
+        - "fzf" # Used by the ZSH history plugin
         - "git"
         - "go"
         - "helm"
         - "ipcalc"
         - "jq"
+        - "ynqa/tap/jnv" # Interactive JQ editor
         - "kubectx" # Easily switch k8s contexts
         - "kubernetes-cli"
         - "k9s"
