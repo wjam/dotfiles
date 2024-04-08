@@ -1,5 +1,5 @@
 # See https://k9scli.io/topics/plugins/
-plugin:
+plugins:
   # Leverage stern (https://github.com/wercker/stern) to output logs.
   stern:
     shortCut: Ctrl-L
@@ -29,7 +29,7 @@ plugin:
     confirm: true
     args:
       - -c
-      - "kubectl debug -it -n=$NAMESPACE $POD --target=$NAME --image=nicolaka/netshoot:v0.11 --share-processes -- bash"
+      - "kubectl debug -it -n=$NAMESPACE $POD --target=$NAME --image=nicolaka/netshoot:v0.12 --share-processes -- bash"
   # View user-supplied values when the helm chart was created
   helm-values:
     shortCut: v
