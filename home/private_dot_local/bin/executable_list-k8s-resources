@@ -13,16 +13,16 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-printf "%s %s: %s" "apiVersion" "kind" "verbs"
+printf "%s\t%s\t%s\n" "apiVersion" "kind" "verbs"
 
 # do core resources first, which are at a separate api location
-kubectl get --raw /api/v1 | jq -r '.resources[] | "v1 \(.name): \(.verbs | join(" "))"'
+kubectl get --raw /api/v1 | jq -r '.resources[] | "v1\t\(.name)\t\(.verbs | join(" "))"'
 
 kubectl get --raw /apis | jq --compact-output --raw-output '.groups[].name' | sort | while IFS= read -r api; do
   kubectl get --raw "/apis/$api"  | jq --compact-output --raw-output '.versions[].version' | while IFS= read -r version; do
     apis=$(kubectl get --raw "/apis/$api/$version" 2>&1 || true)
     if [ "$apis" != "Error from server (NotFound): the server could not find the requested resource" ]; then
-      echo "$apis" | jq --raw-output --arg api "$api" --arg version "$version" '.resources[] | "\($api)/\($version) \(.name): \(.verbs | join(" "))"'
+      echo "$apis" | jq --raw-output --arg api "$api" --arg version "$version" '.resources[] | "\($api)/\($version)\t\(.name)\t\(.verbs | join(" "))"'
     fi
   done
 done
