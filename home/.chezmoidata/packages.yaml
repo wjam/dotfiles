@@ -100,7 +100,6 @@ packages:
         - "kubectx" # Easily switch k8s contexts
         - "kubernetes-cli"
         - "k9s"
-        - "packer"
         - "pandoc" # Transform markdown to man pages and other formats
         - "powerline-go"
         - "pv" # Can be used to write scripts for a demo that don't touch the internet (e.g. 'cat output.txt | pv --quiet --line-mode --rate-limit 5')
@@ -117,7 +116,6 @@ packages:
       brews: []
       casks: []
       vscode:
-        - "HashiCorp.terraform" # Terraform
         - "yzhang.markdown-all-in-one" # Markdown goodies
         - "mushan.vscode-paste-image" # Image pasting for Markdown
         - "ban.spellright" # Spell checking for text and Markdown
