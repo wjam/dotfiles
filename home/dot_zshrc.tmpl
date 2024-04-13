@@ -28,11 +28,6 @@ ZSH_THEME="wezterm-powerline-go"
 # Disable bi-weekly auto-update checks as Chezmoi does it
 zstyle ':omz:update' mode disabled
 
-export HISTFILESIZE=1000000000
-export HISTSIZE=1000000000
-setopt HIST_IGNORE_ALL_DUPS
-setopt SHARE_HISTORY
-
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
 # You can set one of the optional three formats:
@@ -120,6 +115,8 @@ alias top=btop
 alias htop=btop
 
 alias imgcat='wezterm imgcat'
+
+eval "$(atuin init zsh --disable-up-arrow)"
 
 {{- $gcpSDK := joinPath .brew.prefix "share" "google-cloud-sdk" "completion.zsh.inc" }}
 {{- if (stat ($gcpSDK)) }}

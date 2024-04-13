@@ -79,6 +79,7 @@ packages:
     all:
       taps: []
       brews:
+        - "atuin" # better shell history
         - "bat" # cat with syntax highlighting
         - "btop"
         - "chezmoi"
