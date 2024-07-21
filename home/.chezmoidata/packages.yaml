@@ -128,8 +128,7 @@ packages:
         - "tomoki1207.pdf" # PDF viewer
     full:
       taps: []
-      brews:
-        - "pgcli" # PostgreSQL CLI
+      brews: []
       casks: []
       vscode: []
     full_gui:
