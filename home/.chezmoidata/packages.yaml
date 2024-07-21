@@ -104,7 +104,6 @@ packages:
         - "pandoc" # Transform markdown to man pages and other formats
         - "powerline-go"
         - "pv" # Can be used to write scripts for a demo that don't touch the internet (e.g. 'cat output.txt | pv --quiet --line-mode --rate-limit 5')
-        - "rustup-init" # Manage rust
         - "stern" # Displays k8s pod logs better
         - "tealdeer" # Give examples of how to use commands
         - "terragrunt"

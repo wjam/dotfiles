@@ -1,5 +1,19 @@
 # chezmoi:template:left-delimiter="# [[" right-delimiter=]]
 
+# [[ $rustOs := .chezmoi.os ]]
+# [[ if eq $rustOs "darwin" ]]
+# [[ $rustOs = "apple-darwin" ]]
+# [[ else if eq $rustOs "linux" ]]
+# [[ $rustOs = "unknown-linux-gnu" ]]
+# [[ end ]]
+
+# [[ $altArch := .chezmoi.arch ]]
+# [[ if eq $altArch "amd64" ]]
+# [[ $altArch = "x86_64" ]]
+# [[ else if eq $altArch "arm64" ]]
+# [[ $altArch = "aarch64" ]]
+# [[ end ]]
+
 ".oh-my-zsh":
   type: "git-repo"
   url: "https://github.com/ohmyzsh/ohmyzsh.git"
@@ -34,6 +48,10 @@
   exact: true
   url: "https://github.com/sheerun/vim-polyglot.git"
   refreshPeriod: "168h"
+".local/bin/rustup-init":
+  type: "file"
+  url: "https://static.rust-lang.org/rustup/dist/# [[ $altArch ]]-# [[ $rustOs ]]/rustup-init"
+  executable: true
 # [[- if and (eq .chezmoi.os "linux") .gui ]]
 ".local/bin/FreeCAD.AppImage":
   type: "file"
