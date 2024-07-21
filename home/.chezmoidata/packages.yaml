@@ -129,8 +129,6 @@ packages:
     full:
       taps: []
       brews:
-        - "awscli"
-        - "azure-cli"
         - "pgcli" # PostgreSQL CLI
       casks: []
       vscode: []
