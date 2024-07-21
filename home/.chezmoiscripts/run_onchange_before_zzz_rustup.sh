@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-# chezmoi:template:left-delimiter="# [[" right-delimiter=]]
 
 # Exit on error. Append || true if you expect an error.
 set -o errexit
@@ -12,6 +11,4 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
-export PATH=# [[ includeTemplate "path" . | trim | quote ]]
-
-rustup-init --no-modify-path -y
+$HOME/.local/bin/rustup-init --no-modify-path -y
