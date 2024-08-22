@@ -14,20 +14,6 @@ set -o pipefail
 
 export PATH=# [[ includeTemplate "path" . | trim | quote ]]
 
-function mas_uninstall() {
-  installed=$(mas list | grep "$1" || true)
-  if [ "$installed" != "" ]; then
-    sudo mas uninstall "$1"
-  fi
-}
-
-function uninstall_unwanted_default_apps() {
-  mas_uninstall 409203825 # Numbers
-  mas_uninstall 409201541 # Pages
-  mas_uninstall 682658836 # GarageBand
-  mas_uninstall 408981434 # iMovie
-}
-
 function configure_finder() {
   # TODO defaults write NSGlobalDomain AppleShowAllExtensions -bool true; # show all file extensions
   # show hidden files
@@ -96,10 +82,6 @@ function configure_spotlight() {
     '{"enabled" = 0;"name" = "SOURCE";}'
 }
 
-# [[ if and (.admin) (.full) -]]
-mas version > /dev/null # verify that mas is actually installed - next call has `|| true` so won't catch missing mas
-uninstall_unwanted_default_apps
-# [[- end ]]
 configure_finder
 configure_dock
 configure_keyboard

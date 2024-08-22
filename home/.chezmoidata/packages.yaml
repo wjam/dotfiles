@@ -63,17 +63,13 @@ packages:
       casks:
         - "drawio"
         - "gimp"
-        - "google-cloud-sdk"
-        - "libreoffice"
         - "inkscape"
         - "slack"
       vscode: []
     admin:
       taps: []
-      brews:
-        - "mas" # needs admin permissions depending on what it does. Also installs items from App Store via Homebrew (mas "", id: 0)
-      casks:
-        - "google-chrome"
+      brews: []
+      casks: []
       vscode: []
   common:
     all:
