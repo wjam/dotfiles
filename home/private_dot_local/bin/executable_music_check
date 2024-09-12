@@ -17,10 +17,35 @@ find . -mindepth 2 -maxdepth 2 -type d -exec test -e "{}/cover.png" ';' -prune -
   exit 1
 done
 
-# Files within an album should have the same ALBUM title
 find . -type f -name '*.flac' -exec dirname "{}" \; | sort -u | while IFS= read -r dir; do
+  # Files within an album should have the same ALBUM title
   if [[ "$(metaflac --show-tag ALBUM --no-filename "$dir"/*.flac | sort -u | wc -l)" != "1" ]]; then
     echo "'$dir' contains files where the album names don't match"
+    exit 1
+  fi
+
+  # Files within an album that don't share an ARTIST should have an ALBUMARTIST
+  if [[ "$(metaflac --show-tag ARTIST --no-filename "$dir"/*.flac | sort -u | wc -l)" != "1" ]]; then
+    if [[ "$(metaflac --show-tag ALBUMARTIST --no-filename "$dir"/*.flac | sort -u | wc -l)" != "1" ]]; then
+      echo "'$dir' contains files with different artists but no matching ALBUMARTIST"
+      exit 1
+    fi
+  fi
+
+  # Files within an album should have a DATE, the same DATE and a valid one at that
+  date="$(metaflac --show-tag DATE --no-filename "$dir"/*.flac | sort -u)"
+  if [[ "$( echo "$date" | wc -l)" != "1" ]]; then
+    echo "$dir - multiple dates - $date"
+    exit 1
+  fi
+  if [[ "$date" == "" ]]; then
+    echo "$dir is missing DATE"
+    if [[ "$dir" != "./King Size Slim/Only_My_Good_Self_to_Blame" ]]; then
+      # TODO between 2003 & 2008
+      exit 1
+    fi
+  elif [[ "$date" == "0001-01-01" ]]; then
+    echo "$dir has invalid DATE"
     exit 1
   fi
 done
@@ -49,7 +74,7 @@ done
 find . -type f -name '*.flac' | while IFS= read -r file; do
   dir="$(dirname "$file")"
 
-  # TODO enable DATE when most have been added
+  # TODO enable DATE when all have been added
   for type in ARTIST TRACKNUMBER TRACKTOTAL ALBUM TITLE ARTISTSORT; do
     if [[ "$(metaflac --show-tag $type "$file")" == "" ]]; then
       echo "'$file' is missing $type"
@@ -81,12 +106,5 @@ find . -type f -name '*.flac' | while IFS= read -r file; do
     fi
     metaflac --import-picture-from="$cover" "$file"
   fi
-
-# Set DISCNUMBER to 1 if it's missing
-#  if [[ "$(metaflac --show-tag DISCNUMBER "$file")" == "" ]]; then
-#    metaflac --set-tag='DISCNUMBER=1' "$file"
-#  fi
-
-# TODO Set DATE tag somehow...
 
 done
