@@ -9,6 +9,7 @@ pager = ""
 
 [data.brew]
   prefix = "{{ output "brew" "--prefix" | trim }}"
+  install_user = {{ promptStringOnce . "install_user" "Use another user to run brew install:" | quote }}
 
 [diff]
   exclude = ["externals"]

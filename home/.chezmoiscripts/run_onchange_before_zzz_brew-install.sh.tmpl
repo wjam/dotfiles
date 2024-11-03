@@ -45,7 +45,13 @@ export PATH=# [[ includeTemplate "path" . | trim | quote ]]
 # [[-   $vscode = concat $vscode .packages.common.gui.vscode $os.gui.vscode -]]
 # [[- end ]]
 
-brew bundle --no-lock --file=/dev/stdin <<EOF
+brewfile="$(mktemp -p "$HOME")"
+
+trap 'rm -f -- "$brewfile"' EXIT
+
+chmod g+r "$brewfile"
+
+cat <<EOF > "$brewfile"
 # [[ range ($taps | sortAlpha) -]]
 tap # [[ . | quote ]]
 # [[ end -]]
@@ -55,7 +61,7 @@ brew # [[ . | quote ]]
 # [[ end -]]
 
 # [[ if ne (len $casks) 0 -]]
-cask_args appdir: '~/Applications'
+cask_args appdir: '# [[ joinPath .chezmoi.homeDir "Applications" ]]'
 # [[ end -]]
 # [[ range ($casks | sortAlpha) -]]
 cask # [[ . | quote ]]
@@ -65,3 +71,10 @@ cask # [[ . | quote ]]
 vscode # [[ . | quote ]]
 # [[ end -]]
 EOF
+
+user=# [[ .brew.install_user | quote ]]
+if [ "$user" != "" ]; then
+  su "$user" -c "brew bundle --no-lock --file=$brewfile"
+else
+  brew bundle --no-lock --file="$brewfile"
+fi

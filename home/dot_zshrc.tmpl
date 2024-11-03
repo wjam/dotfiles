@@ -6,7 +6,7 @@ zmodload zsh/datetime
 export DOCKER_HOST="unix://{{ joinPath .chezmoi.homeDir ".colima" "docker.sock" }}"
 {{- end }}
 
-export HOMEBREW_CASK_OPTS="--appdir=~/Applications"
+export HOMEBREW_CASK_OPTS="--appdir={{ joinPath .chezmoi.homeDir "Applications" }}"
 
 export PATH={{ includeTemplate "path" . | trim | quote }}
 
