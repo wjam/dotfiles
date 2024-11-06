@@ -19,7 +19,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: ["ubuntu-22.04", "macos-13", "macos-14"] # macos-14 should be an arm runner
+        os: ["ubuntu-22.04", "macos-14"]
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -31,7 +31,7 @@ jobs:
         run: .github/clean-up-mac.sh
         if: runner.os == 'macOS'
       - name: Test
-        run: ./testing.sh --promptBool "Access to app store? y or n:"=n --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test
+        run: ./testing.sh --promptBool "Access to app store? y or n:"=n --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test --promptString "Use another user to run brew install:"=
 
   dependabot:
     needs:
