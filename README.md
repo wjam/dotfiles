@@ -97,13 +97,12 @@ TODO
 * Start hammerspoon
   * launch at login
   * enable accessibility
+  * allow on `Location Services`
 * Start Stats and select start at login
 * Start JetBrains toolbox
 * Show sound in menu bar
 * Show bluetooth in menu bar
 * Settings > Keyboard > Keyboard Shortcuts > Function Keys > 'Use F1, F2, etc. keys as standard function keys'
-* KeeWeb
-  * Security & Privacy > Privacy > Accessibility
 * Settings > Date & Time > Clock: Show date
 * Neuter Spotlight (stop it crawling & using results from files being changed on disk)
   * Settings > Spotlight:
