@@ -138,4 +138,3 @@ docker run --rm -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -
 * Find out whether `update-desktop-database ~/.local/share/applications` is needed once .desktop files are added?
 * Borgmatic?
 * [Hetzner](https://docs.hetzner.com/robot/storage-box/access/access-ssh-rsync-borg/)
-* man for k9s containing https://gist.github.com/BigNerd/35a56e411df4c90f7d6dee1d33dbd0a5
