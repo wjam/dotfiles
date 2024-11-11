@@ -2,6 +2,7 @@
 .chezmoiscripts/darwin/**
 .hammerspoon
 Library
+.local/bin/executable_toggle-bluetooth.tmpl
 {{ end }}
 {{ if ne .chezmoi.os "linux" }}
 .chezmoiscripts/linux/**

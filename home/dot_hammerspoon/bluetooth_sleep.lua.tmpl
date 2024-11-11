@@ -18,23 +18,23 @@ function checkIfBluetoothAlreadyOff(rc, stdout, stderr)
     elseif trim(stdout) == "0" then
         bluetoothWasOffWhenSleeping = true
     else
-        toggleBluetooth("off")
+        toggleBluetooth()
     end
 end
 
-function toggleBluetooth(power)
-    print("Setting bluetooth to " .. power)
-    local t = hs.task.new("{{ .brew.prefix }}/bin/blueutil", checkBluetoothResult, {"--power", power})
+function toggleBluetooth()
+    print("Toggling bluetooth")
+    local t = hs.task.new("{{ joinPath .chezmoi.homeDir ".local" "bin" "toggle-bluetooth" }}", checkBluetoothResult)
     t:start()
 end
 
 function handlePowerEvent(event)
-    if event == hs.caffeinate.watcher.screensDidWake then
+    if event == hs.caffeinate.watcher.systemDidWake then
       if bluetoothWasOffWhenSleeping then
         bluetoothWasOffWhenSleeping = false
         return
       end
-      toggleBluetooth("on")
+      toggleBluetooth()
     elseif event == hs.caffeinate.watcher.systemWillSleep then
       print("Checking if Bluetooth is running")
       local t = hs.task.new("{{ .brew.prefix }}/bin/blueutil", checkIfBluetoothAlreadyOff, {"--power"})

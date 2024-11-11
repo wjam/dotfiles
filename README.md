@@ -98,6 +98,7 @@ TODO
   * launch at login
   * enable accessibility
   * allow on `Location Services`
+  * Add to Bluetooth setting
 * Start Stats and select start at login
 * Start JetBrains toolbox
 * Show sound in menu bar
