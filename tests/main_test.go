@@ -140,7 +140,7 @@ func TestSternJsonLogging(t *testing.T) {
 		},
 		{
 			name:     "k8s-structured-logs",
-			input:    `{"ts":1580306777.04728,"v":4,msg":"Pod status updated"}`,
+			input:    `{"ts":1580306777.04728,"v":4,"msg":"Pod status updated"}`,
 			expected: `/ [01-29T14:06:17.047Z]  Pod status updated`,
 			// TODO need to support `v` for logging level - e.g. v=INFO
 		},
