@@ -112,6 +112,59 @@ func TestDockerPluginsSupported(t *testing.T) {
 	}
 }
 
+func TestSternJsonLogging(t *testing.T) {
+	tests := []struct {
+		name     string
+		input    string
+		expected string
+	}{
+		{
+			name:     "not-json",
+			input:    `hello, world`,
+			expected: `/ hello, world`,
+		},
+		{
+			name:     "basic",
+			input:    `{"level":"info","msg":"info message"}`,
+			expected: `/ [] info info message`,
+		},
+		{
+			name:     "logstash",
+			input:    `{"message":"hello", "@timestamp":"2014-04-08T15:33:07.519Z"}`,
+			expected: `/ [04-08T15:33:07.519Z]  hello`,
+		},
+		{
+			name:     "golang-slog",
+			input:    `{"time":"2023-03-15T13:07:39.105777557+01:00","level":"INFO","msg":"Info message"}`,
+			expected: `/ [03-15T12:07:39.105Z] INFO Info message`,
+		},
+		{
+			name:     "k8s-structured-logs",
+			input:    `{"ts":1580306777.04728,"v":4,msg":"Pod status updated"}`,
+			expected: `/ [01-29T14:06:17.047Z]  Pod status updated`,
+			// TODO need to support `v` for logging level - e.g. v=INFO
+		},
+	}
+
+	for _, test := range tests {
+		t.Run(test.name, func(t *testing.T) {
+			tmp, err := os.CreateTemp(t.TempDir(), "")
+			require.NoError(t, err)
+			require.NoError(t, os.WriteFile(tmp.Name(), []byte(test.input), 0644))
+
+			oldStdin := os.Stdin
+			t.Cleanup(func() {
+				os.Stdin = oldStdin
+			})
+			os.Stdin = tmp
+
+			output := runCommand(t, "stern", "--stdin")
+			assert.Equal(t, test.expected, output)
+		})
+	}
+
+}
+
 func runCommand(t *testing.T, cmd string, args ...string) string {
 	output := shell.RunCommandAndGetOutput(t, shell.Command{
 		Command: findTool(t, cmd),

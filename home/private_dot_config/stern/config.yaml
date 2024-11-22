@@ -1,3 +1,4 @@
+diff-container: true
 
 # Template functions:
 # toRFC3339Nano - Parse timestamp (string, int, json.Number) and format it using RFC3339Nano format
@@ -12,16 +13,23 @@ template: |
     [
       {{- if $msg.ts -}}
         {{- colorGreen ((toUTC $msg.ts).Format "01-02T15:04:05.000Z0700") -}}
-      {{- else -}}
+      {{- else if $msg.time -}}
+        {{- colorGreen ((toUTC $msg.time).Format "01-02T15:04:05.000Z0700") -}}
+      {{- else if (index $msg "@timestamp") -}}
         {{- colorGreen ((toUTC (index $msg "@timestamp")).Format "01-02T15:04:05.000Z0700") -}}
       {{- end -}}
     ]
     {{- " " -}}
-    {{ levelColor $msg.level }} ({{ colorCyan $msg.logger_name }})
+    {{- if $msg.level -}}
+      {{ levelColor $msg.level }}
+    {{- end -}}
+    {{- if $msg.logger_name }}
+    ({{ colorCyan $msg.logger_name }})
+    {{- end }}
     {{- " " -}}
     {{- if $msg.msg -}}
       {{- $msg.msg -}}
-    {{- else -}}
+    {{- else if $msg.message -}}
       {{- $msg.message -}}
     {{- end -}}
     {{- if $msg.stack_trace -}}
