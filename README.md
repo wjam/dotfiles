@@ -124,7 +124,6 @@ docker run --rm -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -
 
 # TODO
 * Find out why meeting interruption stuff isn't working when streamdeck is connected
-* Add tests for stern configuration - `cat test-file | stern --stdin`
 * Find something cask-like for Linux.
   * Software:
     * Visual Studio Code
