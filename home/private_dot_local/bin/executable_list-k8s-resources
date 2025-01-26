@@ -16,7 +16,7 @@ set -o pipefail
 printf "%s\t%s\t%s\n" "apiVersion" "kind" "verbs"
 
 # do core resources first, which are at a separate api location
-kubectl get --raw /api/v1 | jq -r '.resources[] | "v1\t\(.name)\t\(.verbs | join(" "))"'
+kubectl get --raw /api/v1 | jq --raw-output '.resources[] | "v1\t\(.name)\t\(.verbs | join(" "))"'
 
 kubectl get --raw /apis | jq --compact-output --raw-output '.groups[].name' | sort | while IFS= read -r api; do
   kubectl get --raw "/apis/$api"  | jq --compact-output --raw-output '.versions[].version' | while IFS= read -r version; do
