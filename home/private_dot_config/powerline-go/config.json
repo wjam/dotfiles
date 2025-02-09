@@ -1,7 +1,6 @@
 {
   "colorize-hostname": true,
   "eval": true,
-  "modules": [ "perms", "user", "host", "ssh", "cwd", "git", "jobs", "kube", "aws", "direnv", "newline", "root" ],
   "modules-right": [ "exit", "duration", "time" ],
   "max-width": 100,
   "mode": "patched",

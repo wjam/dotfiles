@@ -37,8 +37,12 @@ function powerline_precmd() {
   if [ "light" = "${__APPEARANCE}" ]; then
     __THEME="low-contrast"
   fi
+  local __MODS="perms,user,host,ssh,cwd,git,jobs,kube,aws,direnv,newline,root"
+  if [ "$USER" = "wjam" ]; then
+    __MODS="perms,host,ssh,cwd,git,jobs,kube,aws,direnv,newline,root"
+  fi
 
-  eval "$(powerline-go -theme $__THEME -duration $__DURATION -error $__ERRCODE -jobs $__JOBS)"
+  eval "$(powerline-go -modules $__MODS -theme $__THEME -duration $__DURATION -error $__ERRCODE -jobs $__JOBS)"
   unset __TIMER
 }
 
