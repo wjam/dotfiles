@@ -14,6 +14,7 @@ Library
 .local/share
 {{ end }}
 {{ if or (ne .chezmoi.os "linux") (not .full) (not .gui) }}
+.config/autostart
 .local/share/applications
 .local/share/icons
 {{ end }}
