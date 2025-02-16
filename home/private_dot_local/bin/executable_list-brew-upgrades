@@ -18,16 +18,19 @@ brew update
 
 echo Formulae
 brew outdated --json | jq --compact-output '.formulae[]  | select(.pinned == false) | {name, current_version, installed_versions}' | while IFS= read -r line; do
-  info="$(brew info --formulae --json=v2 "$(echo "$line" | jq --raw-output '.name')")"
+  name="$(echo "$line" | jq --raw-output '.name')"
+  info="$(brew info --formulae --json=v2 "$name")"
   if [[ "$(echo "$info" | jq '.formulae[].installed[].installed_on_request')" == "true" ]]; then
     url="$(echo "$info" | jq --raw-output '.formulae[].urls.stable.url')"
-    releaseUrl=""
+    oldVersion="$(echo "$line" | jq --raw-output '.installed_versions[0]')"
+    newVersion="$(echo "$line" | jq --raw-output '.current_version')"
     if [[ "$url" =~ ^https://github.com/([^/]*)/([^/]*)/archive/refs/tags/(.*?).tar.gz$ ]]; then
-      releaseUrl=" - https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/${BASH_REMATCH[3]}"
+      printf '%s %s -> \e]8;;%s\e\\%s\e]8;;\e\\\n' "$name" "$oldVersion" "https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/${BASH_REMATCH[3]}" "$newVersion"
     elif [[ "$url" =~ ^https://github.com/([^/]*)/([^/]*).git$ ]]; then
-      releaseUrl=" - https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/$(echo "$info" | jq --raw-output '.formulae[].urls.stable.tag')"
+      printf '%s %s -> \e]8;;%s\e\\%s\e]8;;\e\\\n' "$name" "$oldVersion" "https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/$(echo "$info" | jq --raw-output '.formulae[].urls.stable.tag')" "$newVersion"
+    else
+      printf '%s %s -> %s' "$name" "$oldVersion" "$newVersion"
     fi
-    printf '%s%s\n' "$(echo "$line" | jq --raw-output '"\(.name) \(.installed_versions[0]) -> \(.current_version)"')" "$releaseUrl"
   fi
 done
 
