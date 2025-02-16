@@ -29,7 +29,7 @@ brew outdated --json | jq --compact-output '.formulae[]  | select(.pinned == fal
     elif [[ "$url" =~ ^https://github.com/([^/]*)/([^/]*).git$ ]]; then
       printf '%s %s -> \e]8;;%s\e\\%s\e]8;;\e\\\n' "$name" "$oldVersion" "https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/$(echo "$info" | jq --raw-output '.formulae[].urls.stable.tag')" "$newVersion"
     else
-      printf '%s %s -> %s' "$name" "$oldVersion" "$newVersion"
+      printf '%s %s -> %s\n' "$name" "$oldVersion" "$newVersion"
     fi
   fi
 done
