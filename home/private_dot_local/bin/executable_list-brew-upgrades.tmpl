@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# chezmoi:template:left-delimiter="# [[" right-delimiter=]]
 
 # Script used to list all updates for manually installed items
 
@@ -14,7 +15,12 @@ set -o pipefail
 #set -o xtrace
 
 echo Updating Homebrew
-brew update
+user=# [[ .brew.install_user | quote ]]
+if [ "$user" != "" ]; then
+  su "$user" -c "brew update"
+else
+  brew update
+fi
 
 echo Formulae
 brew outdated --json | jq --compact-output '.formulae[]  | select(.pinned == false) | {name, current_version, installed_versions}' | while IFS= read -r line; do
@@ -24,7 +30,7 @@ brew outdated --json | jq --compact-output '.formulae[]  | select(.pinned == fal
     url="$(echo "$info" | jq --raw-output '.formulae[].urls.stable.url')"
     oldVersion="$(echo "$line" | jq --raw-output '.installed_versions[0]')"
     newVersion="$(echo "$line" | jq --raw-output '.current_version')"
-    if [[ "$url" =~ ^https://github.com/([^/]*)/([^/]*)/archive/refs/tags/(.*?).tar.gz$ ]]; then
+    if [[ "$url" =~ ^https://github.com/([^/]+)/([^/]+)/archive/refs/tags/(.+).tar.gz$ ]]; then
       printf '%s %s -> \e]8;;%s\e\\%s\e]8;;\e\\\n' "$name" "$oldVersion" "https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/${BASH_REMATCH[3]}" "$newVersion"
     elif [[ "$url" =~ ^https://github.com/([^/]*)/([^/]*).git$ ]]; then
       printf '%s %s -> \e]8;;%s\e\\%s\e]8;;\e\\\n' "$name" "$oldVersion" "https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/$(echo "$info" | jq --raw-output '.formulae[].urls.stable.tag')" "$newVersion"
