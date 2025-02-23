@@ -103,10 +103,6 @@ alias pbcopy="xclip -in -sel clipboard"
 ulimit -n 10240
 {{- end }}
 
-# `ln -s path/to/folder` ~/.bookmarks/@folder to create a new bookmark
-export CDPATH=".:{{ .chezmoi.homeDir }}/.bookmarks:/"
-alias goto="cd -P"
-
 # Replace cat with bat for syntax highlighting
 alias cat='bat --paging=never'
 
