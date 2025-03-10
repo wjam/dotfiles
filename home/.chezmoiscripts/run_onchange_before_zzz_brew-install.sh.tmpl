@@ -74,7 +74,7 @@ EOF
 
 user=# [[ .brew.install_user | quote ]]
 if [ "$user" != "" ]; then
-  su "$user" -c "brew bundle --no-lock --file=$brewfile"
+  su "$user" -c "brew bundle --file=$brewfile"
 else
-  brew bundle --no-lock --file="$brewfile"
+  brew bundle --file="$brewfile"
 fi
