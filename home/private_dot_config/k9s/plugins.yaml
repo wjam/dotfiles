@@ -1,8 +1,9 @@
 # See https://k9scli.io/topics/plugins/
 plugins:
+  # https://github.com/derailed/k9s/blob/master/plugins/log-stern.yaml
   # Leverage stern (https://github.com/wercker/stern) to output logs.
   stern:
-    shortCut: Ctrl-L
+    shortCut: Ctrl-Y
     confirm: false
     description: "Logs <Stern>"
     scopes:
@@ -17,11 +18,13 @@ plugins:
       - $NAMESPACE
       - --context
       - $CONTEXT
+  # https://github.com/derailed/k9s/blob/master/plugins/debug-container.yaml
   #--- Create debug container for selected pod in current namespace
   # See https://kubernetes.io/docs/tasks/debug/debug-application/debug-running-pod/#ephemeral-container
   debug:
     shortCut: Shift-D
     description: Add debug container
+    dangerous: true
     scopes:
       - containers
     command: bash
@@ -29,7 +32,8 @@ plugins:
     confirm: true
     args:
       - -c
-      - "kubectl debug -it -n=$NAMESPACE $POD --target=$NAME --image=nicolaka/netshoot:v0.12 --share-processes -- bash"
+      - "kubectl --kubeconfig=$KUBECONFIG debug -it --context $CONTEXT -n=$NAMESPACE $POD --target=$NAME --image=nicolaka/netshoot:v0.13 --share-processes -- bash"
+  # https://github.com/derailed/k9s/blob/master/plugins/helm-values.yaml
   # View user-supplied values when the helm chart was created
   helm-values:
     shortCut: v
@@ -37,8 +41,8 @@ plugins:
     description: Values
     scopes:
       - helm
-    command: bash
+    command: sh
     background: false
     args:
       - -c
-      - "helm get values $COL-NAME -n $NAMESPACE --kube-context $CONTEXT | less"
+      - "helm get values $COL-NAME -n $NAMESPACE --kube-context $CONTEXT | less -K"
