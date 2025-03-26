@@ -30,7 +30,7 @@ brew outdated --json | jq --compact-output '.formulae[]  | select(.pinned == fal
     url="$(echo "$info" | jq --raw-output '.formulae[].urls.stable.url')"
     oldVersion="$(echo "$line" | jq --raw-output '.installed_versions[0]')"
     newVersion="$(echo "$line" | jq --raw-output '.current_version')"
-    if [[ "$url" =~ ^https://github.com/([^/]+)/([^/]+)/archive/refs/tags/(.+).tar.gz$ ]]; then
+    if [[ "$url" =~ ^https://github.com/([^/]+)/([^/]+)/archive/refs/tags/(.+).tar.gz$ ]] || [[ "$url" =~ ^https://github.com/([^/]+)/([^/]+)/releases/download/(.+)/.*.tar.gz$ ]]; then
       printf '%s %s -> \e]8;;%s\e\\%s\e]8;;\e\\\n' "$name" "$oldVersion" "https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/${BASH_REMATCH[3]}" "$newVersion"
     elif [[ "$url" =~ ^https://github.com/([^/]*)/([^/]*).git$ ]]; then
       printf '%s %s -> \e]8;;%s\e\\%s\e]8;;\e\\\n' "$name" "$oldVersion" "https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/$(echo "$info" | jq --raw-output '.formulae[].urls.stable.tag')" "$newVersion"
