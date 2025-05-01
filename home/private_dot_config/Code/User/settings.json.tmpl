@@ -18,7 +18,8 @@
 {{- end }}
   ],
   "workbench.editor.empty.hint": "hidden",
-  "window.autoDetectColorScheme": true
+  "window.autoDetectColorScheme": true,
+  "chat.commandCenter.enabled": false
 {{- $appearance := joinPath .chezmoi.homeDir ".config" "powerline-go" "appearance.txt" -}}
 {{- if and (stat $appearance) (eq (output "cat" $appearance) "light") -}}
   ,
