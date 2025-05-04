@@ -9,7 +9,6 @@ Library
 .config/Code
 .config/go/env
 .config/k9s
-.config/systemd
 .config/tealdeer
 .local/share
 {{ end }}
@@ -17,7 +16,4 @@ Library
 .config/autostart
 .local/share/applications
 .local/share/icons
-{{ end }}
-{{ if not (stat "/media/blob/rclone") }}
-.config/systemd/user
 {{ end }}
