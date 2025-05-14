@@ -50,6 +50,8 @@ local keys = {
   {key='0', mods='CTRL', action=wezterm.action.ResetFontAndWindowSize},
   {key='"', mods='SHIFT|CTRL', action=wezterm.action.ActivateTab(1)}, -- Needed for Linux machines w/ UK keyboard
   {key='£', mods='SHIFT|CTRL', action=wezterm.action.ActivateTab(2)}, -- Needed for macOS machines w/ UK keyboard
+  {key='UpArrow', mods='SHIFT', action=wezterm.action.ScrollToPrompt(-1)},
+  {key='DownArrow', mods='SHIFT', action=wezterm.action.ScrollToPrompt(1)},
 }
 
 if (wezterm.target_triple == 'x86_64-apple-darwin' or wezterm.target_triple == 'aarch64-apple-darwin') then
