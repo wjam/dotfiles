@@ -3,7 +3,7 @@ zmodload zsh/datetime
 
 # dive doesn't support Docker contexts - https://github.com/wagoodman/dive/issues/397
 {{- if .gui }}
-export DOCKER_HOST="unix://{{ joinPath .chezmoi.homeDir ".colima" "docker.sock" }}"
+export DOCKER_HOST="unix://{{ joinPath .chezmoi.homeDir ".colima" "default" "docker.sock" }}"
 {{- end }}
 
 export HOMEBREW_CASK_OPTS="--appdir={{ joinPath .chezmoi.homeDir "Applications" }}"
