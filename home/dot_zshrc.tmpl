@@ -1,5 +1,6 @@
 {{- $zsh := joinPath .chezmoi.homeDir ".oh-my-zsh"  -}}
 {{- if ne .brew.install_user "" }}
+# Required as the fpath files will be owned by a different user
 export ZSH_DISABLE_COMPFIX="true"
 {{- end }}
 
