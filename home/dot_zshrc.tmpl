@@ -1,4 +1,8 @@
 {{- $zsh := joinPath .chezmoi.homeDir ".oh-my-zsh"  -}}
+{{- if ne .brew.install_user "" }}
+export ZSH_DISABLE_COMPFIX="true"
+{{- end }}
+
 zmodload zsh/datetime
 
 # dive doesn't support Docker contexts - https://github.com/wagoodman/dive/issues/397
