@@ -2,6 +2,8 @@ syntax on
 
 filetype plugin indent on
 
+packadd! editorconfig
+
 " Standard /usr/share/vim/vim90/debian.vim contents:
 
 " Normally we use vim-extensions. If you want true vi-compatibility
