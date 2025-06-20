@@ -55,7 +55,7 @@
 # [[- if and (eq .chezmoi.os "linux") .gui ]]
 ".local/bin/FreeCAD.AppImage":
   type: "file"
-  url: "https://github.com/FreeCAD/FreeCAD/releases/download/0.21.2/FreeCAD-0.21.2-Linux-x86_64.AppImage"
+  url: "https://github.com/FreeCAD/FreeCAD/releases/download/1.0.1/FreeCAD_1.0.1-conda-Linux-x86_64-py311.AppImage"
   executable: true
 ".local/bin/BambuStudio.AppImage":
   type: "file"

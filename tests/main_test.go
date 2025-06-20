@@ -112,6 +112,22 @@ func TestDockerPluginsSupported(t *testing.T) {
 	}
 }
 
+func TestVimLoadsPlugins(t *testing.T) {
+	pluginFile := filepath.Join(t.TempDir(), "output.txt")
+
+	runCommand(t, "vim",
+		"-c", fmt.Sprintf(":redir > %s | scriptnames | redir END", pluginFile),
+		"-c", "qa!",
+	)
+
+	pluginB, err := os.ReadFile(pluginFile)
+
+	require.NoError(t, err)
+
+	assert.Contains(t, string(pluginB), "editorconfig")
+	assert.Contains(t, string(pluginB), "vim-polyglot")
+}
+
 func TestSternJsonLogging(t *testing.T) {
 	tests := []struct {
 		name     string

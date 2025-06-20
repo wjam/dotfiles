@@ -137,3 +137,8 @@ docker run --rm -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -
 * Find a way to disable sudo access in CI to test no admin access (apt will fail as `code` is assumed to be present at vscode-extensions script (install via snap?))
 * Borgmatic?
 * [Hetzner](https://docs.hetzner.com/robot/storage-box/access/access-ssh-rsync-borg/)
+* fix bug in wezterm when:
+  1. ssh into a server
+  2. cd to a directory
+  3. create new tab
+  4. note that the new tab isn't in the same directory as before sshing but the directory from the server
