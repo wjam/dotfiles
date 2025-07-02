@@ -50,6 +50,7 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
      * `for f in $(ifconfig -l); do if [ "$(ifconfig $f | grep ether | cut -d' ' -f2)" = "$MAC_ADDRESS" ]; then; sudo ifconfig $f 10.11.99.2; fi; done`
 * Unable to install Visual Studio Code extensions - getting the error `unable to get local issuer certificate`
   * Unset `Http: Proxy Strict SSL` setting. HTTPS traffic is being intercepted and this can be verified by going to https://google.com and checking who the certificate is signed by.
+* Disconnecting from a dead SSH session - type `<enter>~.`.
 
 ## ShellCheck notes
 * Use `foo | while read` to loop through a list of items
