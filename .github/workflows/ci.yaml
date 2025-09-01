@@ -21,7 +21,7 @@ jobs:
         os: ["ubuntu-24.04", "macos-14"]
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
       - name: Link to correct location
         run: |
           mkdir -p $HOME/.local/share
