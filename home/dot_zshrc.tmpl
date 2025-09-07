@@ -1,8 +1,10 @@
 {{- $zsh := joinPath .chezmoi.homeDir ".oh-my-zsh"  -}}
-{{- if ne .brew.install_user "" }}
-# Required as the fpath files will be owned by a different user
+
+# Required if the fpath files will be owned by a different user and improves start up performance
 export ZSH_DISABLE_COMPFIX="true"
-{{- end }}
+
+# Disable bi-weekly auto-update checks as Chezmoi does it
+export DISABLE_AUTO_UPDATE=true
 
 zmodload zsh/datetime
 
@@ -29,9 +31,6 @@ export BAT_THEME="Solarized (light)"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="wezterm-powerline-go"
-
-# Disable bi-weekly auto-update checks as Chezmoi does it
-zstyle ':omz:update' mode disabled
 
 # Uncomment the following line if you want to change the command execution time
 # stamp shown in the history command output.
@@ -117,7 +116,13 @@ alias htop=btop
 
 alias imgcat='wezterm imgcat'
 
-eval "$(atuin init zsh --disable-up-arrow)"
+source {{ joinPath .chezmoi.homeDir ".local" "share" "launchers" "atuin" "zsh" }}
+
+source {{ joinPath .chezmoi.homeDir ".local" "share" "launchers" "broot" "zsh" }}
+
+function tree {
+  br -c :pt "$@"
+}
 
 {{- $gcpSDK := joinPath .brew.prefix "share" "google-cloud-sdk" "completion.zsh.inc" }}
 {{- if (stat ($gcpSDK)) }}
