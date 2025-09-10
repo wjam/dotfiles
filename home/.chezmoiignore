@@ -10,7 +10,9 @@ Library
 .config/go/env
 .config/k9s
 .config/tealdeer
-.local/share
+.local/share/applications
+.local/share/icons
+.local/share/JetBrains
 {{ end }}
 {{ if or (ne .chezmoi.os "linux") (not .full) (not .gui) }}
 .config/autostart
