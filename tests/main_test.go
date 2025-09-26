@@ -52,7 +52,6 @@ func TestToolsInstalled(t *testing.T) {
 		"ipcalc",
 		"powerline-go",
 		"terragrunt",
-		"packer",
 		"kubectl",
 		"kubectx",
 		"stern",

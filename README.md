@@ -120,7 +120,7 @@ TODO
 # Testing
 Run the Go tests inside a Docker container with Homebrew, etc. installed:
 ```shell
-docker run --rm -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -q .) /home/docker/.local/share/chezmoi/testing.sh --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test
+docker run --rm -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -q .) /home/docker/.local/share/chezmoi/testing.sh --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test --promptString "Use another user to run brew install:"=
 ```
 
 # TODO

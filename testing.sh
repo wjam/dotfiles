@@ -14,6 +14,9 @@ set -o pipefail
 # Make sure that the repo is already present in the right location
 test -d ~/.local/share/chezmoi
 
+# Make sure .local/share is owned by _this_ user
+find ~/.local/share -maxdepth 0 \! -user "$(whoami)" -type d -exec sudo chown "$(whoami)" {} \;
+
 ## Ensure Homebrew is on the path
 if ! command -v brew > /dev/null; then
   if [[ -e $HOME/dev/brew/bin ]]; then
