@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 
 # Inject timezone data so apt doesn't hang waiting for selection when none will come
 ENV TZ=Europe/London
