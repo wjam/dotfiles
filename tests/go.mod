@@ -1,9 +1,9 @@
 module github.com/wjam/dotfiles/tests
 
-go 1.23.0
+go 1.24.0
 
 require (
-	github.com/gruntwork-io/terratest v0.50.0
+	github.com/gruntwork-io/terratest v0.51.0
 	github.com/samber/lo v1.51.0
 	github.com/stretchr/testify v1.11.1
 	github.com/yuin/gopher-lua v1.1.1
