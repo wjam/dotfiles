@@ -107,6 +107,10 @@ alias pbcopy="xclip -in -sel clipboard"
 ulimit -n 10240
 {{- end }}
 
+{{- if eq .chezmoi.os "linux" }}
+alias trash='/usr/bin/gio trash'
+{{- end }}
+
 # Replace cat with bat for syntax highlighting
 alias cat='bat --paging=never'
 
