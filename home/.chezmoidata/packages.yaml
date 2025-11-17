@@ -37,6 +37,7 @@ packages:
         - "bash-completion"
         - "blueutil" # used by Hammerspoon scripts
         - "dockutil"
+        - "grep" # GNU grep available as ggrep
         - "readline" # .inputrc
         - "watch"
       casks:
@@ -44,6 +45,7 @@ packages:
         - "hammerspoon"
         - "jetbrains-toolbox"
         - "stats"
+        - "thunderbird"
         - "visual-studio-code"
         - "wez/wezterm/wezterm"
       vscode: []
@@ -92,6 +94,7 @@ packages:
         - "git"
         - "go"
         - "helm"
+        - "hexyl" # Hex viewer
         - "ipcalc"
         - "jq"
         - "jnv" # Interactive JQ editor

@@ -15,6 +15,7 @@ jobs:
 
     # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
     # https://github.com/actions/runner-images/blob/main/images/macos/macos-14-arm64-Readme.md
+    # https://docs.github.com/en/actions/reference/runners/github-hosted-runners#standard-github-hosted-runners-for-public-repositories
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:

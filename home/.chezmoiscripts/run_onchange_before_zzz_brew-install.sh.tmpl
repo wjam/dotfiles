@@ -74,6 +74,9 @@ EOF
 
 user=# [[ .brew.install_user | quote ]]
 if [ "$user" != "" ]; then
+# [[ if (eq .chezmoi.os "darwin") ]]
+  mkdir -p ~/Applications
+# [[ end ]]
   su "$user" -c "brew bundle --file=$brewfile"
 else
   brew bundle --file="$brewfile"
