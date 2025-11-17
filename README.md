@@ -98,7 +98,7 @@ TODO
 * Start hammerspoon
   * launch at login
   * enable accessibility
-  * allow on `Location Services`
+  * allow on `Location Services` - needed to read the Wi-Fi network name
   * Add to Bluetooth setting
 * Start Stats and select start at login
 * Start JetBrains toolbox
