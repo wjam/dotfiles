@@ -6,29 +6,24 @@ packages:
       taps: []
       brews: []
       casks: []
-      vscode: []
     full:
       taps: []
       brews: []
       casks: []
-      vscode: []
     gui:
       taps:
         - "wez/wezterm-linuxbrew"
       brews:
         - "wezterm"
       casks: []
-      vscode: []
     full_gui:
       taps: []
       brews: []
       casks: []
-      vscode: []
     admin:
       taps: []
       brews: []
       casks: []
-      vscode: []
   darwin:
     all:
       taps:
@@ -48,17 +43,14 @@ packages:
         - "thunderbird"
         - "visual-studio-code"
         - "wez/wezterm/wezterm"
-      vscode: []
     gui:
       taps: []
       brews: []
       casks: []
-      vscode: []
     full_gui:
       taps: []
       brews: []
       casks: []
-      vscode: []
     full:
       taps: []
       brews: []
@@ -67,12 +59,10 @@ packages:
         - "gimp"
         - "inkscape"
         - "slack"
-      vscode: []
     admin:
       taps: []
       brews: []
       casks: []
-      vscode: []
   common:
     all:
       taps: []
@@ -110,34 +100,31 @@ packages:
         - "tree"
         - "zoxide" # better cd command
       casks: []
-      vscode: []
     gui:
       taps: []
       brews: []
       casks: []
-      vscode:
-        - "yzhang.markdown-all-in-one" # Markdown goodies
-        - "mushan.vscode-paste-image" # Image pasting for Markdown
-        - "ban.spellright" # Spell checking for text and Markdown
-        - "bierner.markdown-footnotes" # Support footnotes in Markdown
-        - "bierner.markdown-mermaid" # Support mermaid diagrams in Markdown
-        - "bpruitt-goddard.mermaid-markdown-syntax-highlighting" # Mermaid syntax highlighting
-        - "EditorConfig.EditorConfig" # EditorConfig support
-        - "ms-vscode.hexeditor" # hex editor
-        - "tomoki1207.pdf" # PDF viewer
     full:
       taps: []
       brews: []
       casks: []
-      vscode: []
     full_gui:
       taps: []
       brews:
         - "colima" # Utility to manage local Docker & Kubernetes VMs
       casks: []
-      vscode: []
     admin:
       taps: []
       brews: []
       casks: []
-      vscode: []
+
+vscode:
+  - "yzhang.markdown-all-in-one" # Markdown goodies
+  - "mushan.vscode-paste-image" # Image pasting for Markdown
+  - "ban.spellright" # Spell checking for text and Markdown
+  - "bierner.markdown-footnotes" # Support footnotes in Markdown
+  - "bierner.markdown-mermaid" # Support mermaid diagrams in Markdown
+  - "bpruitt-goddard.mermaid-markdown-syntax-highlighting" # Mermaid syntax highlighting
+  - "EditorConfig.EditorConfig" # EditorConfig support
+  - "ms-vscode.hexeditor" # hex editor
+  - "tomoki1207.pdf" # PDF viewer
