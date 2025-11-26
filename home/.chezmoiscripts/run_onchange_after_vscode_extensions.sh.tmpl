@@ -16,6 +16,7 @@ export PATH=# [[ includeTemplate "path" . | trim | quote ]]
 
 # [[ if .full -]]
 # [[   range .vscode -]]
+sleep 1
 code --install-extension # [[ . | quote ]]
 # [[   end -]]
 # [[ end -]]
