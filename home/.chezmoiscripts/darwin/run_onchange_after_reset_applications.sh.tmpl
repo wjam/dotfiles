@@ -1,0 +1,66 @@
+#!/usr/bin/env bash
+# chezmoi:template:left-delimiter="# [[" right-delimiter=]]
+
+# Script to reset the owner of ~/Application casks that want to auto-update themselves but may be installed with the
+# wrong user when Homebrew is installed under a different user
+
+# Exit on error. Append || true if you expect an error.
+set -o errexit
+# Exit on error inside any functions or subshells.
+set -o errtrace
+# Do not allow use of undefined vars. Use ${VAR:-} to use an undefined VAR
+set -o nounset
+# Catch the error in case mysqldump fails (but gzip succeeds) in `mysqldump |gzip`
+set -o pipefail
+# Turn on traces, useful while debugging but commented out by default
+#set -o xtrace
+
+export PATH=# [[ includeTemplate "path" . | trim | quote ]]
+
+user=# [[ .brew.install_user | quote ]]
+if [ "$user" == "" ]; then
+  exit 0
+fi
+
+wrong_owners="$(find ~/Applications -not -user "$(whoami)" -prune)"
+if [[ -z "$wrong_owners" ]]; then
+  exit 0
+fi
+
+# [[- $casks := concat .packages.common.all.casks .packages.darwin.all.casks -]]
+# [[- if .full -]]
+# [[-   $casks = concat $casks .packages.common.full.casks .packages.darwin.full.casks -]]
+# [[-   if .admin -]]
+# [[-     $casks = concat $casks .packages.common.admin.casks .packages.darwin.admin.casks -]]
+# [[-   end ]]
+# [[-   if .gui -]]
+# [[-     $casks = concat $casks .packages.common.full_gui.casks .packages.darwin.full_gui.casks -]]
+# [[-   end ]]
+# [[- end -]]
+# [[- if .gui -]]
+# [[-   $casks = concat $casks .packages.common.gui.casks .packages.darwin.gui.casks -]]
+# [[- end ]]
+
+function resetApp() {
+  cask="$1"
+  info="$(brew info --json=v2 "$cask" | jq --compact-output '.casks[] | {auto_updates,app: (.artifacts[] | select(.app) | .app[])}')"
+
+  auto_updates=$(echo "$info" | jq --raw-output '.auto_updates')
+  app=$(echo "$info" | jq --raw-output '.app')
+
+  if [[ "$auto_updates" != "true" ]]; then
+    return
+  fi
+
+  if [[ "$(stat -f '%Su' "$HOME/Applications/$app")" == "$(whoami)" ]]; then
+    return
+  fi
+
+  echo "Resetting owner of $app - may require admin password"
+  su "$user" -c "chown -r $HOME/Applications/$app"
+}
+
+# [[ range ($casks | sortAlpha) -]]
+cask=# [[ . | quote ]]
+resetApp "$cask"
+# [[ end -]]
