@@ -23,13 +23,18 @@ jobs:
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v6
+        with:
+          persist-credentials: 'false'
+
       - name: Link to correct location
         run: |
           mkdir -p $HOME/.local/share
           ln -s $GITHUB_WORKSPACE $HOME/.local/share/chezmoi
+
       - name: Clean up GitHub
         run: .github/clean-up-mac.sh
         if: runner.os == 'macOS'
+
       - name: Test
         run: ./testing.sh --promptBool "Access to app store? y or n:"=n --promptBool "Have admin access? y or n:"=y,"Install everything? y or n:"=n --promptString "Email address for Git:"=ci@example.test --promptString "Use another user to run brew install:"=
 
