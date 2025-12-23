@@ -1,6 +1,24 @@
+local wezterm = require 'wezterm'
 local module = {}
 
-function basename(s)
+-- https://wezterm.org/config/lua/wezterm/nerdfonts.html
+local process_icons = {
+  -- Remember to keep this list in sync with the list in loadWeztermHelpersLuaFunction
+  ["cargo"] = wezterm.nerdfonts.dev_rust,
+  ["docker"] = wezterm.nerdfonts.linux_docker,
+  ["docker-compose"] = wezterm.nerdfonts.linux_docker,
+  ["git"] = wezterm.nerdfonts.dev_git,
+  ["go"] = wezterm.nerdfonts.seti_go2,
+  ["kubectl"] = wezterm.nerdfonts.md_kubernetes,
+  ["make"] = wezterm.nerdfonts.seti_makefile,
+  ["man"] = wezterm.nerdfonts.fa_book,
+  ["vi"] = wezterm.nerdfonts.md_file_edit,
+  ["vim"] = wezterm.nerdfonts.md_file_edit,
+  ["sleep"] = wezterm.nerdfonts.md_sleep,
+  ["ssh"] = wezterm.nerdfonts.md_ssh,
+}
+
+function program_name(s)
   if (s == nil or s == "") then
     return ""
   end
@@ -11,7 +29,8 @@ function basename(s)
       if (substring ~= "sudo" and substring ~= "bash" and substring ~= "zsh") then
         -- The first occurrence of something that isn't an env. var. and isn't an ignored word, so must be
         -- the command being executed
-        return string.gsub(substring, '(.*[/\\])(.*)', '%2')
+        local prog = string.gsub(substring, '(.*[/\\])(.*)', '%2')
+        return process_icons[prog] or prog
       end
 
       name = substring
@@ -112,7 +131,7 @@ function module.format_window_title(tab, pane, tabs, panes, config)
 end
 
 function module.format_tab_title(tab, tabs, panes, config, hover, max_width)
-    local program = basename(tab.active_pane.user_vars["WEZTERM_PROG"])
+    local program = program_name(tab.active_pane.user_vars["WEZTERM_PROG"])
     local ssh = ""
     if tab.active_pane.user_vars["WEZTERM_SSH"] == "true" then
       local suffix = ":"

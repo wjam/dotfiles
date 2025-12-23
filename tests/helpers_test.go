@@ -12,7 +12,7 @@ import (
 )
 
 func TestWeztermSetPowerlineAppearance(t *testing.T) {
-	v := loadWeztermHelpersLuaFunction[any](t, "set_powerline_appearance")
+	v := loadWeztermHelpersLuaFunction[any](t, "set_powerline_appearance", map[string]string{})
 
 	tests := []struct {
 		name       string
@@ -71,7 +71,7 @@ func TestWeztermSetPowerlineAppearance(t *testing.T) {
 }
 
 func TestWeztermSetBtopApperance(t *testing.T) {
-	v := loadWeztermHelpersLuaFunction[any](t, "set_btop_appearance")
+	v := loadWeztermHelpersLuaFunction[any](t, "set_btop_appearance", map[string]string{})
 
 	tests := []struct {
 		name       string
@@ -116,13 +116,13 @@ func TestWeztermSetBtopApperance(t *testing.T) {
 			actual, err := os.Readlink(current)
 			require.NoError(t, err)
 
-			assert.Equal(t, test.expected, string(actual))
+			assert.Equal(t, test.expected, actual)
 		})
 	}
 }
 
 func TestWeztermSetPowerlineAppearance_GuiNotReadyYet(t *testing.T) {
-	v := loadWeztermHelpersLuaFunction[any](t, "set_powerline_appearance")
+	v := loadWeztermHelpersLuaFunction[any](t, "set_powerline_appearance", map[string]string{})
 
 	f := filepath.Join(t.TempDir(), "file.txt")
 
@@ -132,7 +132,7 @@ func TestWeztermSetPowerlineAppearance_GuiNotReadyYet(t *testing.T) {
 }
 
 func TestFormatWindowTitle(t *testing.T) {
-	v := loadWeztermHelpersLuaFunction[string](t, "format_window_title")
+	v := loadWeztermHelpersLuaFunction[string](t, "format_window_title", map[string]string{})
 
 	tests := []struct {
 		name  string
@@ -241,7 +241,10 @@ func TestFormatWindowTitle(t *testing.T) {
 }
 
 func TestFormatTabTitle(t *testing.T) {
-	v := loadWeztermHelpersLuaFunction[[]any](t, "format_tab_title")
+	v := loadWeztermHelpersLuaFunction[[]any](t, "format_tab_title", map[string]string{
+		"md_sleep":      "sleep-icon",
+		"md_kubernetes": "k8s-icon",
+	})
 
 	tests := []struct {
 		name   string
@@ -259,7 +262,7 @@ func TestFormatTabTitle(t *testing.T) {
 		{
 			name:   "program-without-ssh",
 			index:  1,
-			prog:   "sleep",
+			prog:   "kubectl --help",
 			unseen: true,
 			ssh:    false,
 			user:   "me",
@@ -268,7 +271,7 @@ func TestFormatTabTitle(t *testing.T) {
 			cwd:    "/home/me/foo/",
 			expected: []any{
 				map[string]any{"Background": map[string]any{"Color": "blue"}},
-				map[string]any{"Text": "  *2: sleep "},
+				map[string]any{"Text": "  *2: k8s-icon "},
 			},
 		},
 		{
@@ -282,7 +285,7 @@ func TestFormatTabTitle(t *testing.T) {
 			home:   "/home/me",
 			cwd:    "/home/me/foo/",
 			expected: []any{
-				map[string]any{"Text": " 2: sleep "},
+				map[string]any{"Text": " 2: sleep-icon "},
 			},
 		},
 		{
@@ -468,9 +471,36 @@ func TestFormatTabTitle(t *testing.T) {
 
 }
 
-func loadWeztermHelpersLuaFunction[V any](t *testing.T, name string) func(...any) V {
+func loadWeztermHelpersLuaFunction[V any](t *testing.T, name string, fontSymbols map[string]string) func(...any) V {
 	l := lua.NewState()
 	t.Cleanup(l.Close)
+
+	nerdfonts := l.RegisterModule("nerdfonts", map[string]lua.LGFunction{}).(*lua.LTable)
+	symbols := []string{
+		"dev_git",
+		"dev_rust",
+		"fa_book",
+		"fa_hashtag",
+		"linux_docker",
+		"md_file_edit",
+		"md_kubernetes",
+		"md_ssh",
+		"md_sleep",
+		"seti_go2",
+		"seti_makefile",
+	}
+	for _, symbol := range symbols {
+		value := "unset"
+		if v, ok := fontSymbols[symbol]; ok {
+			value = v
+		}
+		nerdfonts.RawSetString(symbol, lua.LString(value))
+	}
+
+	wezterm := l.RegisterModule("wezterm", map[string]lua.LGFunction{}).(*lua.LTable)
+	wezterm.RawSetString("nerdfonts", nerdfonts)
+	l.Push(wezterm)
+
 	require.NoError(t, l.DoFile(filepath.Join("..", "home", "private_dot_config", "wezterm", "helpers.lua")))
 
 	f := l.Get(-1).(*lua.LTable).RawGet(lua.LString(name))
