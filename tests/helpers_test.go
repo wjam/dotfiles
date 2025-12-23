@@ -476,30 +476,25 @@ func loadWeztermHelpersLuaFunction[V any](t *testing.T, name string, fontSymbols
 	l := lua.NewState()
 	t.Cleanup(l.Close)
 
-	nerdfonts := l.RegisterModule("nerdfonts", map[string]lua.LGFunction{}).(*lua.LTable)
-	symbols := []string{
-		"dev_git",
-		"dev_rust",
-		"fa_book",
-		"fa_hashtag",
-		"linux_docker",
-		"md_file_edit",
-		"md_kubernetes",
-		"md_ssh",
-		"md_sleep",
-		"seti_go2",
-		"seti_makefile",
+	nerdFonts := map[string]any{
+		"dev_git":       "unset",
+		"dev_rust":      "unset",
+		"fa_book":       "unset",
+		"fa_hashtag":    "unset",
+		"linux_docker":  "unset",
+		"md_file_edit":  "unset",
+		"md_kubernetes": "unset",
+		"md_ssh":        "unset",
+		"md_sleep":      "unset",
+		"seti_go2":      "unset",
+		"seti_makefile": "unset",
 	}
-	for _, symbol := range symbols {
-		value := "unset"
-		if v, ok := fontSymbols[symbol]; ok {
-			value = v
-		}
-		nerdfonts.RawSetString(symbol, lua.LString(value))
+	for k, v := range fontSymbols {
+		nerdFonts[k] = v
 	}
 
 	wezterm := l.RegisterModule("wezterm", map[string]lua.LGFunction{}).(*lua.LTable)
-	wezterm.RawSetString("nerdfonts", nerdfonts)
+	wezterm.RawSetString("nerdfonts", convertToLua(t, l, nerdFonts))
 	l.Push(wezterm)
 
 	require.NoError(t, l.DoFile(filepath.Join("..", "home", "private_dot_config", "wezterm", "helpers.lua")))
