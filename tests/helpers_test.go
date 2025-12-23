@@ -242,8 +242,9 @@ func TestFormatWindowTitle(t *testing.T) {
 
 func TestFormatTabTitle(t *testing.T) {
 	v := loadWeztermHelpersLuaFunction[[]any](t, "format_tab_title", map[string]string{
-		"md_sleep":      "sleep-icon",
 		"md_kubernetes": "k8s-icon",
+		"md_file_edit":  "edit-icon",
+		"md_sleep":      "sleep-icon",
 	})
 
 	tests := []struct {
@@ -397,7 +398,7 @@ func TestFormatTabTitle(t *testing.T) {
 			home:   "/home/me",
 			cwd:    "/home/me/foo/",
 			expected: []any{
-				map[string]any{"Text": " 2: vi "},
+				map[string]any{"Text": " 2: edit-icon "},
 			},
 		},
 		{
@@ -411,7 +412,7 @@ func TestFormatTabTitle(t *testing.T) {
 			home:   "/home/me",
 			cwd:    "/home/me/foo/",
 			expected: []any{
-				map[string]any{"Text": " 2: me@example.test vi "},
+				map[string]any{"Text": " 2: me@example.test edit-icon "},
 			},
 		},
 		{
