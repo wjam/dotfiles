@@ -112,6 +112,8 @@ packages:
       taps: []
       brews:
         - "colima" # Utility to manage local Docker & Kubernetes VMs
+        - "lima-additional-guestagents" # required for running Colima on non-native architecture
+        - "qemu" # required for running Colima on non-native architecture
       casks: []
     admin:
       taps: []
