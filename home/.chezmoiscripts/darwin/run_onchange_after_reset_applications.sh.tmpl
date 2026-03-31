@@ -57,7 +57,7 @@ function resetApp() {
   fi
 
   echo "Resetting owner of $app - may require admin password"
-  su "$user" -c "chown -r $HOME/Applications/$app"
+  su "$user" -c "sudo chown -R $HOME/Applications/$app"
 }
 
 # [[ range ($casks | sortAlpha) -]]
