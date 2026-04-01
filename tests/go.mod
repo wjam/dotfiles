@@ -4,9 +4,9 @@ go 1.26
 
 require (
 	github.com/gruntwork-io/terratest v0.56.0
-	github.com/samber/lo v1.52.0
+	github.com/samber/lo v1.53.0
 	github.com/stretchr/testify v1.11.1
-	github.com/yuin/gopher-lua v1.1.1
+	github.com/yuin/gopher-lua v1.1.2
 )
 
 require (
