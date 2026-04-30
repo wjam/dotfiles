@@ -10,9 +10,29 @@ on:
     branches:
       - "main"
 
-jobs:
-  test:
+concurrency: # Avoid needlessly continuing to run the workflow if it's already been superseded
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
+jobs:
+  validate:
+    name: Validate GitHub Actions
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
+        with:
+          persist-credentials: 'false'
+
+      - name: Run zizmor
+        uses: zizmorcore/zizmor-action@b1d7e1fb5de872772f31590499237e7cce841e8e # v0.5.3
+        with:
+          advanced-security: 'false'
+          persona: auditor
+          annotations: 'true'
+
+  test:
+    name: Test
     # https://github.com/actions/runner-images/blob/main/images/ubuntu/Ubuntu2404-Readme.md
     # https://github.com/actions/runner-images/blob/main/images/macos/macos-14-arm64-Readme.md
     # https://docs.github.com/en/actions/reference/runners/github-hosted-runners#standard-github-hosted-runners-for-public-repositories
@@ -22,7 +42,7 @@ jobs:
         os: ["ubuntu-24.04", "macos-15"]
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd # v6.0.2
         with:
           persist-credentials: 'false'
 
@@ -41,15 +61,17 @@ jobs:
   dependabot:
     needs:
       - test
+      - validate
+    name: Auto-merge dependabot PRs
     runs-on: ubuntu-latest
     permissions:
-      pull-requests: write
-      contents: write
-    if: ${{ github.actor == 'dependabot[bot]' }}
+      pull-requests: write # Required to automatically merge PR
+      contents: write # Required to automatically merge PR
+    if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
     steps:
       - name: Dependabot metadata
         id: metadata
-        uses: dependabot/fetch-metadata@v2
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
         with:
           github-token: "${{ secrets.GITHUB_TOKEN }}"
       - name: Enable auto-merge for Dependabot PRs
