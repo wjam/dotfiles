@@ -1,3 +1,4 @@
 # https://docs.atuin.sh/configuration/config/
 dialect = "uk"
 update_check = false # managed through Homebrew
+sync_address = "https://shell.may.dev"
