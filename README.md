@@ -84,13 +84,10 @@ To get `go get` to work with private Git servers, like BitBucket server, `ssh-ad
    3. git fetch
       * Fingerprint for GitHub can be found at https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/githubs-ssh-key-fingerprints
 
-## Ubuntu post installation
-* [Configure rclone](https://rclone.org/googlephotos/)
-TODO
-
 ## macOS post installation
 * Create two shortcuts (app added with Monterey): `focus-mode` (turn on do not disturb), and `unfocus-mode` (turn off do not disturb)
 * Add 'Home' network location & create `~/.hammerspoon/ssid.json` like `{"home": "SSIDOfHomeNetwork"}`
+* Set up 'Home' and 'Automatic' network locations with relevant DNS details
 * Tweak Finder
   * Add home directory to the sidebar
 * Settings > Display > Resolution: Scaled (More Space)
@@ -125,18 +122,8 @@ docker run --rm -v $(pwd):/home/docker/.local/share/chezmoi -it $(docker build -
 
 # TODO
 * Find out why meeting interruption stuff isn't working when streamdeck is connected
-* Find something cask-like for Linux.
-  * Software:
-    * Visual Studio Code
-    * Slack
-    * Firefox
-    * Jetbrains Toolbox
-    * wezterm
-  * Options:
-    * Snap - Ubuntu only, must be run as root unless you've `snap login` first (?)
-    * AppImage - not supported for all apps like vscode
+* Switch Chezmoi downloading AppImages to Homebrew downloading them
 * Find a way to disable sudo access in CI to test no admin access (apt will fail as `code` is assumed to be present at vscode-extensions script (install via snap?))
-* [Hetzner](https://docs.hetzner.com/robot/storage-box/access/access-ssh-rsync-borg/)
 * fix bug in wezterm when:
   1. ssh into a server
   2. cd to a directory
