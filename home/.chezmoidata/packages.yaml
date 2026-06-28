@@ -12,9 +12,9 @@ packages:
       casks: []
     gui:
       taps:
-        - "wez/wezterm-linuxbrew"
+        - "wezterm/wezterm-linuxbrew"
       brews:
-        - "wezterm"
+        - "wezterm/wezterm-linuxbrew/wezterm"
       casks: []
     full_gui:
       taps: []
