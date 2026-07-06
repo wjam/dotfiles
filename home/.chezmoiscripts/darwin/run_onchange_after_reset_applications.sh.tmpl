@@ -41,14 +41,23 @@ fi
 # [[-   $casks = concat $casks .packages.common.gui.casks .packages.darwin.gui.casks -]]
 # [[- end ]]
 
+me="$(whoami)"
+
 function resetApp() {
   cask="$1"
-  info="$(brew info --json=v2 "$cask" | jq --compact-output '.casks[] | {auto_updates,app: (.artifacts[] | select(.app) | .app[])}')"
+  info="$(brew info --json=v2 "$cask" | jq --compact-output '.casks[] | {auto_updates,app: (.artifacts[] | select(.app) | .app[]),trash_root_dirs: [(.artifacts[] | select(.zap) | .zap[].trash[] | select(startswith("~") | not) | select(startswith("/Library/Logs/") | not))] != []}')"
 
   auto_updates=$(echo "$info" | jq --raw-output '.auto_updates')
   app=$(echo "$info" | jq --raw-output '.app')
+  trash_root_dirs=$(echo "$info" | jq --raw-output '.trash_root_dirs')
 
   if [[ "$auto_updates" != "true" ]]; then
+    return
+  fi
+
+  if [[ "$trash_root_dirs" == "true" ]]; then
+    # Cask appears to be managing directories outside of home and /Library/Logs,
+    # so auto-update will probably work without owning the directory (*cough* Chrome *cough*)
     return
   fi
 
@@ -57,7 +66,7 @@ function resetApp() {
   fi
 
   echo "Resetting owner of $app - may require admin password"
-  su "$user" -c "sudo chown -R $HOME/Applications/$app"
+  su "$user" -c "sudo chown -R $me $HOME/Applications/$app"
 }
 
 # [[ range ($casks | sortAlpha) -]]
