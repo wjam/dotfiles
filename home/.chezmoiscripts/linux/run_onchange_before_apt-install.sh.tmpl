@@ -27,10 +27,11 @@ vJsd5zYaZZFI1UwTkFXVKJt3bp3Ngn1vEYXwijGTa+FXz6GLHueJwF0I7ug34DgUkAFvAs8Hacr2
 DRYxL5RJXdNgj4Jd2/g6T9InmWT0hASljur+dJnzNiNCkbn9KbX7J/qK1IbR8y560yRmFsU+NdCF
 TW7wY0Fb1fWJ+/KTsC4=
 EOPGP
-
+# [[ if .gui ]]
 cat <<EOAPT | sudo tee /etc/apt/sources.list.d/vscode.list
 deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main
 EOAPT
+# [[- end ]]
 
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive xargs sudo apt-get install --assume-yes <<EOF
