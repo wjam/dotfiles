@@ -22,7 +22,7 @@ func TestZSHTheme(t *testing.T) {
 	envs := runCommandInShell(t, "env")
 
 	// shell integration is there, so the powerline-go is probably running?
-	assert.Contains(t, envs, "__wezterm_semantic_precmd_executing")
+	assert.Contains(t, envs, "__wezterm_semantic_precmd_executing=")
 }
 
 func TestShellDefaultIsZSH(t *testing.T) {
@@ -181,7 +181,7 @@ func TestSternJsonLogging(t *testing.T) {
 }
 
 func runCommand(t *testing.T, cmd string, args ...string) string {
-	output := shell.RunCommandAndGetOutput(t, shell.Command{
+	output := shell.RunCommandContextAndGetOutput(t, t.Context(), &shell.Command{
 		Command: findTool(t, cmd),
 		Args:    args,
 		Env:     map[string]string{"PATH": path(t), "DISABLE_AUTO_UPDATE": "true", "ZSH_DISABLE_COMPFIX": "true"},
@@ -217,7 +217,7 @@ func path(t *testing.T) string {
 func runCommandInShell(t *testing.T, cmd string) string {
 	// Need to run with --interactive to pick up the PATH from the _new_ shell, rather than this shell
 	// but that will include OSC sequences, which are separated by '\a'
-	split := strings.Split(shell.RunCommandAndGetOutput(t, shell.Command{
+	split := strings.Split(shell.RunCommandContextAndGetOutput(t, t.Context(), &shell.Command{
 		Command: "zsh",
 		Args:    []string{"--allexport", "--interactive", "-c", cmd},
 		Env:     map[string]string{"DISABLE_AUTO_UPDATE": "true", "ZSH_DISABLE_COMPFIX": "true"},
