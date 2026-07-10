@@ -50,6 +50,8 @@ ZSH_CACHE_DIR="{{ joinPath .chezmoi.homeDir ".cache" ".oh-my-zsh" }}"
 # Use zoxide for `cd`
 ZOXIDE_CMD_OVERRIDE="cd"
 
+zstyle :omz:plugins:ssh-agent lazy yes
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -64,6 +66,7 @@ plugins=(
   zsh-interactive-cd # interactive list of directories on `cd`
   zsh-autosuggestions # auto-suggest commands based on history
   zsh-syntax-highlighting # syntax highlighting for the typed command
+  ssh-agent # Allow sharing SSH keys securely with a devcontainer
 {{- if and .full .gui }}
   auto-notify # Send a notification when long running programs end
 {{- end }}

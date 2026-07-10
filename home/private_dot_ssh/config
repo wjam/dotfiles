@@ -1,11 +1,5 @@
-# Per-host key, e.g. ~/.ssh/keys/github.com or ~/.ssh/keys/company.github.com
-IdentityFile ~/.ssh/keys/%n
-
-# Fallback keys
-IdentityFile ~/.ssh/id_rsa
-
-# Don't send all keys to everyone
-IdentitiesOnly yes
+# Ignore macOS specific option on non-macOS systems
+IgnoreUnknown UseKeychain
 
 # Keep who you've connected to secret in case it gets leaked
 HashKnownHosts yes
@@ -32,3 +26,10 @@ Host remarkable
 
 Host remarkable.lan
   User root
+
+Host *
+  IdentityFile ~/.ssh/keys/%n # Per-host key, e.g. ~/.ssh/keys/github.com or ~/.ssh/keys/company.github.com
+  IdentityFile ~/.ssh/id_rsa # Fallback keys
+  IdentitiesOnly yes # Don't send all keys to everyone
+  AddKeysToAgent yes
+  UseKeychain yes
