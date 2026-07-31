@@ -14,6 +14,18 @@ set -o pipefail
 # Turn on traces, useful while debugging but commented out by default
 #set -o xtrace
 
+function to_release_url() {
+  local url=$1
+  local tag=$2
+  if [[ "$url" =~ ^https://github.com/([^/]+)/([^/]+)/archive/refs/tags/(.+).tar.gz$ ]] || [[ "$url" =~ ^https://github.com/([^/]+)/([^/]+)/releases/download/(.+)/.*.tar.gz$ ]]; then
+    echo "https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/${BASH_REMATCH[3]}"
+  elif [[ "$url" =~ ^https://github.com/([^/]*)/([^/]*).git$ ]]; then
+    echo "https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/$tag"
+  elif [[ "$url" =~ ^https://nodejs.org/dist/v([^/]+)/node-.*$ ]]; then
+    echo "https://github.com/nodejs/node/releases/tag/v${BASH_REMATCH[1]}"
+  fi
+}
+
 echo Updating Homebrew
 user=# [[ .brew.install_user | quote ]]
 if [ "$user" != "" ]; then
@@ -27,15 +39,19 @@ brew outdated --json | jq --compact-output '.formulae[]  | select(.pinned == fal
   name="$(echo "$line" | jq --raw-output '.name')"
   info="$(brew info --formulae --json=v2 "$name")"
   if [[ "$(echo "$info" | jq '.formulae[].installed[].installed_on_request')" == "true" ]]; then
-    url="$(echo "$info" | jq --raw-output '.formulae[].urls.stable.url')"
     oldVersion="$(echo "$line" | jq --raw-output '.installed_versions[0]')"
     newVersion="$(echo "$line" | jq --raw-output '.current_version')"
-    if [[ "$url" =~ ^https://github.com/([^/]+)/([^/]+)/archive/refs/tags/(.+).tar.gz$ ]] || [[ "$url" =~ ^https://github.com/([^/]+)/([^/]+)/releases/download/(.+)/.*.tar.gz$ ]]; then
-      printf '%s %s -> \e]8;;%s\e\\%s\e]8;;\e\\\n' "$name" "$oldVersion" "https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/${BASH_REMATCH[3]}" "$newVersion"
-    elif [[ "$url" =~ ^https://github.com/([^/]*)/([^/]*).git$ ]]; then
-      printf '%s %s -> \e]8;;%s\e\\%s\e]8;;\e\\\n' "$name" "$oldVersion" "https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/$(echo "$info" | jq --raw-output '.formulae[].urls.stable.tag')" "$newVersion"
+    tag="$(echo "$info" | jq --raw-output '.formulae[].urls.stable.tag')"
+    release_url="$(to_release_url "$(echo "$info" | jq --raw-output '.formulae[].urls.stable.url')" "$tag")"
+    if [[ "$release_url" == "" ]]; then
+      release_url="$(to_release_url "$(echo "$info" | jq --raw-output '.formulae[].urls.head.url')" "$tag")"
+    fi
+
+    if [[ "$release_url" == "" ]]; then
+      domains="$(echo "$info" | jq --raw-output '[[(.formulae[].urls.head?.url // ""), (.formulae[].urls.stable.url)] | .[] | select(. != "") | sub("^[^:]*://";"") | sub("/.*$";"")] | join(" or ")')"
+      printf '%s %s -> %s (%s)\n' "$name" "$oldVersion" "$newVersion" "$domains"
     else
-      printf '%s %s -> %s\n' "$name" "$oldVersion" "$newVersion"
+      printf '%s %s -> \e]8;;%s\e\\%s\e]8;;\e\\\n' "$name" "$oldVersion" "$release_url" "$newVersion"
     fi
   fi
 done
@@ -45,3 +61,8 @@ brew outdated --json | jq --raw-output '.casks[] | "\(.name) \(.installed_versio
 
 echo Pinned formulas
 brew list --pinned
+
+# TODO
+# missing release URL domains
+# npmjs needs redirect: https://registry.npmjs.org/pnpm/-/pnpm-11.18.0.tgz -> https://registry.npmjs.org/pnpm -> https://github.com/pnpm/pnpm/issues (
+# need stable version for gitlab (stable.tag is optional): https://gitlab.com/qemu-project/qemu.git
