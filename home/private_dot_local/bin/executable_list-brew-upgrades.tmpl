@@ -23,8 +23,10 @@ function to_release_url() {
     echo "https://github.com/${BASH_REMATCH[1]}/${BASH_REMATCH[2]}/releases/tag/$tag"
   elif [[ "$url" =~ ^https://nodejs.org/dist/v([^/]+)/node-.*$ ]]; then
     echo "https://github.com/nodejs/node/releases/tag/v${BASH_REMATCH[1]}"
-  elif [[ "$url" =~ ^https://go.dev/dl/(go[0-9]*.[0-9]*.[0-9]*).src.tar.gz$ ]]; then
+  elif [[ "$url" =~ ^https://go.dev/dl/(go[0-9]*\.[0-9]*\.[0-9]*)\.src\.tar\.gz$ ]]; then
     echo "https://go.dev/doc/devel/release#${BASH_REMATCH[1]}"
+  elif [[ "$url" =~ ^https://download.qemu.org/qemu-([0-9]*.[0-9*])\.[0-9]+\.tar\.xz$ ]]; then
+    echo "https://wiki.qemu.org/ChangeLog/${BASH_REMATCH[1]}"
   fi
 }
 
