@@ -15,7 +15,8 @@ packages:
         - "wezterm/wezterm-linuxbrew"
       brews:
         - "wezterm/wezterm-linuxbrew/wezterm"
-      casks: []
+      casks:
+        - "obsidian"
     full_gui:
       taps: []
       brews: []
@@ -31,6 +32,7 @@ packages:
       brews:
         - "bash-completion"
         - "blueutil" # used by Hammerspoon scripts
+        - "btop"
         - "dockutil"
         - "grep" # GNU grep available as ggrep
         - "readline" # .inputrc
@@ -70,7 +72,6 @@ packages:
         - "atuin" # better shell history
         - "bat" # cat with syntax highlighting
         - "broot" # better tree
-        - "btop"
         - "chezmoi"
         - "curl"
         - "direnv"

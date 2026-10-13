@@ -28,13 +28,19 @@ DRYxL5RJXdNgj4Jd2/g6T9InmWT0hASljur+dJnzNiNCkbn9KbX7J/qK1IbR8y560yRmFsU+NdCF
 TW7wY0Fb1fWJ+/KTsC4=
 EOPGP
 # [[ if .gui ]]
-cat <<EOAPT | sudo tee /etc/apt/sources.list.d/vscode.list
-deb [arch=amd64,arm64,armhf signed-by=/etc/apt/keyrings/packages.microsoft.gpg] https://packages.microsoft.com/repos/code stable main
+cat <<EOAPT | sudo tee /etc/apt/sources.list.d/vscode.sources
+Types: deb
+URIs: https://packages.microsoft.com/repos/code
+Suites: stable
+Components: main
+Architectures: amd64
+Signed-By: /usr/share/keyrings/microsoft.gpg
 EOAPT
 # [[- end ]]
 
 sudo apt-get update
 DEBIAN_FRONTEND=noninteractive xargs sudo apt-get install --assume-yes <<EOF
+btop
 build-essential
 curl
 git
@@ -48,10 +54,8 @@ apt-transport-https
 code
 gnome-tweaks
 libfuse2
-libwebkit2gtk-4.0-37
 wl-clipboard
 EOF
 # [[- end ]]
 
-# libwebkit2gtk-4.0-37 needed for Bambu Studio - https://github.com/bambulab/BambuStudio/issues/2429
 # apt-transport-https - needed to install vscode - https://code.visualstudio.com/docs/setup/linux#_debian-and-ubuntu-based-distributions
