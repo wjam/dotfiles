@@ -26,8 +26,7 @@ packages:
       casks: []
   darwin:
     all:
-      taps:
-        - "wezterm/wezterm"
+      taps: []
       brews:
         - "bash-completion"
         - "blueutil" # used by Hammerspoon scripts
@@ -42,7 +41,7 @@ packages:
         - "stats"
         - "thunderbird"
         - "visual-studio-code"
-        - "wezterm/wezterm/wezterm"
+        - "wezterm"
     gui:
       taps: []
       brews: []

@@ -55,7 +55,7 @@ tap # [[ . | quote ]], trusted: true
 brew # [[ . | quote ]]
 # [[ end -]]
 
-# [[ if ne (len $casks) 0 -]]
+# [[ if and (.brew.has_workbrew) (ne (len $casks) 0) -]]
 cask_args appdir: '# [[ joinPath .chezmoi.homeDir "Applications" ]]'
 # [[ end -]]
 # [[ range ($casks | sortAlpha) -]]

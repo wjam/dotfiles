@@ -4,6 +4,8 @@
     (joinPath .brew.prefix "opt" "curl" "bin")
     (joinPath .brew.prefix "opt" "mysql-client" "bin")
     (joinPath .brew.prefix "sbin")
-    (joinPath .brew.prefix "bin")
 -}}
+{{- if not .brew.has_workbrew -}}
+{{-   $paths = append $paths (joinPath .brew.prefix "bin") -}}
+{{- end -}}
 {{- $paths | join ":" -}}:$PATH:{{ joinPath .chezmoi.homeDir ".local" "bin" }}
