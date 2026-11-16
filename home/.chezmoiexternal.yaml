@@ -52,21 +52,3 @@
   type: "file"
   url: "https://static.rust-lang.org/rustup/dist/# [[ $altArch ]]-# [[ $rustOs ]]/rustup-init"
   executable: true
-# [[- if and (eq .chezmoi.os "linux") .gui ]]
-".local/bin/FreeCAD.AppImage":
-  type: "file"
-  url: # [[ gitHubReleaseAssetURL "FreeCAD/FreeCAD" "1.0.1" "FreeCAD_*-conda-Linux-x86_64-py311.AppImage" | quote ]]
-  executable: true
-".local/bin/BambuStudio.AppImage":
-  type: "file"
-  url: # [[ gitHubReleaseAssetURL "bambulab/BambuStudio" "v01.08.04.51" "BambuStudio_linux_ubuntu_*.AppImage" | quote ]]
-  executable: true
-".local/bin/OpenSCAD.AppImage":
-  type: "file"
-  url: # [[ gitHubReleaseAssetURL "openscad/openscad" "openscad-2021.01" "OpenSCAD-*-x86_64.AppImage" | quote ]]
-  executable: true
-".local/bin/Obsidian.AppImage":
-  type: "file"
-  url: # [[ gitHubReleaseAssetURL "obsidianmd/obsidian-releases" "v1.10.6" "Obsidian-1.10.6.AppImage" | quote ]]
-  executable: true
-# [[- end ]]

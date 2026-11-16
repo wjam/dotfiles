@@ -14,7 +14,7 @@ export DOCKER_HOST="unix://{{ joinPath .chezmoi.homeDir ".colima" "default" "doc
 {{- end }}
 
 {{- if not .brew.has_workbrew }}
-export HOMEBREW_CASK_OPTS="--appdir={{ joinPath .chezmoi.homeDir "Applications" }}"
+export HOMEBREW_CASK_OPTS="--appdir={{ joinPath .chezmoi.homeDir "Applications" }} --appimagedir={{ joinPath .chezmoi.homeDir "Applications" }}"
 {{- end }}
 
 export PATH={{ includeTemplate "path" . | trim | quote }}
