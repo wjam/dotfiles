@@ -14,6 +14,12 @@ set -o pipefail
 
 export PATH=# [[ includeTemplate "path" . | trim | quote ]]
 
+# [[ if .brew.has_workbrew -]]
+appDir="/Applications"
+# [[ else -]]
+appDir="$HOME/Applications"
+# [[ end -]]
+
 function configure_finder() {
   # TODO defaults write NSGlobalDomain AppleShowAllExtensions -bool true; # show all file extensions
   # show hidden files
@@ -39,11 +45,11 @@ function configure_dock() {
   dockutil --remove all --no-restart
   dockutil --add "/System/Applications/App Store.app/" --section apps --no-restart
   dockutil --add "/System/Applications/System Settings.app/" --section apps --no-restart
-  dockutil --add "$HOME/Applications/WezTerm.app/" --section apps --no-restart
-  dockutil --add "$HOME/Applications/Slack.app/" --section apps --no-restart
-  dockutil --add "$HOME/Applications/Visual Studio Code.app/" --section apps --no-restart
-  dockutil --add "$HOME/Applications/Firefox.app/" --section apps --no-restart
-  dockutil --add "$HOME/Applications/Thunderbird.app/" --section apps --no-restart
+  dockutil --add "$appDir/WezTerm.app/" --section apps --no-restart
+  dockutil --add "$appDir/Slack.app/" --section apps --no-restart
+  dockutil --add "$appDir/Visual Studio Code.app/" --section apps --no-restart
+  dockutil --add "$appDir/Firefox.app/" --section apps --no-restart
+  dockutil --add "$appDir/Thunderbird.app/" --section apps --no-restart
   dockutil --add "$HOME/Downloads/" --section others --view list --display stack --restart # restart last to pickup changes
 }
 
